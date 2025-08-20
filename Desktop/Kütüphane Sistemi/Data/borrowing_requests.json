@@ -1,0 +1,20 @@
+[
+  {
+    "RequestId": "1af2a43d-6136-43cf-ac25-d89fe0053a7a",
+    "UserId": "85af0cfa-a15e-4f53-b09a-0948c963f1b6",
+    "BookId": "5918ac72-5bac-4b30-aae4-63df98e49988",
+    "RequestDate": "2025-08-20T12:43:41.430355+03:00",
+    "Status": 0,
+    "AdminResponseDate": null,
+    "AdminId": null
+  },
+  {
+    "RequestId": "1963ecef-510d-4f96-94e3-2a3a96a2ddd0",
+    "UserId": "1462da1d-70f8-4e90-91e8-25c297955f22",
+    "BookId": "5918ac72-5bac-4b30-aae4-63df98e49988",
+    "RequestDate": "2025-08-20T13:13:09.344413+03:00",
+    "Status": 0,
+    "AdminResponseDate": null,
+    "AdminId": null
+  }
+]
