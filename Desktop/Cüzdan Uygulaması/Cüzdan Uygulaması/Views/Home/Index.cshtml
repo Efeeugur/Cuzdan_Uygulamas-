@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Kişisel Cüzdan Uygulaması</h1>
+    
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <p class="lead">Hoş geldiniz! Finansal işlemlerinizi yönetmeye başlayabilirsiniz.</p>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Hesaplarım</h5>
+                        <p class="card-text">Banka hesapları ve nakit bakiyelerinizi görüntüleyin.</p>
+                        <a href="#" class="btn btn-primary">Görüntüle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Gelir/Gider</h5>
+                        <p class="card-text">Yeni gelir/gider ekleyin ve geçmiş işlemleri görüntüleyin.</p>
+                        <a href="#" class="btn btn-primary">Ekle</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Taksitler</h5>
+                        <p class="card-text">Taksitli alışverişlerinizi takip edin.</p>
+                        <a href="#" class="btn btn-primary">Görüntüle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="lead">Finansal hayatınızı kontrol altına alın!</p>
+        <p>Gelir ve giderlerinizi takip edin, taksitli alışverişlerinizi yönetin ve bütçenizi planlayın.</p>
+        
+        <div class="mt-4">
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg me-3">Kayıt Ol</a>
+            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary btn-lg">Giriş Yap</a>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">💳 Hesap Yönetimi</h5>
+                        <p class="card-text">Birden fazla hesabınızı tek yerden yönetin.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">📊 Gelir/Gider Takibi</h5>
+                        <p class="card-text">Düzenli ve tek seferlik işlemlerinizi kaydedin.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">🛒 Taksit Yönetimi</h5>
+                        <p class="card-text">Taksitli alışverişlerinizi faizli hesaplayın.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
