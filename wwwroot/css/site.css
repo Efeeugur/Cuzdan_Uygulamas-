@@ -1,0 +1,259 @@
+/* ========== Temel tipografi ve ölçek ========== */
+html { font-size: 14px; }
+@media (min-width: 768px) {
+  html { font-size: 16px; }
+}
+
+html { position: relative; min-height: 100%; }
+body { margin-bottom: 60px; }
+
+/* ========== Tema Değişkenleri ========== */
+:root{
+  --bg: #f5f5f7;
+  --text: #1d1d1f;
+  --muted: #6e6e73;
+  --card: #ffffff;
+  --border: rgba(0,0,0,.08);
+  --shadow: 0 10px 40px rgba(0,0,0,.08);
+  --blue: #007aff;
+  --black: #000;
+  --radius-xl: 22px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #0b0b0c;
+    --text: #f5f5f7;
+    --muted: #9ea0a6;
+    --card: #111113;
+    --border: rgba(255,255,255,.10);
+    --shadow: 0 10px 40px rgba(0,0,0,.55);
+    --black: #fff;
+  }
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ========== Odak (Focus) stilleri ========== */
+/* Bootstrap’in mevcut halkasına yumuşak Apple‑vari ring ekleyelim */
+.btn:focus, .btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus, .form-check-input:focus,
+a:focus, button:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--blue) 22%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--blue) 10%, transparent);
+  border-color: color-mix(in srgb, var(--blue) 40%, var(--border));
+}
+
+/* ========== Form Floating placeholder davranışı (orijinal korunur) ========== */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* ========== Form alanları (genel) ========== */
+.form-label{ font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
+.form-control{
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  height: 44px;
+  background: #fff;
+  color: var(--text);
+  transition: box-shadow .2s ease, border-color .2s ease, transform .02s ease;
+}
+.form-control::placeholder{ color: #a1a1a6; }
+
+/* ========== Butonlar ========== */
+.btn-primary{
+  background: var(--black);
+  border: none;
+  color: var(--bg);
+  border-radius: var(--radius-md);
+  height: 48px;
+  padding: 0 18px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  transition: transform .04s ease, filter .2s ease;
+}
+.btn-primary:hover{ filter: brightness(1.05); }
+.btn-primary:active{ transform: translateY(1px); }
+
+.btn-outline-primary{
+  border-radius: var(--radius-md);
+  font-weight: 700;
+}
+
+/* Özel butonlar (hero ve navbar’da kullandık) */
+.btn-black{
+  background: var(--black);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius-md);
+  height: 48px;
+  padding: 0 18px;
+  font-weight: 700;
+  transition: transform .04s ease, filter .2s ease;
+}
+.btn-black:hover{ filter: brightness(1.05); }
+.btn-black:active{ transform: translateY(1px); }
+
+.btn-ghost{
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: var(--radius-md);
+  height: 48px;
+  padding: 0 16px;
+  font-weight: 600;
+  transition: background .2s ease, border-color .2s ease, transform .04s ease;
+}
+.btn-ghost:hover{ background: color-mix(in srgb, var(--text) 6%, transparent); }
+.btn-ghost:active{ transform: translateY(1px); }
+
+/* ========== Kartlar ========== */
+.card{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 50px rgba(0,0,0,.12);
+  border-color: color-mix(in srgb, var(--blue) 20%, var(--border));
+}
+.card .card-body{ padding: 18px 18px 20px; }
+
+/* ========== Navbar (blur + translucent) ========== */
+.nav-shell{
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+.nav-inner{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display:flex; align-items:center; gap:12px;
+}
+.nav-links .nav-link{
+  color: var(--text) !important;
+  opacity: .86;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background .2s ease, opacity .2s ease;
+}
+.nav-links .nav-link:hover{
+  opacity: 1;
+  background: color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+/* Bootstrap toggler’ı biraz yumuşat */
+.navbar-toggler{
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px 10px;
+  color: var(--text);
+}
+
+/* ========== Sayfa kapsayıcıları ========== */
+.page-container{ max-width: 1120px; margin: 26px auto; padding: 0 16px; }
+.page-main{ background: transparent; }
+
+/* ========== Footer ========== */
+.app-footer{
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+.footer-inner{
+  max-width: 1120px; margin: 0 auto;
+  padding: 18px 16px; color: var(--muted);
+  display:flex; align-items:center; gap: 12px;
+}
+.footer-inner a{
+  color: var(--blue); text-decoration: none; font-weight: 600;
+}
+.footer-inner a:hover{ text-decoration: underline; }
+
+/* ========== Hero & Grid (Ana Sayfa) ========== */
+.home-wrap{ padding: 48px 16px 64px; }
+.hero{ max-width: 1100px; margin: 0 auto 28px; text-align: center; }
+.hero h1{
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin: 6px 0 10px;
+}
+.hero p{ color: var(--muted); font-size: clamp(16px, 2.2vw, 18px); margin: 0 auto; max-width: 820px; }
+.hero-cta{ margin-top: 22px; display:flex; gap:12px; justify-content:center; flex-wrap: wrap; }
+
+.grid{
+  max-width: 1100px;
+  margin: 34px auto 0;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+.grid .card{ grid-column: span 4; }
+@media (max-width: 990px){ .grid .card{ grid-column: span 6; } }
+@media (max-width: 640px){ .grid .card{ grid-column: span 12; } }
+
+/* ========== Auth sayfaları (Login/Register) ========== */
+.auth-wrap{
+  min-height: calc(100vh - 80px);
+  display: grid;
+  place-items: center;
+  padding: 40px 16px;
+}
+.auth-card{
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.auth-head{ padding: 28px 28px 0 28px; text-align: center; }
+.auth-title{ font-weight: 700; letter-spacing: -.02em; margin: 0 0 4px 0; }
+.auth-sub{ color: var(--muted); font-size: .95rem; margin: 0 0 8px 0; }
+.auth-body{ padding: 24px 28px 28px 28px; }
+.validation-summary-errors{
+  background: #fff1f0;
+  border: 1px solid #ffd1ce;
+  color: #a81810;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: .95rem;
+}
+
+/* Küçük ekran ince ayarı */
+@media (max-width: 540px){
+  .auth-card{ border-radius: 16px; }
+  .auth-head, .auth-body, .auth-footer{ padding-left: 20px; padding-right: 20px; }
+}
+
+/* ========== Yardımcılar ========== */
+.mb-3{ margin-bottom: 12px; } /* Apple‑vari daha sıkı dikey ritim */
+.text-muted{ color: var(--muted) !important; }
