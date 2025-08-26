@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,68 +9,247 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Cüzdan_Uygulaması.styles.css" asp-append-version="true" />
+
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --text: #1d1d1f;
+            --muted: #6e6e73;
+            --card: #ffffff;
+            --border: rgba(0, 0, 0, .08);
+            --shadow: 0 12px 40px rgba(0, 0, 0, .08);
+            --nav: color-mix(in srgb, #ffffff 70%, transparent);
+            --nav-border: rgba(0, 0, 0, .06);
+            --blue: #007aff;
+            --black: #000;
+            --radius-xl: 22px;
+            --radius-md: 16px;
+        }
+
+        }
+
+        html,
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        /* Apple‑esque navbar */
+        .nav-shell {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            backdrop-filter: saturate(180%) blur(14px);
+            border-bottom: 1px solid var(--nav-border);
+            background: var(--nav);
+        }
+
+        .nav-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: -.01em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .brand svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .nav-links {
+            margin-left: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: var(--text) !important;
+            opacity: .86;
+            padding: 8px 10px;
+            border-radius: 10px;
+            transition: background .2s ease, opacity .2s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+            background: color-mix(in srgb, var(--text) 8%, transparent);
+        }
+
+        .nav-spacer {
+            flex: 1;
+        }
+
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-ghost {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 8px 12px;
+            color: var(--text);
+            background: transparent;
+            font-weight: 600;
+            transition: background .2s ease, border-color .2s ease, transform .04s ease;
+        }
+
+        .btn-ghost:hover {
+            background: color-mix(in srgb, var(--text) 6%, transparent);
+        }
+
+        .btn-ghost:active {
+            transform: translateY(1px);
+        }
+
+        .btn-black {
+            border: none;
+            border-radius: 12px;
+            padding: 9px 14px;
+            background: var(--black);
+            color: var(--bg);
+            font-weight: 700;
+            transition: filter .2s ease, transform .04s ease;
+        }
+
+        .btn-black:hover {
+            filter: brightness(1.05);
+        }
+
+        .btn-black:active {
+            transform: translateY(1px);
+        }
+
+        /* içerik kabı */
+        .page-container {
+            max-width: 1120px;
+            margin: 26px auto;
+            padding: 0 16px;
+        }
+
+        .page-main {
+            background: transparent;
+            /* sayfa içeriği kendi view'larında kart/section kullanabilir */
+        }
+
+        /* footer */
+        .app-footer {
+            border-top: 1px solid var(--border);
+            margin-top: 32px;
+            background: color-mix(in srgb, var(--card) 70%, transparent);
+        }
+
+        .footer-inner {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 18px 16px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-inner a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-inner a:hover {
+            text-decoration: underline;
+        }
+
+        /* Bootstrap override: navbar toggler görünür kalsın */
+        .navbar-toggler {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 10px;
+            color: var(--text);
+        }
+
+        /* Focus görünürlüğü */
+        a:focus,
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 25%, transparent);
+            border-radius: 12px;
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cüzdan_Uygulaması</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
-                        </li>
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="#">Cüzdan</a>
-                            </li>
-                        }
-                    </ul>
-                    <ul class="navbar-nav">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item">
-                                <span class="nav-link">Hoş geldin, @User.Identity.Name</span>
-                            </li>
-                            <li class="nav-item">
-                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                                    <button type="submit" class="btn nav-link text-dark border-0 bg-transparent">Çıkış</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Giriş</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Kayıt</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+    <header class="nav-shell">
+        <div class="nav-inner">
+            <a class="brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <span>Cüzdan Uygulaması</span>
+            </a>
+
+            <button class="navbar-toggler ms-auto d-md-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#appNavbar" aria-controls="appNavbar" aria-expanded="false"
+                aria-label="Menüyü Aç/Kapat">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div id="appNavbar" class="navbar-collapse collapse d-md-flex nav-links">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a class="nav-link" href="#">Cüzdan</a>
+                }
             </div>
-        </nav>
+
+            <div class="nav-spacer"></div>
+
+            <div class="nav-auth">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="nav-link" style="opacity:.9;">Hoş geldin, @User.Identity.Name</span>
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline m-0">
+                        <button type="submit" class="btn-ghost">Çıkış</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="btn-ghost" asp-controller="Account" asp-action="Login">Giriş</a>
+                    <a class="btn-black" asp-controller="Account" asp-action="Register">Kayıt</a>
+                }
+            </div>
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="page-container">
+        <main role="main" class="page-main pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Cüzdan_Uygulaması - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="app-footer text-muted">
+        <div class="footer-inner">
+            <span>&copy; 2025 - Cüzdan_Uygulaması</span>
+            <span class="ms-2">—</span>
+            <a class="ms-2" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

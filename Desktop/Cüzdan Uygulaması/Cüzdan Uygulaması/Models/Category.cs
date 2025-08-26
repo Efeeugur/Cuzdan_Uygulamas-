@@ -18,6 +18,8 @@ public class Category
 
     public CategoryType Type { get; set; }
 
+    public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
     [Required]
     public string UserId { get; set; } = string.Empty;
 

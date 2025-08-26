@@ -2,77 +2,243 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Kişisel Cüzdan Uygulaması</h1>
-    
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --text: #1d1d1f;
+        --muted: #6e6e73;
+        --card: #ffffff;
+        --border: rgba(0, 0, 0, .08);
+        --shadow: 0 10px 40px rgba(0, 0, 0, .08);
+        --black: #000;
+        --blue: #007aff;
+        --radius-lg: 22px;
+        --radius-md: 16px;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .home-wrap {
+        padding: 48px 16px 64px;
+    }
+
+    .hero {
+        max-width: 1100px;
+        margin: 0 auto 28px;
+        text-align: center;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        font-size: .9rem;
+        color: var(--muted);
+        background: color-mix(in srgb, var(--card) 80%, transparent);
+        margin-bottom: 14px;
+    }
+
+    .hero h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -.02em;
+        margin: 6px 0 10px;
+    }
+
+    .hero p {
+        color: var(--muted);
+        font-size: clamp(16px, 2.2vw, 18px);
+        margin: 0 auto;
+        max-width: 820px;
+    }
+
+    .hero-cta {
+        margin-top: 22px;
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-black,
+    .btn-ghost {
+        height: 48px;
+        padding: 0 18px;
+        border-radius: 14px;
+        font-weight: 700;
+        border: 1px solid var(--border);
+        transition: transform .04s ease, filter .2s ease, background .2s ease;
+    }
+
+    .btn-black {
+        background: var(--black);
+        color: var(--bg);
+        border-color: var(--black);
+    }
+
+    .btn-black:hover {
+        filter: brightness(1.05);
+    }
+
+    .btn-black:active {
+        transform: translateY(1px);
+    }
+
+    .btn-ghost {
+        background: transparent;
+        color: var(--text);
+    }
+
+    .btn-ghost:hover {
+        background: color-mix(in srgb, var(--text) 6%, transparent);
+    }
+
+    .btn-primary {
+        /* mevcut buton sınıfını da şık hale getiriyoruz */
+        height: 42px;
+        padding: 0 14px;
+        border-radius: 12px;
+        background: var(--black);
+        border: none;
+        font-weight: 700;
+    }
+
+    .grid {
+        max-width: 1100px;
+        margin: 34px auto 0;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 16px;
+    }
+
+    .card {
+        grid-column: span 4;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 50px rgba(0, 0, 0, .12);
+        border-color: color-mix(in srgb, var(--blue) 22%, var(--border));
+    }
+
+    .card-body {
+        padding: 18px 18px 20px;
+        text-align: left;
+    }
+
+    .card-title {
+        font-weight: 700;
+        letter-spacing: -.01em;
+        margin-bottom: 6px;
+    }
+
+    .card-text {
+        color: var(--muted);
+        margin-bottom: 14px;
+    }
+
+    .card .btn {
+        background: var(--black);
+        color: var(--bg);
+        border: none;
+        border-radius: 12px;
+        height: 40px;
+        padding: 0 14px;
+        font-weight: 700;
+    }
+
+    .feature-note {
+        color: var(--muted);
+        text-align: center;
+        margin-top: 18px;
+        font-size: .95rem;
+    }
+</style>
+
+<div class="home-wrap">
+    <div class="hero text-center">
+        <h1 class="display-4">Kişisel Cüzdan Uygulaması</h1>
+
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <p class="lead" style="color:var(--muted)">Hoş geldiniz! Finansal işlemlerinizi yönetmeye başlayabilirsiniz.</p>
+        }
+        else
+        {
+            <p class="lead" style="color:var(--muted)">Finansal hayatınızı kontrol altına alın! Gelir/giderlerinizi takip
+                edin, taksitli alışverişlerinizi yönetin ve bütçenizi planlayın.</p>
+            <div class="hero-cta">
+                <a asp-controller="Account" asp-action="Register" class="btn-black btn-lg">Kayıt Ol</a>
+                <a asp-controller="Account" asp-action="Login" class="btn-ghost btn-lg">Giriş Yap</a>
+            </div>
+        }
+    </div>
+
     @if (User.Identity?.IsAuthenticated == true)
     {
-        <p class="lead">Hoş geldiniz! Finansal işlemlerinizi yönetmeye başlayabilirsiniz.</p>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Hesaplarım</h5>
-                        <p class="card-text">Banka hesapları ve nakit bakiyelerinizi görüntüleyin.</p>
-                        <a href="#" class="btn btn-primary">Görüntüle</a>
-                    </div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Hesaplarım</h5>
+                    <p class="card-text">Banka hesapları ve nakit bakiyelerinizi görüntüleyin.</p>
+                    <a href="#" class="btn btn-primary">Görüntüle</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Gelir/Gider</h5>
-                        <p class="card-text">Yeni gelir/gider ekleyin ve geçmiş işlemleri görüntüleyin.</p>
-                        <a href="#" class="btn btn-primary">Ekle</a>
-                    </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Gelir/Gider</h5>
+                    <p class="card-text">Yeni gelir/gider ekleyin ve geçmiş işlemleri görüntüleyin.</p>
+                    <a href="#" class="btn btn-primary">Ekle</a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Taksitler</h5>
-                        <p class="card-text">Taksitli alışverişlerinizi takip edin.</p>
-                        <a href="#" class="btn btn-primary">Görüntüle</a>
-                    </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Taksitler</h5>
+                    <p class="card-text">Taksitli alışverişlerinizi takip edin.</p>
+                    <a href="#" class="btn btn-primary">Görüntüle</a>
                 </div>
             </div>
         </div>
     }
     else
     {
-        <p class="lead">Finansal hayatınızı kontrol altına alın!</p>
-        <p>Gelir ve giderlerinizi takip edin, taksitli alışverişlerinizi yönetin ve bütçenizi planlayın.</p>
-        
-        <div class="mt-4">
-            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg me-3">Kayıt Ol</a>
-            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary btn-lg">Giriş Yap</a>
-        </div>
-        
-        <div class="row mt-5">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">💳 Hesap Yönetimi</h5>
-                        <p class="card-text">Birden fazla hesabınızı tek yerden yönetin.</p>
-                    </div>
+        <div class="grid" style="margin-top: 34px;">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">💳 Hesap Yönetimi</h5>
+                    <p class="card-text">Birden fazla hesabınızı tek yerden yönetin.</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">📊 Gelir/Gider Takibi</h5>
-                        <p class="card-text">Düzenli ve tek seferlik işlemlerinizi kaydedin.</p>
-                    </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Gelir/Gider Takibi</h5>
+                    <p class="card-text">Düzenli ve tek seferlik işlemlerinizi kaydedin.</p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">🛒 Taksit Yönetimi</h5>
-                        <p class="card-text">Taksitli alışverişlerinizi faizli hesaplayın.</p>
-                    </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">🛒 Taksit Yönetimi</h5>
+                    <p class="card-text">Taksitli alışverişlerinizi faizli hesaplayın.</p>
                 </div>
             </div>
         </div>
+        <p class="feature-note">Kayıt olarak tüm özelliklere erişebilirsiniz.</p>
     }
 </div>
