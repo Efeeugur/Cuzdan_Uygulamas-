@@ -1,0 +1,330 @@
+@model IEnumerable<Cüzdan_Uygulaması.BusinessLogic.DTOs.CategoryDto>
+@{
+    ViewData["Title"] = "Kategoriler";
+}
+
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --text: #1d1d1f;
+        --muted: #6e6e73;
+        --blue: #007aff;
+        --green: #28a745;
+        --red: #dc3545;
+        --orange: #ff9500;
+        --border: rgba(0, 0, 0, 0.08);
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --radius: 16px;
+    }
+
+    .category-header {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .category-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-bottom: 16px;
+        overflow: hidden;
+    }
+
+    .category-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-apple {
+        background: #000;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .btn-apple:hover {
+        background: #333;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--muted);
+    }
+
+    .category-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-right: 16px;
+    }
+
+    .category-stats {
+        font-size: 0.9rem;
+        color: var(--muted);
+    }
+
+    .category-colors {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .color-indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="container-fluid px-4">
+    <!-- Header -->
+    <div class="category-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="mb-0">🏷️ Kategoriler</h2>
+                <p class="text-muted mb-0">İşlemlerinizi organize etmek için kategorileri yönetin</p>
+            </div>
+            <div class="col-auto">
+                <div class="btn-group">
+                    <a asp-action="Create" class="btn btn-apple">
+                        <i class="fas fa-plus me-2"></i>Yeni Kategori
+                    </a>
+                    <div class="btn-group">
+                        <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-filter me-2"></i>Filtrele
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="?filter=all">Tüm Kategoriler</a></li>
+                            <li><a class="dropdown-item" href="?filter=used">Kullanılan</a></li>
+                            <li><a class="dropdown-item" href="?filter=unused">Kullanılmayan</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-primary">
+                        <i class="fas fa-tags fa-2x mb-2"></i>
+                    </div>
+                    <h6 class="text-muted">Toplam Kategori</h6>
+                    <h4 class="text-primary">@Model.Count()</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-success">
+                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                    </div>
+                    <h6 class="text-muted">Aktif Kategori</h6>
+                    <h4 class="text-success">@Model.Count(c => c.Transactions.Any())</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-info">
+                        <i class="fas fa-receipt fa-2x mb-2"></i>
+                    </div>
+                    <h6 class="text-muted">Toplam İşlem</h6>
+                    <h4 class="text-info">@Model.Sum(c => c.Transactions.Count())</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <div class="text-warning">
+                        <i class="fas fa-clock fa-2x mb-2"></i>
+                    </div>
+                    <h6 class="text-muted">Kullanılmayan</h6>
+                    <h4 class="text-warning">@Model.Count(c => !c.Transactions.Any())</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories List -->
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Any())
+            {
+                @foreach (var category in Model.OrderBy(c => c.Name))
+                {
+                    var transactionCount = category.Transactions.Count();
+                    var totalAmount = category.Transactions.Sum(t => t.Amount);
+                    var backgroundColor = !string.IsNullOrEmpty(category.Color) ? category.Color : "#007aff";
+                    
+                    <div class="category-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="category-icon" style="background-color: @backgroundColor; color: white;">
+                                        <i class="@(!string.IsNullOrEmpty(category.Icon) ? category.Icon : "fas fa-tag")"></i>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5 class="mb-1">@category.Name</h5>
+                                    @if (!string.IsNullOrEmpty(category.Description))
+                                    {
+                                        <p class="text-muted small mb-2">@category.Description</p>
+                                    }
+                                    <div class="category-stats">
+                                        <span class="me-3">
+                                            <i class="fas fa-receipt me-1"></i>@transactionCount işlem
+                                        </span>
+                                        <span>
+                                            <i class="fas fa-money-bill-wave me-1"></i>₺@totalAmount.ToString("N2")
+                                        </span>
+                                    </div>
+                                    @if (transactionCount == 0)
+                                    {
+                                        <div class="mt-2">
+                                            <span class="badge bg-light text-muted">
+                                                <i class="fas fa-clock me-1"></i>Henüz kullanılmadı
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-auto">
+                                    <div class="btn-group-vertical">
+                                        <a asp-action="Details" asp-route-id="@category.Id" 
+                                           class="btn btn-sm btn-outline-primary mb-1">
+                                            <i class="fas fa-eye me-1"></i>Detay
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@category.Id" 
+                                           class="btn btn-sm btn-outline-warning mb-1">
+                                            <i class="fas fa-edit me-1"></i>Düzenle
+                                        </a>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" 
+                                                    data-bs-toggle="dropdown">
+                                                <i class="fas fa-cog"></i>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                @if (transactionCount == 0)
+                                                {
+                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteCategory(@category.Id)">
+                                                        <i class="fas fa-trash me-2"></i>Sil</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><span class="dropdown-item-text text-muted">
+                                                        <i class="fas fa-info-circle me-2"></i>@transactionCount işlem mevcut
+                                                    </span></li>
+                                                }
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item" asp-controller="Transaction" asp-action="Index" asp-route-categoryId="@category.Id">
+                                                    <i class="fas fa-list me-2"></i>İşlemleri Gör</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body empty-state">
+                        <i class="fas fa-tags fa-4x mb-3"></i>
+                        <h4>Henüz kategori bulunmuyor</h4>
+                        <p>İşlemlerinizi organize etmek için ilk kategorinizi oluşturun.</p>
+                        <a asp-action="Create" class="btn btn-apple">
+                            <i class="fas fa-plus me-2"></i>İlk Kategorimi Oluştur
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function deleteCategory(id) {
+            Swal.fire({
+                title: 'Kategori Silinecek',
+                text: 'Bu işlem geri alınamaz!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Evet, Sil',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Create form and submit
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/Category/Delete/' + id;
+                    
+                    // Add anti-forgery token
+                    const token = document.createElement('input');
+                    token.type = 'hidden';
+                    token.name = '__RequestVerificationToken';
+                    token.value = $('input[name="__RequestVerificationToken"]').val();
+                    form.appendChild(token);
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
+
+        // Success/Error messages
+        @if (TempData["Success"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı!',
+                text: '@Html.Raw(TempData["Success"])',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            </text>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: '@Html.Raw(TempData["Error"])'
+            });
+            </text>
+        }
+    </script>
+}
