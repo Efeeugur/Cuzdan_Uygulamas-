@@ -1,0 +1,395 @@
+@model Cüzdan_Uygulaması.BusinessLogic.DTOs.CreateCategoryDto
+@{
+    ViewData["Title"] = "Yeni Kategori Oluştur";
+}
+
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --text: #1d1d1f;
+        --muted: #6e6e73;
+        --blue: #007aff;
+        --border: rgba(0, 0, 0, 0.08);
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --radius: 16px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .form-header {
+        padding: 2rem 2rem 1rem 2rem;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .form-body {
+        padding: 2rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+    }
+
+    .form-control, .form-select {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        background: var(--card);
+        color: var(--text);
+    }
+
+    .form-control:focus, .form-select:focus {
+        outline: none;
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        background: var(--card);
+    }
+
+    .btn-apple {
+        background: #000;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        width: 100%;
+    }
+
+    .btn-apple:hover {
+        background: #333;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary-custom {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .btn-secondary-custom:hover {
+        background: var(--border);
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    .text-danger {
+        color: #ff3b30 !important;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .form-help {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-top: 0.25rem;
+    }
+
+    .form-icon {
+        color: var(--blue);
+        margin-right: 0.5rem;
+    }
+
+    .preview-section {
+        background: #f8f9fa;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .category-preview {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 24px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-icon-preview {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: white;
+        background: #007aff;
+        transition: all 0.3s ease;
+    }
+
+    .color-picker-grid {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .color-option:hover {
+        transform: scale(1.1);
+    }
+
+    .color-option.selected {
+        border-color: #000;
+        transform: scale(1.1);
+    }
+
+    .icon-grid {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 8px;
+        margin-top: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .icon-option {
+        width: 40px;
+        height: 40px;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: var(--card);
+    }
+
+    .icon-option:hover {
+        border-color: var(--blue);
+        background: rgba(0, 122, 255, 0.1);
+    }
+
+    .icon-option.selected {
+        border-color: var(--blue);
+        background: rgba(0, 122, 255, 0.2);
+        color: var(--blue);
+    }
+</style>
+
+<div class="container-fluid px-4">
+    <div class="form-container">
+        <div class="form-header">
+            <h2 class="mb-2">
+                <i class="fas fa-plus-circle form-icon"></i>
+                Yeni Kategori Oluştur
+            </h2>
+            <p class="text-muted mb-0">İşlemlerinizi organize etmek için yeni bir kategori ekleyin</p>
+        </div>
+
+        <div class="form-body">
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <h6 class="mb-3">Önizleme</h6>
+                <div class="category-preview" id="categoryPreview">
+                    <div class="category-icon-preview" id="iconPreview">
+                        <i class="fas fa-tag"></i>
+                    </div>
+                    <span id="namePreview">Kategori Adı</span>
+                </div>
+            </div>
+
+            <form asp-action="Create" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label">
+                        <i class="fas fa-tag form-icon"></i>Kategori Adı *
+                    </label>
+                    <input asp-for="Name" class="form-control" 
+                           placeholder="örn: Market, Ulaşım, Eğlence, Maaş" 
+                           oninput="updatePreview()" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <div class="form-help">Kategorinizi açık bir şekilde tanımlayın</div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label">
+                        <i class="fas fa-align-left form-icon"></i>Açıklama
+                    </label>
+                    <textarea asp-for="Description" class="form-control" rows="3" 
+                              placeholder="Bu kategori hakkında ek bilgiler (isteğe bağlı)..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <div class="form-help">Kategorinin ne tür işlemler için kullanılacağını belirtin</div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Type" class="form-label">
+                        <i class="fas fa-exchange-alt form-icon"></i>Kategori Türü *
+                    </label>
+                    <select asp-for="Type" class="form-select">
+                        <option value="">Tür seçin...</option>
+                        <option value="0">Gelir</option>
+                        <option value="1">Gider</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                    <div class="form-help">Bu kategori gelir mi yoksa gider mi?</div>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="fas fa-palette form-icon"></i>Renk Seçin
+                    </label>
+                    <input asp-for="Color" type="hidden" id="selectedColor" value="#007aff" />
+                    <div class="color-picker-grid">
+                        <div class="color-option selected" style="background: #007aff" onclick="selectColor('#007aff')"></div>
+                        <div class="color-option" style="background: #28a745" onclick="selectColor('#28a745')"></div>
+                        <div class="color-option" style="background: #dc3545" onclick="selectColor('#dc3545')"></div>
+                        <div class="color-option" style="background: #ff9500" onclick="selectColor('#ff9500')"></div>
+                        <div class="color-option" style="background: #6f42c1" onclick="selectColor('#6f42c1')"></div>
+                        <div class="color-option" style="background: #20c997" onclick="selectColor('#20c997')"></div>
+                        <div class="color-option" style="background: #fd7e14" onclick="selectColor('#fd7e14')"></div>
+                        <div class="color-option" style="background: #6c757d" onclick="selectColor('#6c757d')"></div>
+                        <div class="color-option" style="background: #e83e8c" onclick="selectColor('#e83e8c')"></div>
+                        <div class="color-option" style="background: #17a2b8" onclick="selectColor('#17a2b8')"></div>
+                        <div class="color-option" style="background: #ffc107" onclick="selectColor('#ffc107')"></div>
+                        <div class="color-option" style="background: #343a40" onclick="selectColor('#343a40')"></div>
+                        <div class="color-option" style="background: #f8f9fa" onclick="selectColor('#f8f9fa')" style="border-color: #dee2e6"></div>
+                        <div class="color-option" style="background: #495057" onclick="selectColor('#495057')"></div>
+                        <div class="color-option" style="background: #007bff" onclick="selectColor('#007bff')"></div>
+                        <div class="color-option" style="background: #28a745" onclick="selectColor('#198754')"></div>
+                    </div>
+                    <div class="form-help">Kategorinizi diğerlerinden ayırmak için bir renk seçin</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="fas fa-icons form-icon"></i>İkon Seçin
+                    </label>
+                    <div class="icon-grid">
+                        <div class="icon-option selected" onclick="selectIcon('fas fa-tag')"><i class="fas fa-tag"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-shopping-cart')"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-car')"><i class="fas fa-car"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-home')"><i class="fas fa-home"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-utensils')"><i class="fas fa-utensils"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-gas-pump')"><i class="fas fa-gas-pump"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-gamepad')"><i class="fas fa-gamepad"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-book')"><i class="fas fa-book"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-heart')"><i class="fas fa-heart"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-plane')"><i class="fas fa-plane"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-coffee')"><i class="fas fa-coffee"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-shirt')"><i class="fas fa-shirt"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-dumbbell')"><i class="fas fa-dumbbell"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-music')"><i class="fas fa-music"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-film')"><i class="fas fa-film"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-graduation-cap')"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-laptop')"><i class="fas fa-laptop"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-mobile-alt')"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-tools')"><i class="fas fa-tools"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-pills')"><i class="fas fa-pills"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-money-bill-wave')"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-credit-card')"><i class="fas fa-credit-card"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-gift')"><i class="fas fa-gift"></i></div>
+                        <div class="icon-option" onclick="selectIcon('fas fa-paw')"><i class="fas fa-paw"></i></div>
+                    </div>
+                    <div class="form-help">Kategorinizi temsil eden bir ikon seçin</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <a asp-action="Index" class="btn btn-secondary-custom w-100">
+                            <i class="fas fa-arrow-left me-2"></i>İptal Et
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn-apple">
+                            <i class="fas fa-save me-2"></i>Kategoriyi Oluştur
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        function selectColor(color) {
+            // Remove selected class from all color options
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.target.classList.add('selected');
+            
+            // Update hidden input
+            document.getElementById('selectedColor').value = color;
+            
+            // Update preview
+            updatePreview();
+        }
+
+        function selectIcon(iconClass) {
+            // Remove selected class from all icon options
+            document.querySelectorAll('.icon-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.target.classList.add('selected');
+            
+            // Update hidden input
+            document.getElementById('selectedIcon').value = iconClass;
+            
+            // Update preview
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const name = document.querySelector('input[name="Name"]').value || 'Kategori Adı';
+            const color = document.getElementById('selectedColor').value;
+            const icon = document.getElementById('selectedIcon').value;
+            
+            document.getElementById('namePreview').textContent = name;
+            document.getElementById('iconPreview').style.backgroundColor = color;
+            document.getElementById('iconPreview').innerHTML = '<i class="' + icon + '"></i>';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus first input
+            document.querySelector('input[name="Name"]').focus();
+            
+            updatePreview();
+        });
+    </script>
+}

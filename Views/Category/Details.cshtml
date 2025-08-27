@@ -1,0 +1,325 @@
+@model Cüzdan_Uygulaması.BusinessLogic.DTOs.CategoryDto
+@{
+    ViewData["Title"] = $"{Model.Name} - Kategori Detayları";
+}
+
+<style>
+  :root{
+    --bg:#f5f5f7;
+    --card:#ffffff;
+    --text:#1d1d1f;
+    --muted:#6e6e73;
+    --blue:#007aff;
+    --green:#28a745;
+    --red:#dc3545;
+    --border:rgba(0,0,0,.08);
+    --shadow:0 10px 40px rgba(0,0,0,.08);
+    --radius-lg:18px;
+    --radius-md:14px;
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  }
+
+  .center-shell{
+    min-height: calc(100vh - 80px);  /* üstte navbar varsa yaklaşık pay bıraktık */
+    display: flex;
+    align-items: center;              /* dikey ortalama */
+    justify-content: center;          /* yatay ortalama */
+    padding: 24px;                    /* kenarlardan nefes */
+  }
+  .center-inner{
+    width: min(1200px, 100%);         /* max genişlik + mobil uyum */
+    margin-inline: auto;              /* yatay tam ortaya */
+  }
+
+  /* Header */
+  .category-header{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow); padding:22px 20px; margin-bottom:22px;
+  }
+
+  .btn-soft{
+    border:1px solid var(--border); background:transparent; color:var(--text);
+    border-radius:12px; padding:10px 14px; font-weight:600;
+    transition:background .2s ease, transform .04s ease;
+  }
+  .btn-soft:hover{ background:color-mix(in srgb, var(--text) 6%, transparent); }
+  .btn-soft:active{ transform:translateY(1px); }
+
+  /* Info panel */
+  .category-info{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow); padding:20px; margin-bottom:18px;
+  }
+  .category-icon-large{
+    width:88px; height:88px; border-radius:24px; display:flex; align-items:center; justify-content:center;
+    font-size:2.2rem; color:#fff; margin:0 auto 14px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+  }
+
+  .detail-row{
+    display:flex; justify-content:space-between; align-items:center; gap:18px;
+    padding:14px 0; border-bottom:1px solid var(--border);
+  }
+  .detail-row:last-child{ border-bottom:none; }
+  .detail-label{ font-weight:600; color:var(--muted); display:flex; align-items:center; gap:8px; }
+  .detail-value{ color:var(--text); font-weight:600; }
+
+  /* Stats */
+  .stats-grid{
+    display:grid; grid-template-columns:repeat(12,1fr); gap:14px; margin-bottom:20px;
+  }
+  .stat-card{
+    grid-column:span 6; background:var(--card); border:1px solid var(--border);
+    border-radius:14px; padding:18px; text-align:center; box-shadow:var(--shadow);
+  }
+  .stat-title{ font-size:.9rem; color:var(--muted); margin-bottom:6px; }
+  .stat-value{ font-size:1.2rem; font-weight:800; letter-spacing:-.01em; }
+
+  /* Transactions */
+  .section-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;
+  }
+  .txn-list{ display:grid; gap:10px; }
+  .transaction-card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    box-shadow:var(--shadow); transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .transaction-card:hover{
+    transform:translateY(-1px); box-shadow:0 16px 50px rgba(0,0,0,.12);
+    border-color:color-mix(in srgb, var(--blue) 20%, var(--border));
+  }
+  .txn-inner{
+    display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center; padding:12px 14px;
+  }
+  .txn-avatar{
+    width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:1rem;
+  }
+  .income{ background:linear-gradient(135deg,#22c55e,#16a34a); }
+  .expense{ background:linear-gradient(135deg,#ef4444,#dc2626); }
+
+  .txn-title{ margin:0 0 2px; font-weight:700; letter-spacing:-.01em; }
+  .txn-meta{ margin:0; color:var(--muted); font-size:.9rem; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .chip{
+    display:inline-flex; align-items:center; gap:6px; padding:3px 8px; border-radius:999px;
+    background:#eef0f3; color:#111; border:1px solid var(--border); font-size:.75rem; font-weight:600;
+  }
+
+  .txn-amount{ text-align:right; min-width:140px; }
+  .txn-amount .num{ margin:0; font-weight:800; letter-spacing:-.02em; }
+  .pos{ color:var(--green); } .neg{ color:var(--red); }
+
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--muted); }
+
+  a:focus, button:focus{
+    outline:none; box-shadow:0 0 0 4px color-mix(in srgb, var(--blue) 22%, transparent); border-radius:12px;
+  }
+</style>
+
+<main class="center-shell">
+  <div class="center-inner">
+    <!-- Header -->
+    <div class="category-header">
+      <div class="row align-items-center g-2">
+        <div class="col">
+          <h2 class="mb-1">🏷️ @Model.Name</h2>
+          <p class="text-muted mb-0">@(!string.IsNullOrEmpty(Model.Description) ? Model.Description : "Kategori detayları ve işlemleri")</p>
+        </div>
+        <div class="col-auto">
+          <div class="btn-group">
+            <a asp-controller="Transaction" asp-action="Create" asp-route-categoryId="@Model.Id" class="btn btn-apple">
+              <i class="fas fa-plus me-2"></i>Yeni İşlem
+            </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-soft">
+              <i class="fas fa-edit me-2"></i>Düzenle
+            </a>
+            <a asp-action="Index" class="btn btn-soft">
+              <i class="fas fa-arrow-left me-2"></i>Geri Dön
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- İçerik -->
+    <div class="row g-4">
+      <!-- Sol sütun -->
+      <div class="col-md-4">
+        <div class="category-info">
+          <div class="text-center">
+            @{
+                var backgroundColor = !string.IsNullOrEmpty(Model.Color) ? Model.Color : "#007aff";
+                var iconClass = Model.Type == Cüzdan_Uygulaması.Models.CategoryType.Income ? "fas fa-plus" : "fas fa-minus";
+            }
+            <div class="category-icon-large" style="background: @backgroundColor;">
+                <i class="@iconClass"></i>
+            </div>
+            <h4 class="mb-3">@Model.Name</h4>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label"><i class="fas fa-tag"></i> Kategori Adı</div>
+            <div class="detail-value">@Model.Name</div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label"><i class="fas fa-align-left"></i> Açıklama</div>
+            <div class="detail-value">@(string.IsNullOrEmpty(Model.Description) ? "Belirtilmemiş" : Model.Description)</div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label"><i class="fas fa-palette"></i> Renk</div>
+            <div class="detail-value">
+              <span class="d-inline-flex align-items-center">
+                <span style="width:20px;height:20px;border-radius:50%;background:@backgroundColor;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.1);margin-right:8px;"></span>
+                @backgroundColor
+              </span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label"><i class="fas fa-icons"></i> İkon</div>
+            <div class="detail-value"><i class="@iconClass me-2"></i>@iconClass</div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-label"><i class="fas fa-clock"></i> Oluşturma Tarihi</div>
+            <div class="detail-value">@Model.CreatedDate.ToString("dd MMMM yyyy")</div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-title">Toplam İşlem</div>
+            <div class="stat-value">@Model.Transactions.Count()</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Toplam Gelir</div>
+            <div class="stat-value pos">₺@Model.Transactions.Where(t => t.Type == Cüzdan_Uygulaması.Models.TransactionType.Income).Sum(t => t.Amount).ToString("N2")</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Toplam Gider</div>
+            <div class="stat-value neg">₺@Model.Transactions.Where(t => t.Type == Cüzdan_Uygulaması.Models.TransactionType.Expense).Sum(t => t.Amount).ToString("N2")</div>
+          </div>
+          @{
+            var netAmount = Model.Transactions.Where(t => t.Type == Cüzdan_Uygulaması.Models.TransactionType.Income).Sum(t => t.Amount)
+                          - Model.Transactions.Where(t => t.Type == Cüzdan_Uygulaması.Models.TransactionType.Expense).Sum(t => t.Amount);
+          }
+          <div class="stat-card">
+            <div class="stat-title">Net Tutar</div>
+            <div class="stat-value @(netAmount >= 0 ? "pos" : "neg")">₺@netAmount.ToString("N2")</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sağ sütun -->
+      <div class="col-md-8">
+        <div class="section-head">
+          <h5 class="mb-0">Bu Kategorideki İşlemler</h5>
+          <a asp-controller="Transaction" asp-action="Index" asp-route-categoryId="@Model.Id" class="btn btn-soft btn-sm">
+            Tümünü Gör
+          </a>
+        </div>
+
+        @if (Model.Transactions.Any())
+        {
+          <div class="txn-list">
+            @foreach (var transaction in Model.Transactions.OrderByDescending(t => t.TransactionDate).Take(10))
+            {
+              var isIncome = transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income;
+              <div class="transaction-card">
+                <div class="txn-inner">
+                  <div class="txn-avatar @(isIncome ? "income" : "expense")" aria-hidden="true">
+                    <i class="fas @(isIncome ? "fa-arrow-up" : "fa-arrow-down")"></i>
+                  </div>
+                  <div>
+                    <p class="txn-title">@transaction.Description</p>
+                    <p class="txn-meta">
+                      @transaction.Account?.Name • @transaction.TransactionDate.ToString("dd MMM yyyy, HH:mm")
+                      @if (transaction.IsRecurring)
+                      {
+                        <span class="chip">
+                          <i class="fas fa-sync-alt"></i> Otomatik
+                        </span>
+                      }
+                    </p>
+                  </div>
+                  <div class="txn-amount">
+                    <p class="num @(isIncome ? "pos" : "neg")">
+                      @(isIncome ? "+" : "-")₺@transaction.Amount.ToString("N2")
+                    </p>
+                    <div class="btn-group mt-1">
+                      <a asp-controller="Transaction" asp-action="Details" asp-route-id="@transaction.Id" class="btn btn-sm btn-soft" title="Detay">
+                        <i class="fas fa-eye"></i>
+                      </a>
+                      <a asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id" class="btn btn-sm btn-soft" title="Düzenle">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          @if (Model.Transactions.Count() > 10)
+          {
+            <div class="text-center mt-3">
+              <p class="text-muted">@(Model.Transactions.Count() - 10) adet daha işlem var.</p>
+              <a asp-controller="Transaction" asp-action="Index" asp-route-categoryId="@Model.Id" class="btn btn-soft">
+                Tüm İşlemleri Görüntüle
+              </a>
+            </div>
+          }
+        }
+        else
+        {
+          <div class="transaction-card">
+            <div class="card-body empty-state">
+              <i class="fas fa-receipt fa-3x mb-3"></i>
+              <h5>Bu kategoride henüz işlem bulunmuyor</h5>
+              <p>Bu kategoriye ait işlem eklediğinizde burada görünecek.</p>
+              <a asp-controller="Transaction" asp-action="Create" asp-route-categoryId="@Model.Id" class="btn btn-apple">
+                <i class="fas fa-plus me-2"></i>İlk İşlemi Ekle
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</main>
+
+@section Scripts {
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    @if (TempData["Success"] != null)
+    {
+      <text>
+      Swal.fire({
+          icon: 'success',
+          title: 'Başarılı!',
+          text: '@Html.Raw(TempData["Success"])',
+          timer: 3000,
+          showConfirmButton: false
+      });
+      </text>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+      <text>
+      Swal.fire({
+          icon: 'error',
+          title: 'Hata!',
+          text: '@Html.Raw(TempData["Error"])'
+      });
+      </text>
+    }
+  </script>
+}

@@ -1,0 +1,234 @@
+@model Cüzdan_Uygulaması.BusinessLogic.DTOs.CreateAccountDto
+@{
+    ViewData["Title"] = "Yeni Hesap Oluştur";
+}
+
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --text: #1d1d1f;
+        --muted: #6e6e73;
+        --blue: #007aff;
+        --border: rgba(0, 0, 0, 0.08);
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --radius: 16px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .form-header {
+        padding: 2rem 2rem 1rem 2rem;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .form-body {
+        padding: 2rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+    }
+
+    .form-control {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        background: var(--card);
+        color: var(--text);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        background: var(--card);
+    }
+
+    .form-control::placeholder {
+        color: var(--muted);
+    }
+
+    .btn-apple {
+        background: #000;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        width: 100%;
+    }
+
+    .btn-apple:hover {
+        background: #333;
+        color: white;
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary-custom {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        text-decoration: none;
+    }
+
+    .btn-secondary-custom:hover {
+        background: var(--border);
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    .text-danger {
+        color: #ff3b30 !important;
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .form-help {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-top: 0.25rem;
+    }
+
+    .input-group {
+        position: relative;
+        display: flex;
+    }
+
+    .input-group-text {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-right: none;
+        border-radius: 12px 0 0 12px;
+        padding: 12px 16px;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    .input-group .form-control {
+        border-left: none;
+        border-radius: 0 12px 12px 0;
+    }
+
+    .form-icon {
+        color: var(--blue);
+        margin-right: 0.5rem;
+    }
+</style>
+
+<div class="container-fluid px-4">
+    <div class="form-container">
+        <div class="form-header">
+            <h2 class="mb-2">
+                <i class="fas fa-plus-circle form-icon"></i>
+                Yeni Hesap Oluştur
+            </h2>
+            <p class="text-muted mb-0">Banka hesabı, nakit veya diğer hesap türlerinizi ekleyin</p>
+        </div>
+
+        <div class="form-body">
+            <form asp-action="CreateAccount" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label">
+                        <i class="fas fa-tag form-icon"></i>Hesap Adı *
+                    </label>
+                    <input asp-for="Name" class="form-control" 
+                           placeholder="örn: Ziraat Bankası Vadesiz, Nakit, Kredi Kartı" 
+                           autocomplete="off" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <div class="form-help">Hesabınızı tanımlayacak açık bir isim verin</div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="InitialBalance" class="form-label">
+                        <i class="fas fa-money-bill-wave form-icon"></i>Başlangıç Bakiyesi *
+                    </label>
+                    <div class="input-group">
+                        <span class="input-group-text">₺</span>
+                        <input asp-for="InitialBalance" class="form-control" 
+                               placeholder="0,00" step="0.01" type="number" />
+                    </div>
+                    <span asp-validation-for="InitialBalance" class="text-danger"></span>
+                    <div class="form-help">Bu hesapta şu anda ne kadar para bulunuyor?</div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label">
+                        <i class="fas fa-align-left form-icon"></i>Açıklama
+                    </label>
+                    <textarea asp-for="Description" class="form-control" rows="3" 
+                              placeholder="Bu hesap hakkında ek bilgiler (isteğe bağlı)..."></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <div class="form-help">Hesap hakkında notlarınız, IBAN, şube bilgisi vb.</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <a asp-action="Index" class="btn btn-secondary-custom w-100">
+                            <i class="fas fa-arrow-left me-2"></i>İptal Et
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn-apple">
+                            <i class="fas fa-save me-2"></i>Hesabı Oluştur
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus first input
+            document.querySelector('input[name="Name"]').focus();
+
+            // Format currency input
+            const balanceInput = document.querySelector('input[name="InitialBalance"]');
+            balanceInput.addEventListener('input', function(e) {
+                let value = e.target.value;
+                if (value && !isNaN(value)) {
+                    // Limit to 2 decimal places
+                    if (value.includes('.')) {
+                        let parts = value.split('.');
+                        if (parts[1] && parts[1].length > 2) {
+                            e.target.value = parseFloat(value).toFixed(2);
+                        }
+                    }
+                }
+            });
+
+            // Auto-generate account name suggestions
+            const nameInput = document.querySelector('input[name="Name"]');
+            nameInput.addEventListener('focus', function() {
+                // You could add autocomplete suggestions here
+            });
+        });
+    </script>
+}

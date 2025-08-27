@@ -2,6 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Cüzdan_Uygulaması.Data;
 using Cüzdan_Uygulaması.Models;
+using Cüzdan_Uygulaması.DataAccess;
+using Cüzdan_Uygulaması.DataAccess.Interfaces;
+using Cüzdan_Uygulaması.DataAccess.Repositories;
+using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
+using Cüzdan_Uygulaması.BusinessLogic.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +26,31 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
+
+// Register Data Access Layer
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IInstallmentRepository, InstallmentRepository>();
+
+// Register Business Logic Layer
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IInstallmentService, InstallmentService>();
+builder.Services.AddScoped<ISimpleCategoryService, SimpleCategoryService>();
+
 builder.Services.AddControllersWithViews();
+
+// Register Background Services
+builder.Services.AddHostedService<Cüzdan_Uygulaması.Services.RecurringTransactionService>();
 
 var app = builder.Build();
 
