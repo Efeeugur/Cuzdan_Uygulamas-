@@ -11,6 +11,8 @@ using Cüzdan_Uygulaması.BusinessLogic.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 

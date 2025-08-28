@@ -61,6 +61,15 @@ public class TransactionController : Controller
     public async Task<IActionResult> Create()
     {
         var userId = GetUserId();
+
+        // Check if user has any accounts
+        var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+        if (!accounts.Any())
+        {
+            TempData["Warning"] = "İşlem oluşturmadan önce en az bir hesap oluşturmalısınız.";
+            return RedirectToAction("CreateAccount", "Wallet");
+        }
+
         await PopulateDropdownsAsync(userId);
         return View();
     }
@@ -80,12 +89,27 @@ public class TransactionController : Controller
         {
             var userId = GetUserId();
             await _transactionService.CreateTransactionAsync(model, userId);
-            TempData["Success"] = "Transaction created successfully.";
+            TempData["Success"] = "İşlem başarıyla kaydedildi.";
             return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Handle specific business logic errors
+            TempData["Error"] = ex.Message;
+            var userId = GetUserId();
+            await PopulateDropdownsAsync(userId);
+            return View(model);
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError(string.Empty, ex.Message);
+            // Handle unexpected errors with detailed logging
+            var innerException = ex.InnerException?.Message ?? "No inner exception";
+            var fullError = $"İşlem kaydedilirken bir hata oluştu: {ex.Message}. Inner Exception: {innerException}";
+            TempData["Error"] = fullError;
+            
+            // Log the full exception for debugging
+            Console.WriteLine($"Transaction Creation Error: {ex}");
+            
             var userId = GetUserId();
             await PopulateDropdownsAsync(userId);
             return View(model);

@@ -32,7 +32,6 @@ public class CreateInstallmentDto
     public int TotalInstallments { get; set; }
     public decimal InterestRate { get; set; } = 0;
     public DateTime FirstPaymentDate { get; set; } = DateTime.UtcNow;
-    public int AccountId { get; set; }
     public int? CategoryId { get; set; }
 }
 

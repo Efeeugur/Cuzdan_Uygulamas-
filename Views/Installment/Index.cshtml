@@ -18,6 +18,12 @@
         --radius: 16px;
     }
 
+    body {
+        background: var(--bg);
+        color: var(--text);
+    }
+
+    /* Header */
     .installment-header {
         background: var(--card);
         border: 1px solid var(--border);
@@ -27,12 +33,13 @@
         margin-bottom: 24px;
     }
 
+    /* Cards */
     .installment-card {
         background: var(--card);
         border: 1px solid var(--border);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color .2s ease;
         margin-bottom: 16px;
         overflow: hidden;
     }
@@ -40,10 +47,11 @@
     .installment-card:hover {
         transform: translateY(-2px);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        border-color: color-mix(in srgb, var(--blue) 20%, var(--border));
     }
 
     .installment-card.completed {
-        opacity: 0.8;
+        opacity: .9;
         border-left: 4px solid var(--green);
     }
 
@@ -55,10 +63,11 @@
         border-left: 4px solid var(--red);
     }
 
+    /* Progress */
     .progress-bar-custom {
         height: 8px;
         background-color: #e9ecef;
-        border-radius: 4px;
+        border-radius: 6px;
         overflow: hidden;
     }
 
@@ -68,32 +77,123 @@
         transition: width 0.3s ease;
     }
 
+    /* Buttons */
     .btn-apple {
         background: #000;
-        color: white;
+        color: #fff;
         border: none;
         border-radius: 12px;
         padding: 10px 20px;
-        font-weight: 600;
-        transition: all 0.2s ease;
+        font-weight: 700;
+        transition: filter .2s ease, transform .04s ease;
     }
 
     .btn-apple:hover {
-        background: #333;
-        color: white;
-        transform: translateY(-1px);
+        filter: brightness(1.05);
     }
 
+    .btn-apple:active {
+        transform: translateY(1px);
+    }
+
+    /* Apple-esque action buttons (satır içi) */
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 36px;
+        padding: 0 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #f6f7fa;
+        color: var(--text);
+        font-weight: 600;
+        line-height: 1;
+        transition: background .2s ease, transform .04s ease, border-color .2s ease;
+    }
+
+    .btn-action i {
+        font-size: 14px;
+    }
+
+    .btn-action:hover {
+        background: color-mix(in srgb, var(--text) 7%, #f6f7fa);
+    }
+
+    .btn-action:active {
+        transform: translateY(1px);
+    }
+
+    .btn-action--primary {
+        border-color: color-mix(in srgb, var(--blue) 40%, var(--border));
+        background: #eef6ff;
+        color: #0b60d1;
+    }
+
+    .btn-action--primary:hover {
+        background: #e3f0ff;
+    }
+
+    .btn-action--success {
+        border-color: color-mix(in srgb, var(--green) 40%, var(--border));
+        background: #edf9f1;
+        color: #197a3a;
+    }
+
+    .btn-action--success:hover {
+        background: #e3f6eb;
+    }
+
+    .btn-action--warn {
+        border-color: color-mix(in srgb, #f59e0b 40%, var(--border));
+        background: #fff8ee;
+        color: #a16207;
+    }
+
+    .btn-action--warn:hover {
+        background: #fff3e1;
+    }
+
+    .btn-action--danger {
+        border-color: color-mix(in srgb, var(--red) 40%, var(--border));
+        background: #fff6f6;
+        color: #b91c1c;
+    }
+
+    .btn-action--danger:hover {
+        background: #ffecec;
+    }
+
+    .actions-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-end;
+    }
+
+    /* Badges */
     .status-badge {
         padding: 4px 12px;
-        border-radius: 20px;
+        border-radius: 999px;
         font-size: 0.85rem;
-        font-weight: 600;
+        font-weight: 700;
+        border: 1px solid var(--border);
     }
 
-    .status-active { background: #e3f2fd; color: #1976d2; }
-    .status-completed { background: #e8f5e8; color: #388e3c; }
-    .status-overdue { background: #ffebee; color: #d32f2f; }
+    .status-active {
+        background: #eaf3ff;
+        color: #0b60d1;
+    }
+
+    .status-completed {
+        background: #e8f5e8;
+        color: #388e3c;
+    }
+
+    .status-overdue {
+        background: #ffefef;
+        color: #c62828;
+    }
 
     .empty-state {
         text-align: center;
@@ -115,8 +215,8 @@
                     <a asp-action="Create" class="btn btn-apple">
                         <i class="fas fa-plus me-2"></i>Yeni Taksit
                     </a>
-                    <a asp-action="Active" class="btn btn-outline-primary">
-                        <i class="fas fa-list me-2"></i>Aktif Taksitler
+                    <a asp-action="Active" class="btn btn-action btn-action--primary">
+                        <i class="fas fa-list"></i><span>Aktif Taksitler</span>
                     </a>
                 </div>
             </div>
@@ -128,9 +228,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-primary">
-                        <i class="fas fa-list fa-2x mb-2"></i>
-                    </div>
+                    <div class="text-primary"><i class="fas fa-list fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Toplam Taksit</h6>
                     <h4 class="text-primary">@Model.Count()</h4>
                 </div>
@@ -139,9 +237,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-warning">
-                        <i class="fas fa-clock fa-2x mb-2"></i>
-                    </div>
+                    <div class="text-warning"><i class="fas fa-clock fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Aktif Taksit</h6>
                     <h4 class="text-warning">@Model.Count(i => !i.IsCompleted)</h4>
                 </div>
@@ -150,9 +246,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-success">
-                        <i class="fas fa-check-circle fa-2x mb-2"></i>
-                    </div>
+                    <div class="text-success"><i class="fas fa-check-circle fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Tamamlanan</h6>
                     <h4 class="text-success">@Model.Count(i => i.IsCompleted)</h4>
                 </div>
@@ -161,9 +255,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-info">
-                        <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
-                    </div>
+                    <div class="text-info"><i class="fas fa-money-bill-wave fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Toplam Tutar</h6>
                     <h4 class="text-info">₺@Model.Sum(i => i.TotalAmount).ToString("N2")</h4>
                 </div>
@@ -178,16 +270,17 @@
             {
                 @foreach (var installment in Model.OrderBy(i => i.NextPaymentDate))
                 {
-                    var progressPercentage = installment.TotalInstallments > 0 
-                        ? ((double)(installment.TotalInstallments - installment.RemainingInstallments) / installment.TotalInstallments) * 100 
-                        : 0;
-                    
-                    var cardClass = installment.IsCompleted ? "completed" : 
-                                   (installment.NextPaymentDate < DateTime.Now ? "overdue" : "active");
+                    var progressPercentage = installment.TotalInstallments > 0
+                    ? ((double)(installment.TotalInstallments - installment.RemainingInstallments) /
+                    installment.TotalInstallments) * 100
+                    : 0;
+
+                    var cardClass = installment.IsCompleted ? "completed" :
+                    (installment.NextPaymentDate < DateTime.Now ? "overdue" : "active");
 
                     <div class="installment-card @cardClass">
                         <div class="card-body">
-                            <div class="row align-items-center">
+                            <div class="row align-items-center g-3">
                                 <div class="col">
                                     <div class="d-flex align-items-center mb-2">
                                         <h5 class="mb-0 me-3">@installment.Description</h5>
@@ -212,30 +305,30 @@
                                     </div>
 
                                     <div class="row mb-2">
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-6">
                                             <small class="text-muted d-block">Toplam Tutar</small>
                                             <strong>₺@installment.TotalAmount.ToString("N2")</strong>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-6">
                                             <small class="text-muted d-block">Aylık Ödeme</small>
                                             <strong>₺@installment.MonthlyPayment.ToString("N2")</strong>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-6">
                                             <small class="text-muted d-block">Kalan Taksit</small>
                                             <strong>@installment.RemainingInstallments / @installment.TotalInstallments</strong>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 col-6">
                                             <small class="text-muted d-block">Sonraki Ödeme</small>
                                             <strong>@installment.NextPaymentDate.ToString("dd MMM yyyy")</strong>
                                         </div>
                                     </div>
 
-                                    <!-- Progress Bar -->
+                                    <!-- Progress -->
                                     <div class="progress-bar-custom mb-2">
-                                        <div class="progress-fill" style="width: @(progressPercentage.ToString("F1"))%"></div>
+                                        <div class="progress-fill" style="width:@(progressPercentage.ToString("F1"))%"></div>
                                     </div>
                                     <small class="text-muted">
-                                        %@(progressPercentage.ToString("F1")) tamamlandı 
+                                        %@(progressPercentage.ToString("F1")) tamamlandı
                                         • Ödenen: ₺@installment.TotalPaid.ToString("N2")
                                         • Kalan: ₺@installment.RemainingAmount.ToString("N2")
                                     </small>
@@ -249,34 +342,47 @@
                                         </div>
                                     }
                                 </div>
+
+                                <!-- Actions -->
                                 <div class="col-auto">
-                                    <div class="btn-group-vertical">
+                                    <div class="actions-stack">
                                         @if (!installment.IsCompleted)
                                         {
-                                            <a asp-action="Pay" asp-route-id="@installment.Id" 
-                                               class="btn btn-sm btn-success mb-1">
-                                                <i class="fas fa-credit-card me-1"></i>Ödeme Yap
+                                            <a asp-action="Pay" asp-route-id="@installment.Id"
+                                                class="btn-action btn-action--success" title="Ödeme Yap">
+                                                <i class="fas fa-credit-card"></i><span>Ödeme Yap</span>
                                             </a>
                                         }
-                                        <a asp-action="Details" asp-route-id="@installment.Id" 
-                                           class="btn btn-sm btn-outline-primary mb-1">
-                                            <i class="fas fa-eye me-1"></i>Detay
+                                        <a asp-action="Details" asp-route-id="@installment.Id"
+                                            class="btn-action btn-action--primary" title="Detay">
+                                            <i class="fas fa-eye"></i><span>Detay</span>
                                         </a>
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" 
-                                                    data-bs-toggle="dropdown">
-                                                <i class="fas fa-cog"></i>
+
+                                        <div class="dropdown">
+                                            <button class="btn-action" data-bs-toggle="dropdown" aria-expanded="false"
+                                                title="Diğer">
+                                                <i class="fas fa-cog"></i><span>Diğer</span>
                                             </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@installment.Id">
-                                                    <i class="fas fa-edit me-2"></i>Düzenle</a></li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item text-danger" href="#" onclick="deleteInstallment(@installment.Id)">
-                                                    <i class="fas fa-trash me-2"></i>Sil</a></li>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@installment.Id">
+                                                        <i class="fas fa-edit me-2"></i>Düzenle
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider" />
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger" href="#"
+                                                        onclick="deleteInstallment(@installment.Id)">
+                                                        <i class="fas fa-trash me-2"></i>Sil
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- /Actions -->
                             </div>
                         </div>
                     </div>
@@ -314,47 +420,46 @@
                 cancelButtonText: 'İptal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Create form and submit
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = '/Installment/Delete/' + id;
-                    
-                    // Add anti-forgery token
-                    const token = document.createElement('input');
-                    token.type = 'hidden';
-                    token.name = '__RequestVerificationToken';
-                    token.value = $('input[name="__RequestVerificationToken"]').val();
-                    form.appendChild(token);
-                    
+
+                    const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+                    if (tokenInput) {
+                        const token = document.createElement('input');
+                        token.type = 'hidden';
+                        token.name = '__RequestVerificationToken';
+                        token.value = tokenInput.value;
+                        form.appendChild(token);
+                    }
+
                     document.body.appendChild(form);
                     form.submit();
                 }
             });
         }
 
-        // Success/Error messages
         @if (TempData["Success"] != null)
-        {
-            <text>
-            Swal.fire({
-                icon: 'success',
-                title: 'Başarılı!',
-                text: '@Html.Raw(TempData["Success"])',
-                timer: 3000,
-                showConfirmButton: false
-            });
-            </text>
+            {
+                <text>
+                    Swal.fire({
+                        icon: 'success',
+                    title: 'Başarılı!',
+                    text: '@Html.Raw(TempData["Success"])',
+                    timer: 3000,
+                    showConfirmButton: false
+                                    });
+                </text>
         }
-
-        @if (TempData["Error"] != null)
-        {
-            <text>
-            Swal.fire({
-                icon: 'error',
-                title: 'Hata!',
-                text: '@Html.Raw(TempData["Error"])'
-            });
-            </text>
+            @if (TempData["Error"] != null)
+            {
+                <text>
+                    Swal.fire({
+                        icon: 'error',
+                    title: 'Hata!',
+                    text: '@Html.Raw(TempData["Error"])'
+                                    });
+                </text>
         }
     </script>
 }

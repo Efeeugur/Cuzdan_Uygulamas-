@@ -1,5 +1,6 @@
 using Cüzdan_Uygulaması.Models;
 using Cüzdan_Uygulaması.BusinessLogic.DTOs;
+using Cüzdan_Uygulaması.BusinessLogic.Services;
 
 namespace Cüzdan_Uygulaması.BusinessLogic.Mappers;
 
@@ -27,8 +28,8 @@ public static class DtoMapper
             Description = account.Description,
             CreatedDate = account.CreatedDate,
             UserId = account.UserId,
-            User = account.User?.ToDto(),
-            Transactions = account.Transactions?.Select(t => t.ToDto()).ToList() ?? new List<TransactionDto>()
+            //User = account.User?.ToDto(),
+            Transactions = new List<TransactionDto>() // Avoid circular reference
         };
     }
 
@@ -50,9 +51,9 @@ public static class DtoMapper
             CategoryId = transaction.CategoryId,
             InstallmentId = transaction.InstallmentId,
             User = transaction.User?.ToDto(),
-            Account = transaction.Account?.ToDto(),
-            Category = transaction.Category?.ToDto(),
-            Installment = transaction.Installment?.ToDto()
+            Account = transaction.Account?.ToBasicDto(), // Use basic DTO to avoid circular reference
+            Category = transaction.Category?.ToBasicDto(), // Use basic DTO to avoid circular reference
+            Installment = transaction.Installment?.ToBasicDto() // Use basic DTO to avoid circular reference
         };
     }
 
@@ -68,13 +69,43 @@ public static class DtoMapper
             CreatedDate = category.CreatedDate,
             UserId = category.UserId,
             User = category.User?.ToDto(),
-            Transactions = category.Transactions?.Select(t => t.ToDto()).ToList() ?? new List<TransactionDto>()
+            Transactions = new List<TransactionDto>() // Avoid circular reference
+        };
+    }
+
+    // Basic DTO methods to avoid circular references
+    public static AccountDto ToBasicDto(this Account account)
+    {
+        return new AccountDto
+        {
+            Id = account.Id,
+            Name = account.Name,
+            Balance = account.Balance,
+            Description = account.Description,
+            CreatedDate = account.CreatedDate,
+            UserId = account.UserId,
+            Transactions = new List<TransactionDto>()
+        };
+    }
+
+    public static CategoryDto ToBasicDto(this Category category)
+    {
+        return new CategoryDto
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description,
+            Color = category.Color,
+            Type = category.Type,
+            CreatedDate = category.CreatedDate,
+            UserId = category.UserId,
+            Transactions = new List<TransactionDto>()
         };
     }
 
     public static InstallmentDto ToDto(this Installment installment)
     {
-        return new InstallmentDto
+        var dto = new InstallmentDto
         {
             Id = installment.Id,
             Description = installment.Description,
@@ -90,9 +121,64 @@ public static class DtoMapper
             UserId = installment.UserId,
             CategoryId = installment.CategoryId,
             User = installment.User?.ToDto(),
-            Category = installment.Category?.ToDto(),
-            Transactions = installment.Transactions?.Select(t => t.ToDto()).ToList() ?? new List<TransactionDto>()
+            Transactions = new List<TransactionDto>() // Avoid circular reference
         };
+
+        // Handle Category mapping
+        if (installment.Category != null)
+        {
+            dto.Category = installment.Category.ToBasicDto();
+        }
+        else if (dto.CategoryId.HasValue && dto.CategoryId.Value <= 35)
+        {
+            // Handle SimpleCategoryService categories (hardcoded categories 1-35)
+            var simpleCategoryService = new SimpleCategoryService();
+            dto.Category = new CategoryDto
+            {
+                Id = dto.CategoryId.Value,
+                Name = simpleCategoryService.GetCategoryName(dto.CategoryId.Value),
+                Type = dto.CategoryId.Value <= 5 ? Models.CategoryType.Income : Models.CategoryType.Expense,
+                Transactions = new List<TransactionDto>()
+            };
+        }
+
+        return dto;
+    }
+
+    public static InstallmentDto ToBasicDto(this Installment installment)
+    {
+        var dto = new InstallmentDto
+        {
+            Id = installment.Id,
+            Description = installment.Description,
+            TotalAmount = installment.TotalAmount,
+            TotalInstallments = installment.TotalInstallments,
+            MonthlyPayment = installment.MonthlyPayment,
+            InterestRate = installment.InterestRate,
+            StartDate = installment.StartDate,
+            NextPaymentDate = installment.NextPaymentDate,
+            RemainingInstallments = installment.RemainingInstallments,
+            IsCompleted = installment.Status == InstallmentStatus.Completed,
+            CreatedDate = installment.CreatedDate,
+            UserId = installment.UserId,
+            CategoryId = installment.CategoryId,
+            Transactions = new List<TransactionDto>()
+        };
+
+        // Handle SimpleCategoryService categories for basic DTO as well
+        if (dto.CategoryId.HasValue && dto.CategoryId.Value <= 35)
+        {
+            var simpleCategoryService = new SimpleCategoryService();
+            dto.Category = new CategoryDto
+            {
+                Id = dto.CategoryId.Value,
+                Name = simpleCategoryService.GetCategoryName(dto.CategoryId.Value),
+                Type = dto.CategoryId.Value <= 5 ? Models.CategoryType.Income : Models.CategoryType.Expense,
+                Transactions = new List<TransactionDto>()
+            };
+        }
+
+        return dto;
     }
 
     public static Account ToEntity(this CreateAccountDto dto, string userId)
@@ -113,7 +199,7 @@ public static class DtoMapper
         {
             Amount = dto.Amount,
             Description = dto.Description,
-            TransactionDate = dto.TransactionDate,
+            TransactionDate = dto.TransactionDate.ToUniversalTime(), // Ensure UTC
             Type = dto.Type,
             IsRecurring = dto.IsRecurring,
             RecurrenceType = dto.RecurrenceType,
@@ -142,6 +228,7 @@ public static class DtoMapper
     public static Installment ToEntity(this CreateInstallmentDto dto, string userId)
     {
         var monthlyPayment = CalculateMonthlyPayment(dto.TotalAmount, dto.TotalInstallments, dto.InterestRate);
+        var startDateUtc = dto.FirstPaymentDate.ToUniversalTime(); // Ensure UTC
         
         return new Installment
         {
@@ -150,8 +237,8 @@ public static class DtoMapper
             TotalInstallments = dto.TotalInstallments,
             MonthlyPayment = monthlyPayment,
             InterestRate = dto.InterestRate,
-            StartDate = dto.FirstPaymentDate,
-            NextPaymentDate = dto.FirstPaymentDate.AddMonths(1),
+            StartDate = startDateUtc,
+            NextPaymentDate = startDateUtc.AddMonths(1),
             RemainingInstallments = dto.TotalInstallments,
             Status = InstallmentStatus.Active,
             UserId = userId,

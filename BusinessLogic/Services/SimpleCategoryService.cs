@@ -32,7 +32,19 @@ public class SimpleCategoryService : ISimpleCategoryService
         { 17, ("Giyim", CategoryType.Expense) },
         { 18, ("Eğitim", CategoryType.Expense) },
         { 19, ("Restoran", CategoryType.Expense) },
-        { 20, ("Diğer", CategoryType.Expense) }
+        { 20, ("Diğer", CategoryType.Expense) },
+
+        // Installment Categories (26-35)
+        { 26, ("Elektronik Taksiti", CategoryType.Expense) },
+        { 27, ("Mobilya Taksiti", CategoryType.Expense) },
+        { 28, ("Beyaz Eşya Taksiti", CategoryType.Expense) },
+        { 29, ("Otomobil Taksiti", CategoryType.Expense) },
+        { 30, ("Kredi Kartı Taksiti", CategoryType.Expense) },
+        { 31, ("Ev Eşyası Taksiti", CategoryType.Expense) },
+        { 32, ("Teknoloji Taksiti", CategoryType.Expense) },
+        { 33, ("Giyim Taksiti", CategoryType.Expense) },
+        { 34, ("Eğitim Taksiti", CategoryType.Expense) },
+        { 35, ("Diğer Taksitler", CategoryType.Expense) }
     };
 
     public IEnumerable<SelectListItem> GetIncomeCategories()

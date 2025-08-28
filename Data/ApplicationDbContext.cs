@@ -76,7 +76,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
             entity.HasOne(e => e.Category)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(e => e.CategoryId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.SetNull)
+                .IsRequired(false);
 
             entity.HasOne(e => e.Installment)
                 .WithMany(i => i.Transactions)
@@ -100,10 +101,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasOne(e => e.Category)
-                .WithMany()
-                .HasForeignKey(e => e.CategoryId)
-                .OnDelete(DeleteBehavior.SetNull);
+            // Note: CategoryId foreign key is not configured to allow SimpleCategoryService categories (1-35)
+            // that don't exist in the database. Navigation property Category will be null for these.
+            entity.Property(e => e.CategoryId).IsRequired(false);
 
             entity.HasIndex(e => e.UserId);
             entity.HasIndex(e => e.NextPaymentDate);

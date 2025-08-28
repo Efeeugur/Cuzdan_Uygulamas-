@@ -44,7 +44,7 @@ public class InstallmentController : Controller
     public async Task<IActionResult> Create()
     {
         var userId = GetUserId();
-        await PopulateCategoriesAsync(userId);
+        await PopulateDropdownsAsync(userId);
         return View();
     }
 
@@ -55,7 +55,7 @@ public class InstallmentController : Controller
         if (!ModelState.IsValid)
         {
             var userId = GetUserId();
-            await PopulateCategoriesAsync(userId);
+            await PopulateDropdownsAsync(userId);
             return View(model);
         }
 
@@ -68,9 +68,16 @@ public class InstallmentController : Controller
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError(string.Empty, ex.Message);
+            // Add detailed error logging for debugging
+            var innerException = ex.InnerException?.Message ?? "No inner exception";
+            var fullError = $"Taksit kaydedilirken bir hata oluştu: {ex.Message}. Inner Exception: {innerException}";
+            
+            // Log the full exception for debugging
+            Console.WriteLine($"Installment Creation Error: {ex}");
+            
+            ModelState.AddModelError(string.Empty, fullError);
             var userId = GetUserId();
-            await PopulateCategoriesAsync(userId);
+            await PopulateDropdownsAsync(userId);
             return View(model);
         }
     }
@@ -93,7 +100,7 @@ public class InstallmentController : Controller
             CategoryId = installment.CategoryId
         };
 
-        await PopulateCategoriesAsync(userId);
+        await PopulateDropdownsAsync(userId);
         return View(model);
     }
 
@@ -104,7 +111,7 @@ public class InstallmentController : Controller
         if (!ModelState.IsValid)
         {
             var userId = GetUserId();
-            await PopulateCategoriesAsync(userId);
+            await PopulateDropdownsAsync(userId);
             return View(model);
         }
 
@@ -123,7 +130,7 @@ public class InstallmentController : Controller
         {
             ModelState.AddModelError(string.Empty, ex.Message);
             var userId = GetUserId();
-            await PopulateCategoriesAsync(userId);
+            await PopulateDropdownsAsync(userId);
             return View(model);
         }
     }
@@ -200,9 +207,46 @@ public class InstallmentController : Controller
         }
     }
 
-    private async Task PopulateCategoriesAsync(string userId)
+    private async Task PopulateDropdownsAsync(string userId)
     {
-        var categories = await _categoryService.GetCategoriesByUserIdAsync(userId);
-        ViewBag.Categories = new SelectList(categories, "Id", "Name");
+        // Populate categories (both database and SimpleCategoryService categories)
+        var dbCategories = await _categoryService.GetCategoriesByUserIdAsync(userId);
+        var categoryList = new List<SelectListItem>();
+        
+        // Add database categories
+        foreach (var category in dbCategories)
+        {
+            categoryList.Add(new SelectListItem 
+            { 
+                Value = category.Id.ToString(), 
+                Text = category.Name 
+            });
+        }
+        
+        // Add SimpleCategoryService installment categories (26-35)
+        var installmentCategoryNames = new Dictionary<int, string>
+        {
+            { 26, "Elektronik Taksiti" },
+            { 27, "Mobilya Taksiti" },
+            { 28, "Beyaz Eşya Taksiti" },
+            { 29, "Otomobil Taksiti" },
+            { 30, "Kredi Kartı Taksiti" },
+            { 31, "Ev Eşyası Taksiti" },
+            { 32, "Teknoloji Taksiti" },
+            { 33, "Giyim Taksiti" },
+            { 34, "Eğitim Taksiti" },
+            { 35, "Diğer Taksitler" }
+        };
+        
+        foreach (var installmentCategory in installmentCategoryNames)
+        {
+            categoryList.Add(new SelectListItem 
+            { 
+                Value = installmentCategory.Key.ToString(), 
+                Text = installmentCategory.Value
+            });
+        }
+        
+        ViewBag.Categories = new SelectList(categoryList, "Value", "Text");
     }
 }

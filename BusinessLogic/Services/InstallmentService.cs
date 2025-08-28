@@ -3,6 +3,7 @@ using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.Mappers;
 using Cüzdan_Uygulaması.DataAccess.Interfaces;
 using Cüzdan_Uygulaması.Models;
+using Cüzdan_Uygulaması.BusinessLogic.Services;
 
 namespace Cüzdan_Uygulaması.BusinessLogic.Services;
 
@@ -56,11 +57,16 @@ public class InstallmentService : IInstallmentService
 
         if (createInstallmentDto.CategoryId.HasValue)
         {
-            var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
-                c => c.Id == createInstallmentDto.CategoryId && c.UserId == userId);
+            // Check if it's a SimpleCategoryService category (IDs 1-35) or database category
+            if (createInstallmentDto.CategoryId.Value > 35)
+            {
+                var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
+                    c => c.Id == createInstallmentDto.CategoryId && c.UserId == userId);
 
-            if (category == null)
-                throw new InvalidOperationException("Category not found or access denied.");
+                if (category == null)
+                    throw new InvalidOperationException("Category not found or access denied.");
+            }
+            // SimpleCategoryService categories (1-35) are allowed without database validation
         }
 
         var installment = createInstallmentDto.ToEntity(userId);
@@ -86,11 +92,16 @@ public class InstallmentService : IInstallmentService
 
         if (updateInstallmentDto.CategoryId.HasValue)
         {
-            var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
-                c => c.Id == updateInstallmentDto.CategoryId && c.UserId == userId);
+            // Check if it's a SimpleCategoryService category (IDs 1-35) or database category
+            if (updateInstallmentDto.CategoryId.Value > 35)
+            {
+                var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
+                    c => c.Id == updateInstallmentDto.CategoryId && c.UserId == userId);
 
-            if (category == null)
-                throw new InvalidOperationException("Category not found or access denied.");
+                if (category == null)
+                    throw new InvalidOperationException("Category not found or access denied.");
+            }
+            // SimpleCategoryService categories (1-35) are allowed without database validation
         }
 
         installment.Description = updateInstallmentDto.Description;

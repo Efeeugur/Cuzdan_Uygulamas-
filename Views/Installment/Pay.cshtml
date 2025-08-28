@@ -218,19 +218,19 @@
                 <i class="fas fa-credit-card me-2"></i>
                 Taksit Ödemesi
             </h2>
-            <p class="mb-0 opacity-75">@installment.Description</p>
+            <p class="mb-0 opacity-75">@(installment?.Description ?? "")</p>
         </div>
 
         <div class="payment-body">
             <!-- Overdue Warning -->
-            @if (installment.NextPaymentDate < DateTime.Now)
+            @if (installment?.NextPaymentDate < DateTime.Now)
             {
                 <div class="overdue-warning">
                     <div class="d-flex align-items-center">
                         <i class="fas fa-exclamation-triangle me-2"></i>
                         <div>
                             <strong>Gecikmiş Ödeme!</strong>
-                            <div class="small">Bu taksit @installment.NextPaymentDate.ToString("dd MMMM yyyy") tarihinde ödenmeliydi.</div>
+                            <div class="small">Bu taksit @(installment?.NextPaymentDate.ToString("dd MMMM yyyy")) tarihinde ödenmeliydi.</div>
                         </div>
                     </div>
                 </div>
@@ -240,8 +240,8 @@
             <div class="progress-section">
                 <h6 class="mb-3">📊 Ödeme Durumu</h6>
                 @{
-                    var progressPercentage = installment.TotalInstallments > 0 
-                        ? ((double)(installment.TotalInstallments - installment.RemainingInstallments) / installment.TotalInstallments) * 100 
+                    var progressPercentage = (installment?.TotalInstallments ?? 0) > 0 
+                        ? ((double)((installment?.TotalInstallments ?? 0) - (installment?.RemainingInstallments ?? 0)) / (installment?.TotalInstallments ?? 1)) * 100 
                         : 0;
                 }
                 <div class="progress-bar-custom">
@@ -249,13 +249,13 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <small>%@(progressPercentage.ToString("F1")) tamamlandı</small>
-                    <small>@installment.RemainingInstallments / @installment.TotalInstallments taksit kaldı</small>
+                    <small>@(installment?.RemainingInstallments ?? 0) / @(installment?.TotalInstallments ?? 0) taksit kaldı</small>
                 </div>
             </div>
 
             <!-- Payment Amount -->
             <div class="payment-amount">
-                <div class="amount-display">₺@installment.MonthlyPayment.ToString("N2")</div>
+                <div class="amount-display">₺@(installment?.MonthlyPayment.ToString("N2") ?? "0.00")</div>
                 <p class="mb-0 text-muted">Ödenecek Tutar</p>
             </div>
 
@@ -265,40 +265,40 @@
                 
                 <div class="info-row">
                     <span class="info-label">Alışveriş:</span>
-                    <span class="info-value">@installment.Description</span>
+                    <span class="info-value">@(installment?.Description ?? "")</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Toplam Tutar:</span>
-                    <span class="info-value">₺@installment.TotalAmount.ToString("N2")</span>
+                    <span class="info-value">₺@(installment?.TotalAmount.ToString("N2") ?? "0.00")</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Aylık Ödeme:</span>
-                    <span class="info-value">₺@installment.MonthlyPayment.ToString("N2")</span>
+                    <span class="info-value">₺@(installment?.MonthlyPayment.ToString("N2") ?? "0.00")</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Ödenen Tutar:</span>
-                    <span class="info-value text-success">₺@installment.TotalPaid.ToString("N2")</span>
+                    <span class="info-value text-success">₺@(installment?.TotalPaid.ToString("N2") ?? "0.00")</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Kalan Tutar:</span>
-                    <span class="info-value text-danger">₺@installment.RemainingAmount.ToString("N2")</span>
+                    <span class="info-value text-danger">₺@(installment?.RemainingAmount.ToString("N2") ?? "0.00")</span>
                 </div>
                 
                 <div class="info-row">
                     <span class="info-label">Sonraki Ödeme Tarihi:</span>
-                    <span class="info-value">@installment.NextPaymentDate.ToString("dd MMMM yyyy")</span>
+                    <span class="info-value">@(installment?.NextPaymentDate.ToString("dd MMMM yyyy") ?? "")</span>
                 </div>
 
-                @if (installment.Category != null)
+                @if (installment?.Category != null)
                 {
                     <div class="info-row">
                         <span class="info-label">Kategori:</span>
                         <span class="info-value">
-                            <span class="badge bg-light text-dark">@installment.Category.Name</span>
+                            <span class="badge bg-light text-dark">@(installment?.Category?.Name ?? "")</span>
                         </span>
                     </div>
                 }
@@ -307,7 +307,7 @@
             <form asp-action="Pay" method="post" novalidate>
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
                 
-                <input name="InstallmentId" type="hidden" value="@installment.Id" />
+                <input name="InstallmentId" type="hidden" value="@(installment?.Id ?? 0)" />
 
                 <div class="mb-4">
                     <label for="PaymentDate" class="form-label">
@@ -328,7 +328,7 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-2">
-                        <a asp-action="Details" asp-route-id="@installment.Id" class="btn btn-secondary-custom w-100">
+                        <a asp-action="Details" asp-route-id="@(installment?.Id ?? 0)" class="btn btn-secondary-custom w-100">
                             <i class="fas fa-arrow-left me-2"></i>Geri Dön
                         </a>
                     </div>

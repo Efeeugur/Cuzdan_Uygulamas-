@@ -1,7 +1,6 @@
 @model Cüzdan_Uygulaması.BusinessLogic.DTOs.CreateInstallmentDto
 @{
     ViewData["Title"] = "Yeni Taksitli Alışveriş";
-    var accounts = ViewBag.Accounts as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
     var categories = ViewBag.Categories as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
 }
 
@@ -196,6 +195,7 @@
             </div>
 
             <form asp-action="Create" method="post" novalidate>
+                @Html.AntiForgeryToken()
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
                 <div class="row">
@@ -223,7 +223,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-6 mb-4">
                         <label asp-for="TotalInstallments" class="form-label">
                             <i class="fas fa-calendar-alt form-icon"></i>Taksit Sayısı *
                         </label>
@@ -240,16 +240,7 @@
                         </select>
                         <span asp-validation-for="TotalInstallments" class="text-danger"></span>
                     </div>
-                    <div class="col-md-4 mb-4">
-                        <label asp-for="AccountId" class="form-label">
-                            <i class="fas fa-university form-icon"></i>Ödeme Hesabı *
-                        </label>
-                        <select asp-for="AccountId" asp-items="accounts" class="form-select">
-                            <option value="">Hesap seçin...</option>
-                        </select>
-                        <span asp-validation-for="AccountId" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-6 mb-4">
                         <label asp-for="CategoryId" class="form-label">
                             <i class="fas fa-tags form-icon"></i>Kategori
                         </label>
@@ -257,6 +248,7 @@
                             <option value="">Kategori seçin (isteğe bağlı)</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        <div class="form-help">Taksitli alışverişin kategorisi</div>
                     </div>
                 </div>
 

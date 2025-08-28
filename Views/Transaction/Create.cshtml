@@ -213,7 +213,21 @@
         </div>
 
         <div class="form-body">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>@TempData["Error"]
+                </div>
+            }
+            @if (TempData["Warning"] != null)
+            {
+                <div class="alert alert-warning" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>@TempData["Warning"]
+                </div>
+            }
+            
             <form asp-action="Create" method="post" novalidate>
+                @Html.AntiForgeryToken()
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
                 <!-- Transaction Type Selector -->

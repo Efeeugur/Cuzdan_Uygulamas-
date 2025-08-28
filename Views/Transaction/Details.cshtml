@@ -176,12 +176,15 @@
     <div class="row">
         <div class="col-md-4 mb-4">
             <!-- Amount Display -->
-            <div class="amount-display @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "income" : "expense")">
+            <div
+                class="amount-display @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "income" : "expense")">
                 <div class="mb-2">
-                    <i class="fas @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "fa-arrow-up" : "fa-arrow-down") fa-2x"></i>
+                    <i
+                        class="fas @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "fa-arrow-up" : "fa-arrow-down") fa-2x"></i>
                 </div>
                 <h3 class="mb-1">
-                    @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" : "-")₺@Model.Amount.ToString("N2")
+                    @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" :
+                                        "-")₺@Model.Amount.ToString("N2")
                 </h3>
                 <p class="mb-0 opacity-75">
                     @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "Gelir" : "Gider") İşlemi
@@ -197,7 +200,7 @@
                     <div class="info-title">Hesap</div>
                     <div class="info-value">@(Model.Account?.Name ?? "Bilinmiyor")</div>
                 </div>
-                
+
                 @if (Model.Category != null)
                 {
                     <div class="info-card">
@@ -265,8 +268,10 @@
                         Tutar
                     </div>
                     <div class="detail-value">
-                        <span class="@(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "text-success" : "text-danger")">
-                            @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" : "-")₺@Model.Amount.ToString("N2")
+                        <span
+                            class="@(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "text-success" : "text-danger")">
+                            @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" :
+                                                        "-")₺@Model.Amount.ToString("N2")
                         </span>
                     </div>
                 </div>
@@ -277,7 +282,8 @@
                         İşlem Türü
                     </div>
                     <div class="detail-value">
-                        <span class="status-badge @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "income-badge" : "expense-badge")">
+                        <span
+                            class="status-badge @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "income-badge" : "expense-badge")">
                             @(Model.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "Gelir" : "Gider")
                         </span>
                     </div>
@@ -291,8 +297,8 @@
                     <div class="detail-value">
                         @if (Model.Account != null)
                         {
-                            <a asp-controller="Wallet" asp-action="AccountDetails" asp-route-id="@Model.Account.Id" 
-                               class="text-decoration-none">
+                            <a asp-controller="Wallet" asp-action="AccountDetails" asp-route-id="@Model.Account.Id"
+                                class="text-decoration-none">
                                 @Model.Account.Name
                             </a>
                         }
@@ -377,7 +383,7 @@
                         <i class="fas fa-info-circle me-2"></i>
                         Bu işlem @switch (Model.RecurrenceType)
                         {
-                            case Cüzdan_Uygulaması.Models.RecurrenceType.Monthly:
+                                        case Cüzdan_Uygulaması.Models.RecurrenceType.Monthly:
                                 <span>her ay</span>
                                 break;
                             case Cüzdan_Uygulaması.Models.RecurrenceType.Weekly:
@@ -386,70 +392,71 @@
                             case Cüzdan_Uygulaması.Models.RecurrenceType.Yearly:
                                 <span>her yıl</span>
                                 break;
-                        } otomatik olarak oluşturulacaktır.
+                            }
+         otomatik olarak oluşturulacaktır.
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-</div>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function deleteTransaction(id) {
-            Swal.fire({
-                title: 'İşlem Silinecek',
-                text: 'Bu işlem geri alınamaz ve hesap bakiyesi güncellenecek!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Evet, Sil',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Create form and submit
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '/Transaction/Delete/' + id;
-                    
-                    // Add anti-forgery token
-                    const token = document.createElement('input');
-                    token.type = 'hidden';
-                    token.name = '__RequestVerificationToken';
-                    token.value = $('input[name="__RequestVerificationToken"]').val();
-                    form.appendChild(token);
-                    
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-        }
+    @section Scripts {
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function deleteTransaction(id) {
+                Swal.fire({
+                    title: 'İşlem Silinecek',
+                    text: 'Bu işlem geri alınamaz ve hesap bakiyesi güncellenecek!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Evet, Sil',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Create form and submit
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '/Transaction/Delete/' + id;
 
-        // Success/Error messages
-        @if (TempData["Success"] != null)
-        {
-            <text>
-            Swal.fire({
-                icon: 'success',
-                title: 'Başarılı!',
-                text: '@Html.Raw(TempData["Success"])',
-                timer: 3000,
-                showConfirmButton: false
-            });
-            </text>
-        }
+                        // Add anti-forgery token
+                        const token = document.createElement('input');
+                        token.type = 'hidden';
+                        token.name = '__RequestVerificationToken';
+                        token.value = $('input[name="__RequestVerificationToken"]').val();
+                        form.appendChild(token);
 
-        @if (TempData["Error"] != null)
-        {
-            <text>
-            Swal.fire({
-                icon: 'error',
-                title: 'Hata!',
-                text: '@Html.Raw(TempData["Error"])'
-            });
-            </text>
-        }
-    </script>
-}
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                });
+            }
+
+            // Success/Error messages
+            @if (TempData["Success"] != null)
+                {
+                    <text>
+                        Swal.fire({
+                            icon: 'success',
+                        title: 'Başarılı!',
+                        text: '@Html.Raw(TempData["Success"])',
+                        timer: 3000,
+                        showConfirmButton: false
+                        });
+                    </text>
+            }
+
+                @if (TempData["Error"] != null)
+                {
+                    <text>
+                        Swal.fire({
+                            icon: 'error',
+                        title: 'Hata!',
+                        text: '@Html.Raw(TempData["Error"])'
+                        });
+                    </text>
+            }
+        </script>
+    }

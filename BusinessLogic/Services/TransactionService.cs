@@ -49,8 +49,38 @@ public class TransactionService : ITransactionService
 
     public async Task<TransactionDto?> GetTransactionByIdAsync(int id, string userId)
     {
-        var transaction = await _unitOfWork.Transactions.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
-        return transaction?.ToDto();
+        var transactions = await _unitOfWork.Transactions.GetTransactionsWithDetailsAsync(userId);
+        var transaction = transactions.FirstOrDefault(t => t.Id == id);
+        
+        if (transaction == null)
+            return null;
+            
+        var dto = transaction.ToDto();
+        
+        // Manually populate account and category names for display
+        if (transaction.Account != null)
+        {
+            dto.Account = transaction.Account.ToBasicDto();
+        }
+        
+        if (transaction.Category != null)
+        {
+            dto.Category = transaction.Category.ToBasicDto();
+        }
+        else if (dto.CategoryId.HasValue && dto.CategoryId.Value <= 35)
+        {
+            // Handle SimpleCategoryService categories (hardcoded categories 1-35)
+            var simpleCategoryService = new SimpleCategoryService();
+            dto.Category = new CategoryDto
+            {
+                Id = dto.CategoryId.Value,
+                Name = simpleCategoryService.GetCategoryName(dto.CategoryId.Value),
+                Type = dto.CategoryId.Value <= 5 ? Models.CategoryType.Income : Models.CategoryType.Expense,
+                Transactions = new List<TransactionDto>()
+            };
+        }
+        
+        return dto;
     }
 
     public async Task<TransactionSummaryDto> GetTransactionSummaryAsync(string userId)
@@ -132,15 +162,20 @@ public class TransactionService : ITransactionService
             a => a.Id == createTransactionDto.AccountId && a.UserId == userId);
 
         if (account == null)
-            throw new InvalidOperationException("Account not found or access denied.");
+            throw new InvalidOperationException($"Account with ID {createTransactionDto.AccountId} not found or access denied. Please ensure you have created an account first.");
 
         if (createTransactionDto.CategoryId.HasValue)
         {
-            var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
-                c => c.Id == createTransactionDto.CategoryId && c.UserId == userId);
+            // Check if it's a hardcoded category (SimpleCategoryService) or database category
+            // SimpleCategoryService uses categories with IDs 1-25
+            if (createTransactionDto.CategoryId.Value > 25)
+            {
+                var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
+                    c => c.Id == createTransactionDto.CategoryId && c.UserId == userId);
 
-            if (category == null)
-                throw new InvalidOperationException("Category not found or access denied.");
+                if (category == null)
+                    throw new InvalidOperationException("Category not found or access denied.");
+            }
         }
 
         if (createTransactionDto.InstallmentId.HasValue)
@@ -157,6 +192,14 @@ public class TransactionService : ITransactionService
             await _unitOfWork.BeginTransactionAsync();
 
             var transaction = createTransactionDto.ToEntity(userId);
+            
+            // Note: We keep CategoryId even for SimpleCategoryService categories (1-25)
+            // The foreign key constraint allows null, so EF won't enforce the relationship
+            // We'll handle display logic in the service layer
+            
+            // Log transaction details for debugging
+            Console.WriteLine($"Creating Transaction: UserId={transaction.UserId}, AccountId={transaction.AccountId}, Amount={transaction.Amount}, Type={transaction.Type}, CategoryId={transaction.CategoryId}");
+            
             await _unitOfWork.Transactions.AddAsync(transaction);
 
             var balanceChange = createTransactionDto.Type == TransactionType.Income 
@@ -166,6 +209,7 @@ public class TransactionService : ITransactionService
             account.Balance += balanceChange;
             _unitOfWork.Accounts.Update(account);
 
+            Console.WriteLine($"Saving changes - Account Balance will be: {account.Balance}");
             await _unitOfWork.SaveChangesAsync();
             await _unitOfWork.CommitTransactionAsync();
 
