@@ -179,31 +179,105 @@ public class InstallmentController : Controller
 
         var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
         ViewBag.Accounts = new SelectList(accounts, "Id", "Name");
-        ViewBag.InstallmentId = id;
-        ViewBag.PaymentAmount = installment.MonthlyPayment;
+        ViewBag.Installment = installment;
 
-        return View();
+        var model = new PayInstallmentDto
+        {
+            InstallmentId = id,
+            PaymentDate = DateTime.Today
+        };
+
+        return View(model);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Pay(int installmentId, int accountId)
+    public async Task<IActionResult> Pay(PayInstallmentDto model)
     {
+        if (!ModelState.IsValid)
+        {
+            var userId = GetUserId();
+            var installment = await _installmentService.GetInstallmentByIdAsync(model.InstallmentId, userId);
+            var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+            ViewBag.Accounts = new SelectList(accounts, "Id", "Name");
+            ViewBag.Installment = installment;
+            return View(model);
+        }
+
         try
         {
             var userId = GetUserId();
-            var result = await _installmentService.ProcessInstallmentPaymentAsync(installmentId, accountId, userId);
+            var result = await _installmentService.ProcessInstallmentPaymentAsync(
+                model.InstallmentId, 
+                model.AccountId, 
+                userId, 
+                model.PaymentDate, 
+                model.Notes);
 
             if (!result)
                 return NotFound();
 
-            TempData["Success"] = "Installment payment processed successfully.";
-            return RedirectToAction(nameof(Details), new { id = installmentId });
+            TempData["Success"] = "Taksit ödemesi başarıyla işlendi.";
+            return RedirectToAction(nameof(Details), new { id = model.InstallmentId });
+        }
+        catch (InvalidOperationException ex)
+        {
+            // Handle specific business logic errors (like insufficient funds)
+            if (ex.Message.Contains("bakiye") || ex.Message.Contains("yeterli"))
+            {
+                TempData["Warning"] = $"⚠️ {ex.Message} Lütfen başka bir hesap seçin veya hesabınıza para yatırın.";
+            }
+            else
+            {
+                TempData["Warning"] = ex.Message;
+            }
+            
+            var userId = GetUserId();
+            var installment = await _installmentService.GetInstallmentByIdAsync(model.InstallmentId, userId);
+            var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+            ViewBag.Accounts = new SelectList(accounts, "Id", "Name");
+            ViewBag.Installment = installment;
+            return View(model);
+        }
+        catch (ArgumentException ex)
+        {
+            TempData["Warning"] = $"Geçersiz ödeme bilgisi: {ex.Message}";
+            var userId = GetUserId();
+            var installment = await _installmentService.GetInstallmentByIdAsync(model.InstallmentId, userId);
+            var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+            ViewBag.Accounts = new SelectList(accounts, "Id", "Name");
+            ViewBag.Installment = installment;
+            return View(model);
         }
         catch (Exception ex)
         {
-            TempData["Error"] = ex.Message;
-            return RedirectToAction(nameof(Pay), new { id = installmentId });
+            var errorMessage = "Taksit ödemesi sırasında bir hata oluştu. ";
+            
+            // Provide specific error messages
+            if (ex.Message.Contains("not found") || ex.Message.Contains("bulunamadı"))
+            {
+                errorMessage += "Taksit veya hesap bilgileri bulunamadı.";
+            }
+            else if (ex.Message.Contains("completed") || ex.Message.Contains("tamamlandı"))
+            {
+                errorMessage += "Bu taksit zaten tamamlanmış.";
+            }
+            else
+            {
+                errorMessage += "Lütfen bilgilerinizi kontrol edip tekrar deneyin.";
+            }
+            
+            TempData["Error"] = errorMessage;
+            
+            // Log for debugging
+            Console.WriteLine($"Installment Payment Error: {ex}");
+            
+            var userId = GetUserId();
+            var installment = await _installmentService.GetInstallmentByIdAsync(model.InstallmentId, userId);
+            var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+            ViewBag.Accounts = new SelectList(accounts, "Id", "Name");
+            ViewBag.Installment = installment;
+            return View(model);
         }
     }
 

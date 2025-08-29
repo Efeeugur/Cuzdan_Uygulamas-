@@ -134,6 +134,11 @@ public class InstallmentService : IInstallmentService
 
     public async Task<bool> ProcessInstallmentPaymentAsync(int installmentId, int accountId, string userId)
     {
+        return await ProcessInstallmentPaymentAsync(installmentId, accountId, userId, DateTime.Now, null);
+    }
+
+    public async Task<bool> ProcessInstallmentPaymentAsync(int installmentId, int accountId, string userId, DateTime paymentDate, string? notes)
+    {
         var installment = await _unitOfWork.Installments.FirstOrDefaultAsync(
             i => i.Id == installmentId && i.UserId == userId);
 
@@ -147,17 +152,23 @@ public class InstallmentService : IInstallmentService
             return false;
 
         if (account.Balance < installment.MonthlyPayment)
-            throw new InvalidOperationException("Insufficient balance for installment payment.");
+            throw new InvalidOperationException("Bu ödeme için hesabınızda yeterli bakiye bulunmuyor.");
 
         try
         {
             await _unitOfWork.BeginTransactionAsync();
 
+            var transactionDescription = $"Taksit ödemesi: {installment.Description}";
+            if (!string.IsNullOrWhiteSpace(notes))
+            {
+                transactionDescription += $" - {notes}";
+            }
+
             var transaction = new Transaction
             {
                 Amount = installment.MonthlyPayment,
-                Description = $"Installment payment: {installment.Description}",
-                TransactionDate = DateTime.UtcNow,
+                Description = transactionDescription,
+                TransactionDate = paymentDate,
                 Type = TransactionType.Expense,
                 UserId = userId,
                 AccountId = accountId,

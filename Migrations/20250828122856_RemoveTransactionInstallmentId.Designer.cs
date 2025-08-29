@@ -3,6 +3,7 @@ using System;
 using Cüzdan_Uygulaması.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cüzdan_Uygulaması.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250828122856_RemoveTransactionInstallmentId")]
+    partial class RemoveTransactionInstallmentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +48,9 @@ namespace Cüzdan_Uygulaması.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -480,12 +486,12 @@ namespace Cüzdan_Uygulaması.Migrations
 
                     b.HasOne("Cüzdan_Uygulaması.Models.Category", "Category")
                         .WithMany("Transactions")
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("Cüzdan_Uygulaması.Models.Installment", "Installment")
-                        .WithMany("Transactions")
-                        .HasForeignKey("InstallmentId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Cüzdan_Uygulaması.Models.Installment", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("InstallmentId");
 
                     b.HasOne("Cüzdan_Uygulaması.Models.User", "User")
                         .WithMany("Transactions")
@@ -496,8 +502,6 @@ namespace Cüzdan_Uygulaması.Migrations
                     b.Navigation("Account");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Installment");
 
                     b.Navigation("User");
                 });

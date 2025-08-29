@@ -1,7 +1,8 @@
-@*@model Cüzdan_Uygulaması.BusinessLogic.DTOs.PayInstallmentDto*@
+@model Cüzdan_Uygulaması.BusinessLogic.DTOs.PayInstallmentDto
 @{
     ViewData["Title"] = "Taksit Ödemesi";
     var installment = ViewBag.Installment as Cüzdan_Uygulaması.BusinessLogic.DTOs.InstallmentDto;
+    var accounts = ViewBag.Accounts as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
 }
 
 <style>
@@ -307,22 +308,36 @@
             <form asp-action="Pay" method="post" novalidate>
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
                 
-                <input name="InstallmentId" type="hidden" value="@(installment?.Id ?? 0)" />
+                @Html.AntiForgeryToken()
+                <input asp-for="InstallmentId" type="hidden" />
 
                 <div class="mb-4">
-                    <label for="PaymentDate" class="form-label">
+                    <label asp-for="AccountId" class="form-label">
+                        <i class="fas fa-university form-icon"></i>Ödeme Hesabı *
+                    </label>
+                    <select asp-for="AccountId" asp-items="accounts" class="form-control">
+                        <option value="">Ödeme yapılacak hesabı seçin...</option>
+                    </select>
+                    <span asp-validation-for="AccountId" class="text-danger"></span>
+                    <div class="form-help">Ödemenin çekileceği hesap</div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="PaymentDate" class="form-label">
                         <i class="fas fa-calendar form-icon"></i>Ödeme Tarihi *
                     </label>
-                    <input name="PaymentDate" class="form-control" type="date" required />
+                    <input asp-for="PaymentDate" class="form-control" type="date" />
+                    <span asp-validation-for="PaymentDate" class="text-danger"></span>
                     <div class="form-help">Ödemenin yapıldığı gerçek tarih</div>
                 </div>
 
                 <div class="mb-4">
-                    <label for="Notes" class="form-label">
+                    <label asp-for="Notes" class="form-label">
                         <i class="fas fa-sticky-note form-icon"></i>Notlar
                     </label>
-                    <textarea name="Notes" class="form-control" rows="3" 
+                    <textarea asp-for="Notes" class="form-control" rows="3" 
                               placeholder="Bu ödeme hakkında ek notlarınız (isteğe bağlı)..."></textarea>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
                     <div class="form-help">Ödeme hakkında hatırlamak istediğiniz bilgiler</div>
                 </div>
 
@@ -348,12 +363,8 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Set default payment date to today
-            const today = new Date();
-            document.querySelector('input[name="PaymentDate"]').value = today.toISOString().split('T')[0];
-
-            // Focus on notes field
-            document.querySelector('textarea[name="Notes"]').focus();
+            // Focus on account selection
+            document.querySelector('select[name="AccountId"]').focus();
         });
     </script>
 }

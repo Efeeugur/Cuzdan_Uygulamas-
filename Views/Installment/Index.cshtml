@@ -77,25 +77,6 @@
         transition: width 0.3s ease;
     }
 
-    /* Buttons */
-    .btn-apple {
-        background: #000;
-        color: #fff;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 20px;
-        font-weight: 700;
-        transition: filter .2s ease, transform .04s ease;
-    }
-
-    .btn-apple:hover {
-        filter: brightness(1.05);
-    }
-
-    .btn-apple:active {
-        transform: translateY(1px);
-    }
-
     /* Apple-esque action buttons (satır içi) */
     .btn-action {
         display: inline-flex;
@@ -261,6 +242,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div>
+        <h5>Taksitler</h5>
     </div>
 
     <!-- Installments List -->
@@ -448,7 +433,7 @@
                     text: '@Html.Raw(TempData["Success"])',
                     timer: 3000,
                     showConfirmButton: false
-                                    });
+                                                            });
                 </text>
         }
             @if (TempData["Error"] != null)
@@ -458,7 +443,7 @@
                         icon: 'error',
                     title: 'Hata!',
                     text: '@Html.Raw(TempData["Error"])'
-                                    });
+                                                            });
                 </text>
         }
     </script>

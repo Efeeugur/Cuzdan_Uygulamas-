@@ -12,5 +12,6 @@ public interface IInstallmentService
     Task<InstallmentDto?> UpdateInstallmentAsync(UpdateInstallmentDto updateInstallmentDto, string userId);
     Task<bool> DeleteInstallmentAsync(int id, string userId);
     Task<bool> ProcessInstallmentPaymentAsync(int installmentId, int accountId, string userId);
+    Task<bool> ProcessInstallmentPaymentAsync(int installmentId, int accountId, string userId, DateTime paymentDate, string? notes);
     Task<IEnumerable<InstallmentDto>> GetInstallmentsDueAsync(DateTime dueDate);
 }

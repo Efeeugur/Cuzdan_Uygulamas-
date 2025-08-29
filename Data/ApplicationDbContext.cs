@@ -73,11 +73,9 @@ public class ApplicationDbContext : IdentityDbContext<User>
                 .HasForeignKey(e => e.AccountId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(e => e.Category)
-                .WithMany(c => c.Transactions)
-                .HasForeignKey(e => e.CategoryId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .IsRequired(false);
+            // CategoryId is used for SimpleCategoryService categories (1-35) that don't exist in database
+            // No foreign key constraint to allow these predefined categories
+            entity.Property(e => e.CategoryId).IsRequired(false);
 
             entity.HasOne(e => e.Installment)
                 .WithMany(i => i.Transactions)

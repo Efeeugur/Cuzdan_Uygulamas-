@@ -1,0 +1,509 @@
+@model Cüzdan_Uygulaması.BusinessLogic.DTOs.InstallmentDto
+@{
+    ViewData["Title"] = "Taksit Detayları";
+    var simpleCategoryService = new Cüzdan_Uygulaması.BusinessLogic.Services.SimpleCategoryService();
+}
+
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --text: #1d1d1f;
+        --muted: #6e6e73;
+        --blue: #007aff;
+        --green: #28a745;
+        --red: #dc3545;
+        --orange: #ff9500;
+        --border: rgba(0, 0, 0, 0.08);
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --radius: 16px;
+    }
+
+    .details-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+    }
+
+    .installment-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        margin-bottom: 2rem;
+    }
+
+    .card-header {
+        padding: 2rem;
+        text-align: center;
+        background: linear-gradient(135deg, var(--blue), #4A90E2);
+        color: white;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .info-section {
+        background: #f8f9fa;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: var(--muted);
+    }
+
+    .info-value {
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .progress-section {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        border: 1px solid rgba(0, 122, 255, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .progress-bar-custom {
+        height: 12px;
+        background-color: #e9ecef;
+        border-radius: 6px;
+        overflow: hidden;
+        margin: 1rem 0;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--blue), var(--green));
+        transition: width 0.5s ease;
+        border-radius: 6px;
+    }
+
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-active {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .status-completed {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .btn-apple {
+        background: #000;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-apple:hover {
+        background: #333;
+        color: white;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    .btn-success-custom {
+        background: var(--green);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-success-custom:hover {
+        background: #218838;
+        color: white;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    .btn-secondary-custom {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-secondary-custom:hover {
+        background: var(--border);
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    .transactions-table {
+        background: var(--card);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        background: #f8f9fa;
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .table td {
+        border: none;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .overdue-warning {
+        background: #ffebee;
+        border: 1px solid #ffcdd2;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+        color: #d32f2f;
+    }
+
+    .text-success {
+        color: var(--green) !important;
+    }
+
+    .text-danger {
+        color: var(--red) !important;
+    }
+
+    .text-warning {
+        color: var(--orange) !important;
+    }
+
+    .form-icon {
+        color: var(--blue);
+        margin-right: 0.5rem;
+    }
+
+    .amount-display {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--blue);
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        color: var(--text);
+        font-weight: 600;
+    }
+</style>
+
+<div class="container-fluid px-4">
+    <div class="details-container">
+        <!-- Success/Error Messages -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>@TempData["Error"]
+            </div>
+        }
+
+        <!-- Installment Details Card -->
+        <div class="installment-card">
+            <div class="card-header">
+                <h2 class="mb-2">
+                    <i class="fas fa-credit-card me-2"></i>
+                    @Model.Description
+                </h2>
+                <p class="mb-0 opacity-75">Taksit Detayları ve Ödeme Geçmişi</p>
+            </div>
+
+            <div class="card-body">
+                <!-- Overdue Warning -->
+                @if (Model.NextPaymentDate < DateTime.Now && !Model.IsCompleted)
+                {
+                    <div class="overdue-warning">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <div>
+                                <strong>Gecikmiş Ödeme!</strong>
+                                <div class="small">Bu taksit @Model.NextPaymentDate.ToString("dd MMMM yyyy") tarihinde ödenmeliydi.</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <h6 class="section-title">
+                        <i class="fas fa-chart-line form-icon"></i>
+                        Ödeme Durumu
+                    </h6>
+                    @{
+                        var progressPercentage = Model.TotalInstallments > 0 
+                            ? ((double)(Model.TotalInstallments - Model.RemainingInstallments) / Model.TotalInstallments) * 100 
+                            : 0;
+                    }
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: @(progressPercentage.ToString("F1"))%"></div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <small>%@(progressPercentage.ToString("F1")) tamamlandı</small>
+                        <small>@Model.RemainingInstallments / @Model.TotalInstallments taksit kaldı</small>
+                    </div>
+                </div>
+
+                <!-- Basic Information -->
+                <div class="info-section">
+                    <h6 class="section-title">
+                        <i class="fas fa-info-circle form-icon"></i>
+                        Genel Bilgiler
+                    </h6>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Durum:</span>
+                        <span class="info-value">
+                            @if (Model.IsCompleted)
+                            {
+                                <span class="status-badge status-completed">
+                                    <i class="fas fa-check-circle me-1"></i>Tamamlandı
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-active">
+                                    <i class="fas fa-clock me-1"></i>Aktif
+                                </span>
+                            }
+                        </span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Toplam Tutar:</span>
+                        <span class="info-value amount-display">₺@Model.TotalAmount.ToString("N2")</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Aylık Ödeme:</span>
+                        <span class="info-value">₺@Model.MonthlyPayment.ToString("N2")</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Faiz Oranı:</span>
+                        <span class="info-value">%@Model.InterestRate.ToString("N2")</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Başlangıç Tarihi:</span>
+                        <span class="info-value">@Model.StartDate.ToString("dd MMMM yyyy")</span>
+                    </div>
+                    
+                    @if (!Model.IsCompleted)
+                    {
+                        <div class="info-row">
+                            <span class="info-label">Sonraki Ödeme Tarihi:</span>
+                            <span class="info-value 
+                                @(Model.NextPaymentDate < DateTime.Now ? "text-danger" : "")">
+                                @Model.NextPaymentDate.ToString("dd MMMM yyyy")
+                            </span>
+                        </div>
+                    }
+                    
+                    <div class="info-row">
+                        <span class="info-label">Ödenen Tutar:</span>
+                        <span class="info-value text-success">₺@Model.TotalPaid.ToString("N2")</span>
+                    </div>
+                    
+                    <div class="info-row">
+                        <span class="info-label">Kalan Tutar:</span>
+                        <span class="info-value text-danger">₺@Model.RemainingAmount.ToString("N2")</span>
+                    </div>
+
+                    @if (Model.CategoryId.HasValue)
+                    {
+                        <div class="info-row">
+                            <span class="info-label">Kategori:</span>
+                            <span class="info-value">
+                                <span class="badge bg-light text-dark">
+                                    @simpleCategoryService.GetCategoryName(Model.CategoryId.Value)
+                                </span>
+                            </span>
+                        </div>
+                    }
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <a asp-action="Index" class="btn btn-secondary-custom w-100">
+                            <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                        </a>
+                    </div>
+                    @if (!Model.IsCompleted)
+                    {
+                        <div class="col-md-3 mb-2">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-apple w-100">
+                                <i class="fas fa-edit me-2"></i>Düzenle
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a asp-action="Pay" asp-route-id="@Model.Id" class="btn btn-success-custom w-100">
+                                <i class="fas fa-credit-card me-2"></i>Ödeme Yap (₺@Model.MonthlyPayment.ToString("N2"))
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-9">
+                            <div class="alert alert-success mb-0">
+                                <i class="fas fa-check-circle me-2"></i>Bu taksit planı başarıyla tamamlanmıştır.
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment History -->
+        @if (Model.Transactions.Any())
+        {
+            <div class="installment-card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-history me-2"></i>
+                        Ödeme Geçmişi (@Model.Transactions.Count() ödeme)
+                    </h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="transactions-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tarih</th>
+                                    <th>Tutar</th>
+                                    <th>Açıklama</th>
+                                    <th>Hesap</th>
+                                    <th>İşlem Tarihi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.Transactions.OrderByDescending(t => t.TransactionDate))
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@transaction.TransactionDate.ToString("dd MMM yyyy")</strong>
+                                            <br>
+                                            <small class="text-muted">@transaction.TransactionDate.ToString("HH:mm")</small>
+                                        </td>
+                                        <td>
+                                            <span class="text-success">
+                                                <strong>₺@transaction.Amount.ToString("N2")</strong>
+                                            </span>
+                                        </td>
+                                        <td>@transaction.Description</td>
+                                        <td>
+                                            @if (transaction.Account != null)
+                                            {
+                                                <span class="badge bg-light text-dark">@transaction.Account.Name</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">@transaction.CreatedDate.ToString("dd MMM yyyy HH:mm")</small>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="installment-card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-receipt fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Henüz ödeme yapılmamış</h5>
+                    <p class="text-muted">Bu taksit için henüz herhangi bir ödeme kaydı bulunmuyor.</p>
+                    @if (!Model.IsCompleted)
+                    {
+                        <a asp-action="Pay" asp-route-id="@Model.Id" class="btn btn-success-custom">
+                            <i class="fas fa-credit-card me-2"></i>İlk Ödemeyi Yap
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-hide success/error messages after 5 seconds
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    if (alert.classList.contains('alert-success') || alert.classList.contains('alert-danger')) {
+                        alert.style.opacity = '0';
+                        setTimeout(() => alert.remove(), 500);
+                    }
+                });
+            }, 5000);
+        });
+    </script>
+}

@@ -95,17 +95,39 @@ public class TransactionController : Controller
         catch (InvalidOperationException ex)
         {
             // Handle specific business logic errors
-            TempData["Error"] = ex.Message;
+            TempData["Warning"] = ex.Message;
+            var userId = GetUserId();
+            await PopulateDropdownsAsync(userId);
+            return View(model);
+        }
+        catch (ArgumentException ex)
+        {
+            // Handle validation errors
+            TempData["Warning"] = $"Geçersiz değer: {ex.Message}";
             var userId = GetUserId();
             await PopulateDropdownsAsync(userId);
             return View(model);
         }
         catch (Exception ex)
         {
-            // Handle unexpected errors with detailed logging
-            var innerException = ex.InnerException?.Message ?? "No inner exception";
-            var fullError = $"İşlem kaydedilirken bir hata oluştu: {ex.Message}. Inner Exception: {innerException}";
-            TempData["Error"] = fullError;
+            // Handle unexpected errors with user-friendly message
+            var errorMessage = "İşlem kaydedilirken beklenmeyen bir hata oluştu. Lütfen girdiğiniz bilgileri kontrol edin.";
+            
+            // Add specific error details for common issues
+            if (ex.Message.Contains("format") || ex.Message.Contains("invalid"))
+            {
+                errorMessage = "Girilen tutar formatı geçersiz. Lütfen geçerli bir sayı girin (örn: 100,50).";
+            }
+            else if (ex.Message.Contains("balance") || ex.Message.Contains("insufficient"))
+            {
+                errorMessage = "Bu işlem için hesabınızda yeterli bakiye bulunmuyor.";
+            }
+            else if (ex.Message.Contains("account") || ex.Message.Contains("not found"))
+            {
+                errorMessage = "Seçilen hesap bulunamadı. Lütfen geçerli bir hesap seçin.";
+            }
+            
+            TempData["Error"] = errorMessage;
             
             // Log the full exception for debugging
             Console.WriteLine($"Transaction Creation Error: {ex}");
