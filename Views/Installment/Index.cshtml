@@ -196,8 +196,8 @@
                     <a asp-action="Create" class="btn btn-apple">
                         <i class="fas fa-plus me-2"></i>Yeni Taksit
                     </a>
-                    <a asp-action="Active" class="btn btn-action btn-action--primary">
-                        <i class="fas fa-list"></i><span>Aktif Taksitler</span>
+                    <a asp-action="Active" class="btn btn-action btn-action--primary"></a>
+                    <i class="fas fa-list"></i><span>Aktif Taksitler</span>
                     </a>
                 </div>
             </div>
@@ -433,7 +433,7 @@
                     text: '@Html.Raw(TempData["Success"])',
                     timer: 3000,
                     showConfirmButton: false
-                                                            });
+                                                                            });
                 </text>
         }
             @if (TempData["Error"] != null)
@@ -443,7 +443,7 @@
                         icon: 'error',
                     title: 'Hata!',
                     text: '@Html.Raw(TempData["Error"])'
-                                                            });
+                                                                            });
                 </text>
         }
     </script>
