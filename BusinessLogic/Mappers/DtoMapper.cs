@@ -29,7 +29,26 @@ public static class DtoMapper
             CreatedDate = account.CreatedDate,
             UserId = account.UserId,
             //User = account.User?.ToDto(),
-            Transactions = new List<TransactionDto>() // Avoid circular reference
+            Transactions = account.Transactions?.Select(t => new TransactionDto
+            {
+                Id = t.Id,
+                Amount = t.Amount,
+                Description = t.Description,
+                TransactionDate = t.TransactionDate,
+                Type = t.Type,
+                CreatedDate = t.CreatedDate,
+                IsRecurring = t.IsRecurring,
+                RecurrenceType = t.RecurrenceType,
+                CategoryId = t.CategoryId,
+                // Include Category mapping if needed
+                Category = t.Category != null ? new CategoryDto
+                {
+                    Id = t.Category.Id,
+                    Name = t.Category.Name,
+                    Color = t.Category.Color,
+                    Type = t.Category.Type
+                } : null
+            }).OrderByDescending(t => t.TransactionDate).ToList() ?? new List<TransactionDto>()
         };
     }
 
@@ -121,7 +140,15 @@ public static class DtoMapper
             UserId = installment.UserId,
             CategoryId = installment.CategoryId,
             User = installment.User?.ToDto(),
-            Transactions = new List<TransactionDto>() // Avoid circular reference
+            Transactions = installment.Transactions?.Select(t => new TransactionDto
+            {
+                Id = t.Id,
+                Amount = t.Amount,
+                Description = t.Description,
+                TransactionDate = t.TransactionDate,
+                Type = t.Type,
+                CreatedDate = t.CreatedDate
+            }).ToList() ?? new List<TransactionDto>()
         };
 
         // Handle Category mapping

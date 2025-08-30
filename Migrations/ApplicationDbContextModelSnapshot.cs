@@ -54,7 +54,7 @@ namespace Cüzdan_Uygulaması.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("Cüzdan_Uygulaması.Models.Category", b =>
@@ -92,7 +92,7 @@ namespace Cüzdan_Uygulaması.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Cüzdan_Uygulaması.Models.Installment", b =>
@@ -153,7 +153,7 @@ namespace Cüzdan_Uygulaması.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Installments");
+                    b.ToTable("Installments", (string)null);
                 });
 
             modelBuilder.Entity("Cüzdan_Uygulaması.Models.Transaction", b =>
@@ -216,7 +216,7 @@ namespace Cüzdan_Uygulaması.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Transactions", (string)null);
                 });
 
             modelBuilder.Entity("Cüzdan_Uygulaması.Models.User", b =>

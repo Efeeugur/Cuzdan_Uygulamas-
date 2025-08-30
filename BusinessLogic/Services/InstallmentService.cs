@@ -57,16 +57,11 @@ public class InstallmentService : IInstallmentService
 
         if (createInstallmentDto.CategoryId.HasValue)
         {
-            // Check if it's a SimpleCategoryService category (IDs 1-35) or database category
-            if (createInstallmentDto.CategoryId.Value > 35)
+            // Validate SimpleCategoryService categories (1-35)
+            if (createInstallmentDto.CategoryId.Value < 1 || createInstallmentDto.CategoryId.Value > 35)
             {
-                var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
-                    c => c.Id == createInstallmentDto.CategoryId && c.UserId == userId);
-
-                if (category == null)
-                    throw new InvalidOperationException("Category not found or access denied.");
+                throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
             }
-            // SimpleCategoryService categories (1-35) are allowed without database validation
         }
 
         var installment = createInstallmentDto.ToEntity(userId);
@@ -92,16 +87,11 @@ public class InstallmentService : IInstallmentService
 
         if (updateInstallmentDto.CategoryId.HasValue)
         {
-            // Check if it's a SimpleCategoryService category (IDs 1-35) or database category
-            if (updateInstallmentDto.CategoryId.Value > 35)
+            // Validate SimpleCategoryService categories (1-35)
+            if (updateInstallmentDto.CategoryId.Value < 1 || updateInstallmentDto.CategoryId.Value > 35)
             {
-                var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
-                    c => c.Id == updateInstallmentDto.CategoryId && c.UserId == userId);
-
-                if (category == null)
-                    throw new InvalidOperationException("Category not found or access denied.");
+                throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
             }
-            // SimpleCategoryService categories (1-35) are allowed without database validation
         }
 
         installment.Description = updateInstallmentDto.Description;

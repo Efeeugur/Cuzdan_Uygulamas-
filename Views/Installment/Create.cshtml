@@ -244,7 +244,7 @@
                         <label asp-for="CategoryId" class="form-label">
                             <i class="fas fa-tags form-icon"></i>Kategori
                         </label>
-                        <select asp-for="CategoryId" asp-items="categories" class="form-select">
+                        <select asp-for="CategoryId" asp-items="categories" class="form-select" id="CategoryId">
                             <option value="">Kategori seçin (isteğe bağlı)</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -288,12 +288,12 @@
 
                 <div class="row mt-4">
                     <div class="col-md-6 mb-2">
-                        <a asp-action="Index" class="btn btn-secondary-custom w-100">
+                        <a asp-action="Index" class="btn-secondary-action w-100">
                             <i class="fas fa-arrow-left me-2"></i>İptal Et
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn-apple">
+                        <button type="submit" class="btn-primary-action w-100">
                             <i class="fas fa-save me-2"></i>Taksitli Alışveriş Oluştur
                         </button>
                     </div>
@@ -313,6 +313,9 @@
             nextMonth.setMonth(nextMonth.getMonth() + 1);
             nextMonth.setDate(1);
             document.querySelector('input[name="FirstPaymentDate"]').value = nextMonth.toISOString().split('T')[0];
+
+            // Initialize installment category filtering
+            initializeInstallmentCategoryFiltering();
 
             // Focus on description
             document.querySelector('input[name="Description"]').focus();

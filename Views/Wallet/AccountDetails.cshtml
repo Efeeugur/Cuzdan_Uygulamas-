@@ -122,13 +122,13 @@
             <div class="col-auto">
                 <div class="btn-group">
                     <a asp-controller="Transaction" asp-action="Create" asp-route-accountId="@Model.Id"
-                        class="btn btn-apple">
+                        class="btn-primary-action">
                         <i class="fas fa-plus me-2"></i>Yeni İşlem
                     </a>
-                    <a asp-action="EditAccount" asp-route-id="@Model.Id" class="btn btn-outline-primary">
+                    <a asp-action="EditAccount" asp-route-id="@Model.Id" class="btn-edit-action">
                         <i class="fas fa-edit me-2"></i>Düzenle
                     </a>
-                    <a asp-action="Index" class="btn btn-outline-secondary">
+                    <a asp-action="Index" class="btn-secondary-action">
                         <i class="fas fa-arrow-left me-2"></i>Geri Dön
                     </a>
                 </div>
@@ -138,7 +138,7 @@
 
     <div class="row">
         <!-- Account Info -->
-        <div class="col-md-4 mb-4">
+        <div>
             <div class="balance-card">
                 <h5 class="mb-1">Mevcut Bakiye</h5>
                 <h2 class="mb-0">₺@Model.Balance.ToString("N2")</h2>
@@ -197,81 +197,111 @@
                 </div>
             </div>
 
-            <!-- Transactions -->
-            <div class="col-md-8">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0">Son İşlemler</h5>
-                    <a asp-controller="Transaction" asp-action="Index" class="btn btn-sm btn-outline-primary">
-                        Tümünü Gör
-                    </a>
+        <!-- Transaction History -->
+        @if (Model.Transactions.Any())
+        {
+            <div class="installment-card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="fas fa-history me-2"></i>
+                            İşlem Geçmişi (@Model.Transactions.Count() işlem)
+                        </h4>
+                        <a asp-controller="Transaction" asp-action="Index" class="btn-view-action btn-sm">
+                            Tümünü Gör
+                        </a>
+                    </div>
                 </div>
-
-                @if (Model.Transactions.Any())
-                {
-                    @foreach (var transaction in Model.Transactions.OrderByDescending(t => t.TransactionDate).Take(10))
-                    {
-                        <div class="transaction-card">
-                            <div class="card-body py-3">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div
-                                            class="@(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "income-indicator" : "expense-indicator")">
-                                            <i
-                                                class="fas @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "fa-arrow-up" : "fa-arrow-down") fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-1">@transaction.Description</h6>
-                                        <p class="text-muted small mb-0">
-                                            @transaction.TransactionDate.ToString("dd MMM yyyy, HH:mm")
-                                            @if (transaction.Category != null)
-                                            {
-                                                <span class="badge bg-light text-dark ms-2">@transaction.Category.Name</span>
-                                            }
+                <div class="card-body p-0">
+                    <div class="transactions-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tarih</th>
+                                    <th>Tür</th>
+                                    <th>Tutar</th>
+                                    <th>Açıklama</th>
+                                    <th>Kategori</th>
+                                    <th>İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.Transactions.OrderByDescending(t => t.TransactionDate).Take(10))
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@transaction.TransactionDate.ToString("dd MMM yyyy")</strong>
+                                            <br>
+                                            <small class="text-muted">@transaction.TransactionDate.ToString("HH:mm")</small>
+                                        </td>
+                                        <td>
+                                            <span class="@(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "text-success" : "text-danger")">
+                                                <i class="fas @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "fa-arrow-up" : "fa-arrow-down") me-1"></i>
+                                                @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "Gelir" : "Gider")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="@(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "text-success" : "text-danger")">
+                                                <strong>@(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" : "-")₺@transaction.Amount.ToString("N2")</strong>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @transaction.Description
                                             @if (transaction.IsRecurring)
                                             {
-                                                <span class="badge bg-info text-white ms-1">
-                                                    <i class="fas fa-sync-alt me-1"></i>Otomatik
-                                                </span>
+                                                <br><small class="text-info"><i class="fas fa-sync-alt me-1"></i>Otomatik İşlem</small>
                                             }
-                                    </p>
-                                </div>
-                                <div class="col-auto text-end">
-                                    <h6
-                                        class="mb-0 @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "text-success" : "text-danger")">
-                                        @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" :
-                                                                            "-")₺@transaction.Amount.ToString("N2")
-                                        </h6>
-                                        <div class="btn-group">
-                                            <a asp-controller="Transaction" asp-action="Details" asp-route-id="@transaction.Id"
-                                                class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id"
-                                                class="btn btn-sm btn-outline-warning">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body empty-state">
-                            <i class="fas fa-receipt fa-3x mb-3"></i>
-                            <h5>Henüz işlem bulunmuyor</h5>
-                            <p>Bu hesapta henüz hiç işlem yapılmamış.</p>
-                            <a asp-controller="Transaction" asp-action="Create" asp-route-accountId="@Model.Id"
-                                class="btn btn-apple">
-                                <i class="fas fa-plus me-2"></i>İlk İşlemi Ekle
-                            </a>
-                        </div>
+                                        </td>
+                                        <td>
+                                            @if (transaction.Category != null)
+                                            {
+                                                <span class="badge bg-light text-dark">@transaction.Category.Name</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a asp-controller="Transaction" asp-action="Details" asp-route-id="@transaction.Id"
+                                                    class="btn-view-action btn-sm" title="Detay">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id"
+                                                    class="btn-edit-action btn-sm" title="Düzenle">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="installment-card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-history me-2"></i>
+                        İşlem Geçmişi
+                    </h4>
+                </div>
+                <div class="card-body empty-state">
+                    <i class="fas fa-receipt fa-3x mb-3"></i>
+                    <h5>Henüz işlem bulunmuyor</h5>
+                    <p>Bu hesapta henüz hiç işlem yapılmamış.</p>
+                    <a asp-controller="Transaction" asp-action="Create" asp-route-accountId="@Model.Id"
+                        class="btn-primary-action">
+                        <i class="fas fa-plus me-2"></i>İlk İşlemi Ekle
+                    </a>
+                </div>
+            </div>
+        }
             </div>
         </div>
     </div>
@@ -289,7 +319,7 @@
                         text: '@Html.Raw(TempData["Success"])',
                         timer: 3000,
                         showConfirmButton: false
-                            });
+                                                                    });
                     </text>
             }
 
@@ -300,7 +330,7 @@
                             icon: 'error',
                         title: 'Hata!',
                         text: '@Html.Raw(TempData["Error"])'
-                            });
+                                                                    });
                     </text>
             }
         </script>

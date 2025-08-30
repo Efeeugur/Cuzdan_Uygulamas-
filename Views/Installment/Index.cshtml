@@ -3,189 +3,10 @@
     ViewData["Title"] = "Taksitli Alışverişler";
 }
 
-<style>
-    :root {
-        --bg: #f5f5f7;
-        --card: #ffffff;
-        --text: #1d1d1f;
-        --muted: #6e6e73;
-        --blue: #007aff;
-        --green: #28a745;
-        --red: #dc3545;
-        --orange: #ff9500;
-        --border: rgba(0, 0, 0, 0.08);
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        --radius: 16px;
-    }
-
-    body {
-        background: var(--bg);
-        color: var(--text);
-    }
-
-    /* Header */
-    .installment-header {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 24px;
-        margin-bottom: 24px;
-    }
-
-    /* Cards */
-    .installment-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color .2s ease;
-        margin-bottom: 16px;
-        overflow: hidden;
-    }
-
-    .installment-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-        border-color: color-mix(in srgb, var(--blue) 20%, var(--border));
-    }
-
-    .installment-card.completed {
-        opacity: .9;
-        border-left: 4px solid var(--green);
-    }
-
-    .installment-card.active {
-        border-left: 4px solid var(--blue);
-    }
-
-    .installment-card.overdue {
-        border-left: 4px solid var(--red);
-    }
-
-    /* Progress */
-    .progress-bar-custom {
-        height: 8px;
-        background-color: #e9ecef;
-        border-radius: 6px;
-        overflow: hidden;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--blue), var(--green));
-        transition: width 0.3s ease;
-    }
-
-    /* Apple-esque action buttons (satır içi) */
-    .btn-action {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        height: 36px;
-        padding: 0 12px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        background: #f6f7fa;
-        color: var(--text);
-        font-weight: 600;
-        line-height: 1;
-        transition: background .2s ease, transform .04s ease, border-color .2s ease;
-    }
-
-    .btn-action i {
-        font-size: 14px;
-    }
-
-    .btn-action:hover {
-        background: color-mix(in srgb, var(--text) 7%, #f6f7fa);
-    }
-
-    .btn-action:active {
-        transform: translateY(1px);
-    }
-
-    .btn-action--primary {
-        border-color: color-mix(in srgb, var(--blue) 40%, var(--border));
-        background: #eef6ff;
-        color: #0b60d1;
-    }
-
-    .btn-action--primary:hover {
-        background: #e3f0ff;
-    }
-
-    .btn-action--success {
-        border-color: color-mix(in srgb, var(--green) 40%, var(--border));
-        background: #edf9f1;
-        color: #197a3a;
-    }
-
-    .btn-action--success:hover {
-        background: #e3f6eb;
-    }
-
-    .btn-action--warn {
-        border-color: color-mix(in srgb, #f59e0b 40%, var(--border));
-        background: #fff8ee;
-        color: #a16207;
-    }
-
-    .btn-action--warn:hover {
-        background: #fff3e1;
-    }
-
-    .btn-action--danger {
-        border-color: color-mix(in srgb, var(--red) 40%, var(--border));
-        background: #fff6f6;
-        color: #b91c1c;
-    }
-
-    .btn-action--danger:hover {
-        background: #ffecec;
-    }
-
-    .actions-stack {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        align-items: flex-end;
-    }
-
-    /* Badges */
-    .status-badge {
-        padding: 4px 12px;
-        border-radius: 999px;
-        font-size: 0.85rem;
-        font-weight: 700;
-        border: 1px solid var(--border);
-    }
-
-    .status-active {
-        background: #eaf3ff;
-        color: #0b60d1;
-    }
-
-    .status-completed {
-        background: #e8f5e8;
-        color: #388e3c;
-    }
-
-    .status-overdue {
-        background: #ffefef;
-        color: #c62828;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--muted);
-    }
-</style>
 
 <div class="container-fluid px-4">
     <!-- Header -->
-    <div class="installment-header">
+    <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
                 <h2 class="mb-0">🛒 Taksitli Alışverişler</h2>
@@ -193,11 +14,8 @@
             </div>
             <div class="col-auto">
                 <div class="btn-group">
-                    <a asp-action="Create" class="btn btn-apple">
+                    <a asp-action="Create" class="btn-primary-action">
                         <i class="fas fa-plus me-2"></i>Yeni Taksit
-                    </a>
-                    <a asp-action="Active" class="btn btn-action btn-action--primary"></a>
-                    <i class="fas fa-list"></i><span>Aktif Taksitler</span>
                     </a>
                 </div>
             </div>
@@ -253,6 +71,7 @@
         <div class="col-12">
             @if (Model.Any())
             {
+                <div class="item-list">
                 @foreach (var installment in Model.OrderBy(i => i.NextPaymentDate))
                 {
                     var progressPercentage = installment.TotalInstallments > 0
@@ -263,115 +82,106 @@
                     var cardClass = installment.IsCompleted ? "completed" :
                     (installment.NextPaymentDate < DateTime.Now ? "overdue" : "active");
 
-                    <div class="installment-card @cardClass">
-                        <div class="card-body">
-                            <div class="row align-items-center g-3">
-                                <div class="col">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <h5 class="mb-0 me-3">@installment.Description</h5>
+                    <div class="item-card item-card--installment @cardClass">
+                        <div class="item-inner">
+                            <!-- Avatar with Progress Ring -->
+                            <div class="item-avatar item-avatar--installment" data-progress="@progressPercentage.ToString("F1")">
+                                <div class="progress-ring">
+                                    <svg class="progress-ring__svg" width="44" height="44">
+                                        <circle class="progress-ring__circle-bg" cx="22" cy="22" r="18"/>
+                                        <circle class="progress-ring__circle" cx="22" cy="22" r="18" 
+                                                style="stroke-dasharray: @(2 * Math.PI * 18); stroke-dashoffset: @(2 * Math.PI * 18 * (100 - progressPercentage) / 100);"/>
+                                    </svg>
+                                    <div class="progress-ring__icon">
                                         @if (installment.IsCompleted)
                                         {
-                                            <span class="status-badge status-completed">
-                                                <i class="fas fa-check me-1"></i>Tamamlandı
-                                            </span>
+                                            <i class="fas fa-check"></i>
                                         }
                                         else if (installment.NextPaymentDate < DateTime.Now)
                                         {
-                                            <span class="status-badge status-overdue">
-                                                <i class="fas fa-exclamation-triangle me-1"></i>Gecikmiş
-                                            </span>
+                                            <i class="fas fa-exclamation-triangle"></i>
                                         }
                                         else
                                         {
-                                            <span class="status-badge status-active">
-                                                <i class="fas fa-clock me-1"></i>Aktif
-                                            </span>
+                                            <i class="fas fa-credit-card"></i>
                                         }
                                     </div>
+                                </div>
+                            </div>
 
-                                    <div class="row mb-2">
-                                        <div class="col-md-3 col-6">
-                                            <small class="text-muted d-block">Toplam Tutar</small>
-                                            <strong>₺@installment.TotalAmount.ToString("N2")</strong>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <small class="text-muted d-block">Aylık Ödeme</small>
-                                            <strong>₺@installment.MonthlyPayment.ToString("N2")</strong>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <small class="text-muted d-block">Kalan Taksit</small>
-                                            <strong>@installment.RemainingInstallments / @installment.TotalInstallments</strong>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <small class="text-muted d-block">Sonraki Ödeme</small>
-                                            <strong>@installment.NextPaymentDate.ToString("dd MMM yyyy")</strong>
-                                        </div>
-                                    </div>
-
-                                    <!-- Progress -->
-                                    <div class="progress-bar-custom mb-2">
-                                        <div class="progress-fill" style="width:@(progressPercentage.ToString("F1"))%"></div>
-                                    </div>
-                                    <small class="text-muted">
-                                        %@(progressPercentage.ToString("F1")) tamamlandı
-                                        • Ödenen: ₺@installment.TotalPaid.ToString("N2")
-                                        • Kalan: ₺@installment.RemainingAmount.ToString("N2")
-                                    </small>
-
+                            <!-- Content -->
+                            <div class="item-content">
+                                <p class="title">@installment.Description</p>
+                                <p class="meta">
+                                    @installment.RemainingInstallments / @installment.TotalInstallments taksit kaldı
+                                    • ₺@installment.MonthlyPayment.ToString("N2") aylık
                                     @if (installment.Category != null)
                                     {
-                                        <div class="mt-2">
-                                            <span class="badge bg-light text-dark">
-                                                <i class="fas fa-tag me-1"></i>@installment.Category.Name
-                                            </span>
-                                        </div>
+                                        <span class="item-chip"><i class="fas fa-tag"></i> @installment.Category.Name</span>
                                     }
-                                </div>
-
-                                <!-- Actions -->
-                                <div class="col-auto">
-                                    <div class="actions-stack">
-                                        @if (!installment.IsCompleted)
-                                        {
-                                            <a asp-action="Pay" asp-route-id="@installment.Id"
-                                                class="btn-action btn-action--success" title="Ödeme Yap">
-                                                <i class="fas fa-credit-card"></i><span>Ödeme Yap</span>
-                                            </a>
-                                        }
-                                        <a asp-action="Details" asp-route-id="@installment.Id"
-                                            class="btn-action btn-action--primary" title="Detay">
-                                            <i class="fas fa-eye"></i><span>Detay</span>
-                                        </a>
-
-                                        <div class="dropdown">
-                                            <button class="btn-action" data-bs-toggle="dropdown" aria-expanded="false"
-                                                title="Diğer">
-                                                <i class="fas fa-cog"></i><span>Diğer</span>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li>
-                                                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@installment.Id">
-                                                        <i class="fas fa-edit me-2"></i>Düzenle
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <hr class="dropdown-divider" />
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item text-danger" href="#"
-                                                        onclick="deleteInstallment(@installment.Id)">
-                                                        <i class="fas fa-trash me-2"></i>Sil
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                    @if (installment.IsCompleted)
+                                    {
+                                        <span class="item-chip item-chip--success"><i class="fas fa-check"></i> Tamamlandı</span>
+                                    }
+                                    else if (installment.NextPaymentDate < DateTime.Now)
+                                    {
+                                        <span class="item-chip item-chip--danger"><i class="fas fa-exclamation-triangle"></i> Gecikmiş</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="item-chip item-chip--primary"><i class="fas fa-clock"></i> @installment.NextPaymentDate.ToString("dd MMM")</span>
+                                    }
+                                </p>
+                                
+                                <!-- Interactive Progress Bar -->
+                                <div class="installment-progress" data-percentage="@progressPercentage.ToString("F1")" 
+                                     data-paid="@installment.TotalPaid.ToString("N2")" 
+                                     data-remaining="@installment.RemainingAmount.ToString("N2")">
+                                    <div class="progress-bar-interactive">
+                                        <div class="progress-fill-interactive" style="width: @(progressPercentage.ToString("F1"))%"></div>
+                                        <div class="progress-tooltip">
+                                            <strong>@(progressPercentage.ToString("F1"))% tamamlandı</strong><br>
+                                            Ödenen: ₺@installment.TotalPaid.ToString("N2")<br>
+                                            Kalan: ₺@installment.RemainingAmount.ToString("N2")
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /Actions -->
+                            </div>
+
+                            <!-- Amount -->
+                            <div class="item-amount">
+                                <p class="value">₺@installment.TotalAmount.ToString("N2")</p>
+                                <small class="text-muted">toplam</small>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="item-actions">
+                                @if (!installment.IsCompleted)
+                                {
+                                    <a asp-action="Pay" asp-route-id="@installment.Id"
+                                        class="btn-success-action btn-sm" title="Ödeme Yap">
+                                        <i class="fas fa-credit-card"></i><span>Ödeme Yap</span>
+                                    </a>
+                                }
+                                <a asp-action="Details" asp-route-id="@installment.Id"
+                                    class="btn-view-action btn-sm" title="Detay">
+                                    <i class="fas fa-eye"></i><span>Detay</span>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@installment.Id"
+                                    class="btn-edit-action btn-sm" title="Düzenle">
+                                    <i class="fas fa-edit"></i><span>Düzenle</span>
+                                </a>
+                                <button type="button"
+                                        class="btn-danger-action btn-sm"
+                                        onclick="deleteInstallment(@installment.Id)"
+                                        title="Sil">
+                                    <i class="fas fa-trash"></i><span>Sil</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                 }
+                </div> <!-- /.item-list -->
             }
             else
             {
@@ -380,7 +190,7 @@
                         <i class="fas fa-shopping-cart fa-4x mb-3"></i>
                         <h4>Henüz taksit bulunmuyor</h4>
                         <p>İlk taksitli alışverişinizi ekleyerek başlayın.</p>
-                        <a asp-action="Create" class="btn btn-apple">
+                        <a asp-action="Create" class="btn-primary-action">
                             <i class="fas fa-plus me-2"></i>İlk Taksitimi Ekle
                         </a>
                     </div>
@@ -393,58 +203,28 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function deleteInstallment(id) {
-            Swal.fire({
-                title: 'Taksit Silinecek',
-                text: 'Bu işlem geri alınamaz!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Evet, Sil',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '/Installment/Delete/' + id;
-
-                    const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
-                    if (tokenInput) {
-                        const token = document.createElement('input');
-                        token.type = 'hidden';
-                        token.name = '__RequestVerificationToken';
-                        token.value = tokenInput.value;
-                        form.appendChild(token);
-                    }
-
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-        }
-
         @if (TempData["Success"] != null)
-            {
-                <text>
-                    Swal.fire({
-                        icon: 'success',
-                    title: 'Başarılı!',
-                    text: '@Html.Raw(TempData["Success"])',
-                    timer: 3000,
-                    showConfirmButton: false
-                                                                            });
-                </text>
+        {
+            <text>
+            Swal.fire({
+                icon: 'success',
+                title: 'Başarılı!',
+                text: '@Html.Raw(TempData["Success"])',
+                timer: 3000,
+                showConfirmButton: false
+            });
+            </text>
         }
-            @if (TempData["Error"] != null)
-            {
-                <text>
-                    Swal.fire({
-                        icon: 'error',
-                    title: 'Hata!',
-                    text: '@Html.Raw(TempData["Error"])'
-                                                                            });
-                </text>
+        
+        @if (TempData["Error"] != null)
+        {
+            <text>
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: '@Html.Raw(TempData["Error"])'
+            });
+            </text>
         }
     </script>
 }

@@ -11,16 +11,13 @@ public class WalletController : Controller
 {
     private readonly IAccountService _accountService;
     private readonly ITransactionService _transactionService;
-    private readonly ICategoryService _categoryService;
 
     public WalletController(
         IAccountService accountService,
-        ITransactionService transactionService,
-        ICategoryService categoryService)
+        ITransactionService transactionService)
     {
         _accountService = accountService;
         _transactionService = transactionService;
-        _categoryService = categoryService;
     }
 
     private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;

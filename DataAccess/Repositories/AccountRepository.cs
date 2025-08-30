@@ -15,6 +15,7 @@ public class AccountRepository : Repository<Account>, IAccountRepository
     {
         return await _dbSet
             .Where(a => a.UserId == userId)
+            .Include(a => a.Transactions) // Include transactions for proper calculation
             .OrderBy(a => a.Name)
             .ToListAsync();
     }
@@ -23,7 +24,6 @@ public class AccountRepository : Repository<Account>, IAccountRepository
     {
         return await _dbSet
             .Include(a => a.Transactions)
-                .ThenInclude(t => t.Category)
             .FirstOrDefaultAsync(a => a.Id == accountId);
     }
 

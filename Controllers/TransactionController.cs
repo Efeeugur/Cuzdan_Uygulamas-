@@ -271,4 +271,26 @@ public class TransactionController : Controller
                filter.IsRecurring.HasValue ||
                !string.IsNullOrWhiteSpace(filter.Search);
     }
+
+    // API endpoints for dynamic category loading
+    [HttpGet]
+    public IActionResult GetCategoriesByType(string type)
+    {
+        IEnumerable<SelectListItem> categories = type?.ToLower() switch
+        {
+            "income" => _simpleCategoryService.GetIncomeCategories(),
+            "expense" => _simpleCategoryService.GetExpenseCategories(),
+            _ => new List<SelectListItem>()
+        };
+
+        var result = categories.Select(c => new { value = c.Value, text = c.Text }).ToArray();
+        return Json(result);
+    }
+
+    [HttpGet]
+    public IActionResult GetAllCategoriesByType()
+    {
+        var result = _simpleCategoryService.GetCategoriesByType();
+        return Json(result);
+    }
 }

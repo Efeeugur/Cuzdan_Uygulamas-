@@ -247,7 +247,7 @@
                         <p class="small text-muted mb-0">Alışveriş, fatura vb.</p>
                     </div>
                 </div>
-                <input asp-for="Type" type="hidden" id="transactionType" />
+                <input asp-for="Type" type="hidden" id="Type" />
 
                 <div class="row">
                     <div class="col-md-8 mb-4">
@@ -285,7 +285,7 @@
                         <label asp-for="CategoryId" class="form-label">
                             <i class="fas fa-tags form-icon"></i>Kategori
                         </label>
-                        <select asp-for="CategoryId" asp-items="categories" class="form-select">
+                        <select asp-for="CategoryId" asp-items="categories" class="form-select" id="CategoryId">
                             <option value="">Kategori seçin (isteğe bağlı)</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -328,12 +328,12 @@
 
                 <div class="row mt-4">
                     <div class="col-md-6 mb-2">
-                        <a asp-action="Index" class="btn btn-secondary-custom w-100">
+                        <a asp-action="Index" class="btn-secondary-action w-100">
                             <i class="fas fa-arrow-left me-2"></i>İptal Et
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn-apple">
+                        <button type="submit" class="btn-primary-action w-100">
                             <i class="fas fa-save me-2"></i>İşlemi Kaydet
                         </button>
                     </div>
@@ -356,13 +356,16 @@
             // Focus on description
             document.querySelector('input[name="Description"]').focus();
 
+            // Initialize dynamic category filtering
+            initializeCategoryFiltering();
+
             // Default to expense
             selectTransactionType(1);
         });
 
         function selectTransactionType(type) {
             const options = document.querySelectorAll('.type-option');
-            const typeInput = document.getElementById('transactionType');
+            const typeInput = document.getElementById('Type');
             
             options.forEach(option => option.classList.remove('selected'));
             
@@ -372,6 +375,11 @@
             } else { // Expense
                 options[1].classList.add('selected');
                 typeInput.value = 1;
+            }
+            
+            // Trigger category update after setting the type
+            if (window.updateCategoryOptionsFromType) {
+                window.updateCategoryOptionsFromType();
             }
         }
 

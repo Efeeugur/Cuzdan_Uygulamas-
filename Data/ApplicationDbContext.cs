@@ -12,7 +12,6 @@ public class ApplicationDbContext : IdentityDbContext<User>
     }
 
     public DbSet<Account> Accounts { get; set; }
-    public DbSet<Category> Categories { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     public DbSet<Installment> Installments { get; set; }
 
@@ -42,20 +41,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
             entity.HasIndex(e => e.UserId);
         });
 
-        builder.Entity<Category>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.Color).HasMaxLength(7);
-
-            entity.HasOne(e => e.User)
-                .WithMany()
-                .HasForeignKey(e => e.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasIndex(e => e.UserId);
-        });
+        // Note: Category entity is kept for backward compatibility but no longer used for database storage
+        // SimpleCategoryService provides predefined categories (1-35) without database storage
 
         builder.Entity<Transaction>(entity =>
         {
@@ -73,8 +60,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
                 .HasForeignKey(e => e.AccountId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // CategoryId is used for SimpleCategoryService categories (1-35) that don't exist in database
-            // No foreign key constraint to allow these predefined categories
+            // CategoryId references SimpleCategoryService predefined categories (1-35)
+            // No foreign key constraint - these categories don't exist in database
             entity.Property(e => e.CategoryId).IsRequired(false);
 
             entity.HasOne(e => e.Installment)
@@ -99,8 +86,8 @@ public class ApplicationDbContext : IdentityDbContext<User>
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Note: CategoryId foreign key is not configured to allow SimpleCategoryService categories (1-35)
-            // that don't exist in the database. Navigation property Category will be null for these.
+            // CategoryId references SimpleCategoryService predefined categories (1-35)
+            // No foreign key constraint - these categories don't exist in database
             entity.Property(e => e.CategoryId).IsRequired(false);
 
             entity.HasIndex(e => e.UserId);

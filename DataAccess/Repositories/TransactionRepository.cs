@@ -16,7 +16,6 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
         return await _dbSet
             .Where(t => t.UserId == userId)
             .Include(t => t.Account)
-            .Include(t => t.Category)
             .Include(t => t.Installment)
             .OrderByDescending(t => t.TransactionDate)
             .ToListAsync();
@@ -26,7 +25,6 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
     {
         return await _dbSet
             .Where(t => t.AccountId == accountId)
-            .Include(t => t.Category)
             .Include(t => t.Installment)
             .OrderByDescending(t => t.TransactionDate)
             .ToListAsync();
@@ -49,7 +47,6 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
                        t.TransactionDate >= startDate && 
                        t.TransactionDate <= endDate)
             .Include(t => t.Account)
-            .Include(t => t.Category)
             .Include(t => t.Installment)
             .OrderByDescending(t => t.TransactionDate)
             .ToListAsync();
@@ -60,7 +57,6 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
         return await _dbSet
             .Where(t => t.IsRecurring && t.NextRecurrenceDate <= DateTime.UtcNow)
             .Include(t => t.Account)
-            .Include(t => t.Category)
             .ToListAsync();
     }
 
@@ -83,7 +79,6 @@ public class TransactionRepository : Repository<Transaction>, ITransactionReposi
         return await _dbSet
             .Where(t => t.UserId == userId)
             .Include(t => t.Account)
-            .Include(t => t.Category)
             .Include(t => t.Installment)
             .OrderByDescending(t => t.TransactionDate)
             .ToListAsync();

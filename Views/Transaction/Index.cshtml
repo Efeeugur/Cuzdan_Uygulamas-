@@ -9,196 +9,17 @@
     var filterRecurringOptions = ViewBag.FilterRecurringOptions as Microsoft.AspNetCore.Mvc.Rendering.SelectList;
 }
 
-<style>
-    :root {
-        --bg: #f5f5f7;
-        --card: #ffffff;
-        --text: #1d1d1f;
-        --muted: #6e6e73;
-        --blue: #007aff;
-        --green: #28a745;
-        --red: #dc3545;
-        --border: rgba(0, 0, 0, 0.08);
-        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        --radius: 16px;
-    }
-
-    .transaction-header {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 24px;
-        margin-bottom: 24px;
-    }
-
-    .transaction-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        margin-bottom: 12px;
-    }
-
-    .transaction-card:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .btn-apple {
-        background: #000;
-        color: white;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 20px;
-        font-weight: 600;
-        transition: all 0.2s ease;
-    }
-    .btn-apple:hover { background: #333; color: white; transform: translateY(-1px); }
-
-    .income-indicator { color: var(--green); }
-    .expense-indicator { color: var(--red); }
-
-    .empty-state {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--muted);
-    }
-
-    .filter-form .form-label {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: var(--text);
-        margin-bottom: 0.5rem;
-    }
-    .filter-form .form-control,
-    .filter-form .form-select {
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 8px 12px;
-        font-size: 0.9rem;
-        background: var(--card);
-        color: var(--text);
-    }
-    .filter-form .form-control:focus,
-    .filter-form .form-select:focus {
-        outline: none;
-        border-color: var(--blue);
-        box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
-    }
-
-    .filter-active {
-        background: linear-gradient(135deg, #007aff, #5ac8fa) !important;
-        color: white !important;
-    }
-
-    .transaction-count {
-        font-size: 0.9rem;
-        color: var(--muted);
-        font-style: italic;
-    }
-
-    /* ==== Apple-esque Transactions List ==== */
-    .txn-list{ display:grid; gap:12px; }
-    .txn-item{
-        background:var(--card);
-        border:1px solid var(--border);
-        border-radius:16px;
-        box-shadow:var(--shadow);
-        transition:transform .12s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .txn-item:hover{
-        transform:translateY(-1px);
-        box-shadow:0 16px 50px rgba(0,0,0,.12);
-        border-color:color-mix(in srgb, var(--blue) 20%, var(--border));
-    }
-    .txn-inner{
-        display:grid;
-        grid-template-columns:auto 1fr auto;
-        gap:14px;
-        align-items:center;
-        padding:12px 14px;
-    }
-    .txn-avatar{
-        width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-        color:#fff;font-size:18px;
-    }
-    .txn-income{ background:linear-gradient(135deg,#22c55e,#16a34a); }
-    .txn-expense{ background:linear-gradient(135deg,#ef4444,#dc2626); }
-
-    .txn-title{ margin:0 0 2px; font-weight:700; letter-spacing:-.01em; }
-    .txn-meta{
-        margin:0; color:var(--muted); font-size:.9rem;
-        display:flex; align-items:center; gap:6px; flex-wrap:wrap;
-    }
-    .txn-chip{
-        display:inline-flex; align-items:center; gap:6px;
-        padding:3px 8px; border-radius:999px;
-        background:#eef0f3; color:#111; border:1px solid var(--border);
-        font-size:.75rem; font-weight:600;
-    }
-
-    .txn-amount{
-        text-align:right;
-        min-width:160px;           /* aksiyonlar için alan */
-        display:flex;
-        flex-direction:column;
-        align-items:flex-end;
-        gap:6px;
-    }
-    .txn-amount .num{ margin:0; font-weight:800; letter-spacing:-.02em; }
-    .txn-pos{ color:var(--green); }
-    .txn-neg{ color:var(--red); }
-
-    /* Aksiyon butonları */
-    .txn-actions{ display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
-
-    .btn-action{
-        display:inline-flex; align-items:center; gap:8px;
-        height:36px; padding:0 12px;
-        border-radius:12px; border:1px solid var(--border);
-        background:#f6f7fa; color:var(--text);
-        font-weight:600; line-height:1;
-        transition:background .2s ease, transform .04s ease, border-color .2s ease, color .2s ease;
-    }
-    .btn-action i{ font-size:14px; }
-    .btn-action:hover{ background:color-mix(in srgb, var(--text) 7%, #f6f7fa); }
-    .btn-action:active{ transform:translateY(1px); }
-
-    .btn-action--warn{
-        border-color:color-mix(in srgb, #f59e0b 40%, var(--border));
-        background:#fff8ee; color:#a16207;
-    }
-    .btn-action--warn:hover{ background:#fff3e1; border-color:#f59e0b; }
-
-    .btn-action--danger{
-        border-color:color-mix(in srgb, var(--red) 40%, var(--border));
-        background:#fff6f6; color:#b91c1c;
-    }
-    .btn-action--danger:hover{ background:#ffecec; border-color:var(--red); }
-
-    /* Eski “soft” buton (liste dışında kullanmak isterseniz) */
-    .btn-soft{
-        border:1px solid var(--border); background:transparent; color:var(--text);
-        border-radius:12px; height:36px; padding:0 12px; font-weight:600;
-        transition:background .2s ease, transform .04s ease, border-color .2s ease;
-    }
-    .btn-soft:hover{ background:color-mix(in srgb, var(--text) 6%, transparent); }
-    .btn-soft:active{ transform:translateY(1px); }
-
-</style>
 
 <div class="container-fluid px-4">
     <!-- Header -->
-    <div class="transaction-header">
+    <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
                 <h2 class="mb-0">📊 Gelir/Gider İşlemleri</h2>
                 <p class="text-muted mb-0">Tüm finansal işlemlerinizi görüntüleyin ve yönetin</p>
             </div>
             <div class="col-auto">
-                <a asp-action="Create" class="btn btn-apple">
+                <a asp-action="Create" class="btn-primary-action">
                     <i class="fas fa-plus me-2"></i>Yeni İşlem
                 </a>
             </div>
@@ -270,54 +91,54 @@
 
         @if (Model.Any())
         {
-          <div class="txn-list">
+          <div class="item-list">
             @foreach (var transaction in Model)
             {
               var isIncome = transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income;
-              <div class="txn-item">
-                <div class="txn-inner">
+              <div class="item-card">
+                <div class="item-inner">
                   <!-- Avatar -->
-                  <div class="txn-avatar @(isIncome ? "txn-income" : "txn-expense")" aria-hidden="true">
+                  <div class="item-avatar @(isIncome ? "item-avatar--income" : "item-avatar--expense")" aria-hidden="true">
                     <i class="fas @(isIncome ? "fa-arrow-up" : "fa-arrow-down")"></i>
                   </div>
 
                   <!-- Meta -->
-                  <div>
-                    <p class="txn-title">@transaction.Description</p>
-                    <p class="txn-meta">
+                  <div class="item-content">
+                    <p class="title">@transaction.Description</p>
+                    <p class="meta">
                       @transaction.Account?.Name
                       @if (transaction.Category != null)
                       {
-                        <span class="txn-chip"><i class="fas fa-tag"></i> @transaction.Category.Name</span>
+                        <span class="item-chip"><i class="fas fa-tag"></i> @transaction.Category.Name</span>
                       }
                       @if (transaction.IsRecurring)
                       {
-                        <span class="txn-chip"><i class="fas fa-sync-alt"></i> Otomatik</span>
+                        <span class="item-chip"><i class="fas fa-sync-alt"></i> Otomatik</span>
                       }
                       • @transaction.TransactionDate.ToString("dd MMMM yyyy, HH:mm")
                     </p>
                   </div>
 
                   <!-- Amount & actions -->
-                  <div class="txn-amount">
-                    <p class="num @(isIncome ? "txn-pos" : "txn-neg")">
+                  <div class="item-amount">
+                    <p class="value @(isIncome ? "positive" : "negative")">
                       @(isIncome ? "+" : "-")₺@transaction.Amount.ToString("N2")
                     </p>
-                    <div class="txn-actions">
+                    <div class="item-actions">
                       <a asp-action="Details"
                          asp-route-id="@transaction.Id"
-                         class="btn-action"
+                         class="btn-view-action"
                          title="Detay">
                         <i class="fas fa-eye"></i><span>Detay</span>
                       </a>
                       <a asp-action="Edit"
                          asp-route-id="@transaction.Id"
-                         class="btn-action btn-action--warn"
+                         class="btn-edit-action"
                          title="Düzenle">
                         <i class="fas fa-edit"></i><span>Düzenle</span>
                       </a>
                       <button type="button"
-                              class="btn-action btn-action--danger"
+                              class="btn-danger-action"
                               onclick="deleteTransaction(@transaction.Id)"
                               title="Sil">
                         <i class="fas fa-trash"></i><span>Sil</span>
@@ -343,7 +164,7 @@
               <i class="fas fa-receipt fa-4x mb-3"></i>
               <h4>Henüz işlem bulunmuyor</h4>
               <p>İlk gelir veya gider işleminizi oluşturarak başlayın.</p>
-              <a asp-action="Create" class="btn btn-apple">
+              <a asp-action="Create" class="btn-primary-action">
                 <i class="fas fa-plus me-2"></i>İlk İşlemimi Ekle
               </a>
             </div>
@@ -356,36 +177,6 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function deleteTransaction(id) {
-            Swal.fire({
-                title: 'İşlem Silinecek',
-                text: 'Bu işlem geri alınamaz ve hesap bakiyesi güncellenecek!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Evet, Sil',
-                cancelButtonText: 'İptal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '/Transaction/Delete/' + id;
-
-                    const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
-                    if (tokenInput) {
-                        const token = document.createElement('input');
-                        token.type = 'hidden';
-                        token.name = '__RequestVerificationToken';
-                        token.value = tokenInput.value;
-                        form.appendChild(token);
-                    }
-
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-        }
 
         // Success/Error messages
         @if (TempData["Success"] != null)

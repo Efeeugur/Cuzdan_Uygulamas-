@@ -33,10 +33,8 @@ public class TransactionService : ITransactionService
 
     public async Task<IEnumerable<TransactionDto>> GetTransactionsByCategoryIdAsync(int categoryId, string userId)
     {
-        var category = await _unitOfWork.Categories.FirstOrDefaultAsync(c => c.Id == categoryId && c.UserId == userId);
-        if (category == null)
-            return Enumerable.Empty<TransactionDto>();
-
+        // CategoryId now refers to SimpleCategoryService categories (1-35)
+        // No database validation needed for predefined categories
         var transactions = await _unitOfWork.Transactions.GetTransactionsByCategoryIdAsync(categoryId);
         return transactions.Select(t => t.ToDto());
     }
@@ -166,15 +164,10 @@ public class TransactionService : ITransactionService
 
         if (createTransactionDto.CategoryId.HasValue)
         {
-            // Check if it's a hardcoded category (SimpleCategoryService) or database category
-            // SimpleCategoryService uses categories with IDs 1-25
-            if (createTransactionDto.CategoryId.Value > 25)
+            // Validate SimpleCategoryService categories (1-35)
+            if (createTransactionDto.CategoryId.Value < 1 || createTransactionDto.CategoryId.Value > 35)
             {
-                var category = await _unitOfWork.Categories.FirstOrDefaultAsync(
-                    c => c.Id == createTransactionDto.CategoryId && c.UserId == userId);
-
-                if (category == null)
-                    throw new InvalidOperationException("Category not found or access denied.");
+                throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
             }
         }
 

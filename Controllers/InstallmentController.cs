@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.DTOs;
+using Cüzdan_Uygulaması.BusinessLogic.Services;
 
 namespace Cüzdan_Uygulaması.Controllers;
 
@@ -11,16 +12,13 @@ namespace Cüzdan_Uygulaması.Controllers;
 public class InstallmentController : Controller
 {
     private readonly IInstallmentService _installmentService;
-    private readonly ICategoryService _categoryService;
     private readonly IAccountService _accountService;
 
     public InstallmentController(
         IInstallmentService installmentService,
-        ICategoryService categoryService,
         IAccountService accountService)
     {
         _installmentService = installmentService;
-        _categoryService = categoryService;
         _accountService = accountService;
     }
 
@@ -283,44 +281,14 @@ public class InstallmentController : Controller
 
     private async Task PopulateDropdownsAsync(string userId)
     {
-        // Populate categories (both database and SimpleCategoryService categories)
-        var dbCategories = await _categoryService.GetCategoriesByUserIdAsync(userId);
-        var categoryList = new List<SelectListItem>();
-        
-        // Add database categories
-        foreach (var category in dbCategories)
-        {
-            categoryList.Add(new SelectListItem 
-            { 
-                Value = category.Id.ToString(), 
-                Text = category.Name 
-            });
-        }
-        
-        // Add SimpleCategoryService installment categories (26-35)
-        var installmentCategoryNames = new Dictionary<int, string>
-        {
-            { 26, "Elektronik Taksiti" },
-            { 27, "Mobilya Taksiti" },
-            { 28, "Beyaz Eşya Taksiti" },
-            { 29, "Otomobil Taksiti" },
-            { 30, "Kredi Kartı Taksiti" },
-            { 31, "Ev Eşyası Taksiti" },
-            { 32, "Teknoloji Taksiti" },
-            { 33, "Giyim Taksiti" },
-            { 34, "Eğitim Taksiti" },
-            { 35, "Diğer Taksitler" }
-        };
-        
-        foreach (var installmentCategory in installmentCategoryNames)
-        {
-            categoryList.Add(new SelectListItem 
-            { 
-                Value = installmentCategory.Key.ToString(), 
-                Text = installmentCategory.Value
-            });
-        }
+        // Use SimpleCategoryService for installment categories
+        var simpleCategoryService = new SimpleCategoryService();
+        var categoryList = simpleCategoryService.GetAllCategories().ToList();
         
         ViewBag.Categories = new SelectList(categoryList, "Value", "Text");
+        
+        // Populate accounts
+        var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
+        ViewBag.Accounts = new SelectList(accounts, "Id", "Name");
     }
 }

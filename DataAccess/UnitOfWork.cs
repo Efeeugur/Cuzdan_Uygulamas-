@@ -12,7 +12,6 @@ public class UnitOfWork : IUnitOfWork
 
     private IAccountRepository? _accounts;
     private ITransactionRepository? _transactions;
-    private ICategoryRepository? _categories;
     private IInstallmentRepository? _installments;
 
     public UnitOfWork(ApplicationDbContext context)
@@ -25,9 +24,6 @@ public class UnitOfWork : IUnitOfWork
 
     public ITransactionRepository Transactions =>
         _transactions ??= new TransactionRepository(_context);
-
-    public ICategoryRepository Categories =>
-        _categories ??= new CategoryRepository(_context);
 
     public IInstallmentRepository Installments =>
         _installments ??= new InstallmentRepository(_context);

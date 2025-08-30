@@ -159,13 +159,13 @@
             </div>
             <div class="col-auto">
                 <div class="btn-group">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-apple">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit-action">
                         <i class="fas fa-edit me-2"></i>Düzenle
                     </a>
-                    <a asp-action="Index" class="btn btn-outline-secondary">
+                    <a asp-action="Index" class="btn-secondary-action">
                         <i class="fas fa-arrow-left me-2"></i>Geri Dön
                     </a>
-                    <button class="btn btn-outline-danger" onclick="deleteTransaction(@Model.Id)">
+                    <button class="btn-danger-action" onclick="deleteTransaction(@Model.Id)">
                         <i class="fas fa-trash me-2"></i>Sil
                     </button>
                 </div>

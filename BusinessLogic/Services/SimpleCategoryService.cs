@@ -7,8 +7,10 @@ public interface ISimpleCategoryService
 {
     IEnumerable<SelectListItem> GetIncomeCategories();
     IEnumerable<SelectListItem> GetExpenseCategories();
+    IEnumerable<SelectListItem> GetInstallmentCategories();
     IEnumerable<SelectListItem> GetAllCategories();
     string GetCategoryName(int categoryId);
+    Dictionary<string, object> GetCategoriesByType();
 }
 
 public class SimpleCategoryService : ISimpleCategoryService
@@ -59,7 +61,17 @@ public class SimpleCategoryService : ISimpleCategoryService
 
     public IEnumerable<SelectListItem> GetExpenseCategories()
     {
-        return Categories.Where(c => c.Value.Type == CategoryType.Expense)
+        return Categories.Where(c => c.Value.Type == CategoryType.Expense && c.Key <= 25) // Regular expenses (11-20)
+                        .Select(c => new SelectListItem 
+                        { 
+                            Value = c.Key.ToString(), 
+                            Text = c.Value.Name 
+                        });
+    }
+
+    public IEnumerable<SelectListItem> GetInstallmentCategories()
+    {
+        return Categories.Where(c => c.Key >= 26 && c.Key <= 35) // Installment categories (26-35)
                         .Select(c => new SelectListItem 
                         { 
                             Value = c.Key.ToString(), 
@@ -75,6 +87,16 @@ public class SimpleCategoryService : ISimpleCategoryService
             Text = c.Value.Name,
             Group = new SelectListGroup { Name = c.Value.Type == CategoryType.Income ? "Gelir" : "Gider" }
         });
+    }
+
+    public Dictionary<string, object> GetCategoriesByType()
+    {
+        return new Dictionary<string, object>
+        {
+            ["income"] = GetIncomeCategories().Select(c => new { value = c.Value, text = c.Text }).ToArray(),
+            ["expense"] = GetExpenseCategories().Select(c => new { value = c.Value, text = c.Text }).ToArray(),
+            ["installment"] = GetInstallmentCategories().Select(c => new { value = c.Value, text = c.Text }).ToArray()
+        };
     }
 
     public string GetCategoryName(int categoryId)

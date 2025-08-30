@@ -15,7 +15,7 @@ public class InstallmentRepository : Repository<Installment>, IInstallmentReposi
     {
         return await _dbSet
             .Where(i => i.UserId == userId)
-            .Include(i => i.Category)
+            .Include(i => i.Transactions) // Include transactions for proper calculation
             .OrderByDescending(i => i.CreatedDate)
             .ToListAsync();
     }
@@ -24,7 +24,7 @@ public class InstallmentRepository : Repository<Installment>, IInstallmentReposi
     {
         return await _dbSet
             .Where(i => i.UserId == userId && i.Status == InstallmentStatus.Active)
-            .Include(i => i.Category)
+            .Include(i => i.Transactions) // Include transactions for proper calculation
             .OrderBy(i => i.NextPaymentDate)
             .ToListAsync();
     }
@@ -34,7 +34,6 @@ public class InstallmentRepository : Repository<Installment>, IInstallmentReposi
         return await _dbSet
             .Where(i => i.Status == InstallmentStatus.Active && i.NextPaymentDate <= dueDate)
             .Include(i => i.User)
-            .Include(i => i.Category)
             .ToListAsync();
     }
 
@@ -43,7 +42,6 @@ public class InstallmentRepository : Repository<Installment>, IInstallmentReposi
         return await _dbSet
             .Include(i => i.Transactions)
                 .ThenInclude(t => t.Account)
-            .Include(i => i.Category)
             .FirstOrDefaultAsync(i => i.Id == installmentId);
     }
 }
