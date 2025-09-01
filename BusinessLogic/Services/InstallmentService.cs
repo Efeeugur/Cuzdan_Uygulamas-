@@ -55,13 +55,10 @@ public class InstallmentService : IInstallmentService
         if (createInstallmentDto.InterestRate < 0)
             throw new ArgumentException("Interest rate cannot be negative.");
 
-        if (createInstallmentDto.CategoryId.HasValue)
+        // Validate SimpleCategoryService categories (26-35 for installments)
+        if (createInstallmentDto.CategoryId < 26 || createInstallmentDto.CategoryId > 35)
         {
-            // Validate SimpleCategoryService categories (1-35)
-            if (createInstallmentDto.CategoryId.Value < 1 || createInstallmentDto.CategoryId.Value > 35)
-            {
-                throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
-            }
+            throw new InvalidOperationException("Invalid category ID. Must be between 26 and 35 for installment categories.");
         }
 
         var installment = createInstallmentDto.ToEntity(userId);
@@ -87,10 +84,10 @@ public class InstallmentService : IInstallmentService
 
         if (updateInstallmentDto.CategoryId.HasValue)
         {
-            // Validate SimpleCategoryService categories (1-35)
-            if (updateInstallmentDto.CategoryId.Value < 1 || updateInstallmentDto.CategoryId.Value > 35)
+            // Validate SimpleCategoryService categories (26-35 for installments)
+            if (updateInstallmentDto.CategoryId.Value < 26 || updateInstallmentDto.CategoryId.Value > 35)
             {
-                throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
+                throw new InvalidOperationException("Invalid category ID. Must be between 26 and 35 for installment categories.");
             }
         }
 

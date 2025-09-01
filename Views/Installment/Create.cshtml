@@ -45,7 +45,8 @@
         color: var(--text);
     }
 
-    .form-control, .form-select {
+    .form-control,
+    .form-select {
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 12px 16px;
@@ -55,7 +56,8 @@
         color: var(--text);
     }
 
-    .form-control:focus, .form-select:focus {
+    .form-control:focus,
+    .form-select:focus {
         outline: none;
         border-color: var(--blue);
         box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
@@ -186,10 +188,15 @@
         <div class="form-body">
             <div class="installment-info">
                 <div class="d-flex align-items-center">
-                    <i class="fas fa-info-circle me-2"></i>
+                    <i class="fas fa-magic me-2"></i>
                     <div>
-                        <strong>Taksitli Ödeme Nedir?</strong>
-                        <div class="small">Büyük alışverişlerinizi aylık ödemeler halinde takip edin. Her ay otomatik olarak hatırlatma alacaksınız.</div>
+                        <strong>🎯 Akıllı Taksit Sistemi</strong>
+                        <div class="small">Kategori seçtiğinizde piyasa faiz oranı otomatik olarak belirlenir.
+                            İstediğiniz zaman manuel olarak değiştirebilirsiniz.</div>
+                        <div class="small mt-1">
+                            <strong>💡 İpucu:</strong> Farklı kategoriler için farklı faiz oranları uygulanır (örn:
+                            otomobil %0.99, elektronik %1.99).
+                        </div>
                     </div>
                 </div>
             </div>
@@ -203,8 +210,8 @@
                         <label asp-for="Description" class="form-label">
                             <i class="fas fa-edit form-icon"></i>Alışveriş Açıklaması *
                         </label>
-                        <input asp-for="Description" class="form-control" 
-                               placeholder="örn: Laptop, Buzdolabı, Televizyon" />
+                        <input asp-for="Description" class="form-control"
+                            placeholder="örn: Laptop, Buzdolabı, Televizyon" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                         <div class="form-help">Neyi taksitle aldığınızı belirtin</div>
                     </div>
@@ -214,9 +221,8 @@
                         </label>
                         <div class="input-group">
                             <span class="input-group-text">₺</span>
-                            <input asp-for="TotalAmount" class="form-control" 
-                                   placeholder="0,00" step="0.01" type="number" 
-                                   onchange="calculateInstallment()" />
+                            <input asp-for="TotalAmount" class="form-control" placeholder="0,00" step="0.01"
+                                type="number" onchange="calculateInstallment()" />
                         </div>
                         <span asp-validation-for="TotalAmount" class="text-danger"></span>
                     </div>
@@ -242,114 +248,351 @@
                     </div>
                     <div class="col-md-6 mb-4">
                         <label asp-for="CategoryId" class="form-label">
-                            <i class="fas fa-tags form-icon"></i>Kategori
+                            <i class="fas fa-tags form-icon"></i>Kategori *
                         </label>
-                        <select asp-for="CategoryId" asp-items="categories" class="form-select" id="CategoryId">
-                            <option value="">Kategori seçin (isteğe bağlı)</option>
+                        <select asp-for="CategoryId" asp-items="categories" class="form-select" id="CategoryId"
+                            onchange="onCategoryChange()">
+                            <option value="">Kategori seçin...</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
-                        <div class="form-help">Taksitli alışverişin kategorisi</div>
+                        <div class="form-help">Taksit kategorisi (faiz oranını belirler)</div>
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <label asp-for="FirstPaymentDate" class="form-label">
-                        <i class="fas fa-calendar form-icon"></i>İlk Ödeme Tarihi *
-                    </label>
-                    <input asp-for="FirstPaymentDate" class="form-control" type="date" />
-                    <span asp-validation-for="FirstPaymentDate" class="text-danger"></span>
-                    <div class="form-help">İlk taksit ödemesinin yapılacağı tarih</div>
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <label asp-for="InterestRate" class="form-label">
+                            <i class="fas fa-percentage form-icon"></i>Faiz Oranı (Aylık %)
+                            <span id="rateSourceIndicator" class="badge bg-info ms-2" style="display: none;">Piyasa Oranı</span>
+                        </label>
+                        <div class="input-group">
+                            <input asp-for="InterestRate" class="form-control" type="number" step="0.01" min="0" max="99.99"
+                                placeholder="0.00" onchange="onInterestRateChange()" oninput="onInterestRateChange()"
+                                id="InterestRateInput" />
+                            <span class="input-group-text">%</span>
+                        </div>
+                        <span asp-validation-for="InterestRate" class="text-danger"></span>
+
+                        <!-- Market Rate Information -->
+                        <div id="marketRateInfo" class="form-help" style="display: none;">
+                            <i class="fas fa-chart-line me-1"></i>
+                            <span id="marketRateText">Kategori için önerilen piyasa oranı</span>
+                        </div>
+
+                        <!-- Rate Comparison -->
+                        <div id="rateComparisonInfo" class="mt-1" style="display: none;">
+                            <small id="comparisonText" class="text-success"></small>
+                        </div>
+
+                        <!-- Manual Override Notice -->
+                        <div id="manualOverrideNotice" class="mt-1" style="display: none;">
+                            <small class="text-warning">
+                                <i class="fas fa-edit me-1"></i>Manuel olarak değiştirildi
+                            </small>
+                        </div>
+
+                        <!-- Smart Rate Controls -->
+                        <div class="mt-2" id="rateControlsSection">
+                            <div id="marketRateControls" style="display: none;">
+                                <small class="text-success d-block mb-1">
+                                    <i class="fas fa-check-circle me-1"></i>Piyasa oranı kullanılıyor
+                                </small>
+                                <button type="button" class="btn btn-outline-warning btn-sm" onclick="enableManualRate()"
+                                    title="Manuel olarak değiştir">
+                                    <i class="fas fa-edit me-1"></i>Manuel Değiştir
+                                </button>
+                            </div>
+                            <div id="manualRateControls" style="display: none;">
+                                <small class="text-muted d-block mb-1">Hızlı Ayarlama:</small>
+                                <div class="btn-group-sm" role="group">
+                                    <button type="button" class="btn btn-outline-success btn-sm me-1"
+                                        onclick="setManualRate(0)" title="Faizsiz">%0</button>
+                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="useMarketRate()"
+                                        title="Piyasa oranına dön" id="backToMarketBtn">
+                                        <i class="fas fa-undo me-1"></i>Piyasa Oranı
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Calculation Preview -->
-                <div class="calculation-preview" id="calculationPreview" style="display: none;">
-                    <h6 class="mb-3">📊 Ödeme Planı Önizlemesi</h6>
-                    
-                    <div class="preview-row">
-                        <span class="preview-label">Toplam Tutar:</span>
-                        <span class="preview-value" id="previewTotal">₺0,00</span>
-                    </div>
-                    
-                    <div class="preview-row">
-                        <span class="preview-label">Taksit Sayısı:</span>
-                        <span class="preview-value" id="previewCount">-</span>
-                    </div>
-                    
-                    <div class="preview-row">
-                        <span class="preview-label">Aylık Ödeme:</span>
-                        <span class="preview-value total" id="previewMonthly">₺0,00</span>
-                    </div>
-                    
-                    <div class="preview-row">
-                        <span class="preview-label">Son Ödeme Tarihi:</span>
-                        <span class="preview-value" id="previewEndDate">-</span>
-                    </div>
-                </div>
-
-                <div class="row mt-4">
-                    <div class="col-md-6 mb-2">
-                        <a asp-action="Index" class="btn-secondary-action w-100">
-                            <i class="fas fa-arrow-left me-2"></i>İptal Et
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn-primary-action w-100">
-                            <i class="fas fa-save me-2"></i>Taksitli Alışveriş Oluştur
-                        </button>
-                    </div>
-                </div>
-            </form>
+        <div class="mb-4">
+            <label asp-for="FirstPaymentDate" class="form-label">
+                <i class="fas fa-calendar form-icon"></i>İlk Ödeme Tarihi *
+            </label>
+            <input asp-for="FirstPaymentDate" class="form-control" type="date" />
+            <span asp-validation-for="FirstPaymentDate" class="text-danger"></span>
+            <div class="form-help">İlk taksit ödemesinin yapılacağı tarih</div>
         </div>
+
+        <!-- Calculation Preview -->
+        <div class="calculation-preview" id="calculationPreview" style="display: none;">
+            <h6 class="mb-3">📊 Ödeme Planı Önizlemesi</h6>
+
+            <div class="preview-row">
+                <span class="preview-label">Ana Para:</span>
+                <span class="preview-value" id="previewPrincipal">₺0,00</span>
+            </div>
+
+            <div class="preview-row">
+                <span class="preview-label">Faiz Oranı:</span>
+                <span class="preview-value" id="previewRate">%0,00</span>
+            </div>
+
+            <div class="preview-row">
+                <span class="preview-label">Taksit Sayısı:</span>
+                <span class="preview-value" id="previewCount">-</span>
+            </div>
+
+            <div class="preview-row">
+                <span class="preview-label">Aylık Ödeme:</span>
+                <span class="preview-value total" id="previewMonthly">₺0,00</span>
+            </div>
+
+            <div class="preview-row" id="interestRow" style="display: none;">
+                <span class="preview-label">Toplam Faiz:</span>
+                <span class="preview-value" id="previewInterest" style="color: var(--orange);">₺0,00</span>
+            </div>
+
+            <div class="preview-row" id="totalCostRow" style="display: none;">
+                <span class="preview-label">Toplam Ödenecek:</span>
+                <span class="preview-value" id="previewTotalCost"
+                    style="color: var(--orange); font-weight: 700;">₺0,00</span>
+            </div>
+
+            <div class="preview-row">
+                <span class="preview-label">Son Ödeme Tarihi:</span>
+                <span class="preview-value" id="previewEndDate">-</span>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6 mb-2">
+                <a asp-action="Index" class="btn-secondary-action w-100">
+                    <i class="fas fa-arrow-left me-2"></i>İptal Et
+                </a>
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn-primary-action w-100">
+                    <i class="fas fa-save me-2"></i>Taksitli Alışveriş Oluştur
+                </button>
+            </div>
+        </div>
+        </form>
     </div>
+</div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Set default first payment date to next month
             const nextMonth = new Date();
             nextMonth.setMonth(nextMonth.getMonth() + 1);
             nextMonth.setDate(1);
             document.querySelector('input[name="FirstPaymentDate"]').value = nextMonth.toISOString().split('T')[0];
 
-            // Initialize installment category filtering
-            initializeInstallmentCategoryFiltering();
+            // Initialize rate manager
+            rateManager.reset();
 
             // Focus on description
             document.querySelector('input[name="Description"]').focus();
         });
 
+        // Smart Interest Rate System
+        class InterestRateManager {
+            constructor() {
+                this.currentMarketRate = null;
+                this.isUsingMarketRate = false;
+                this.currentCategoryData = null;
+            }
+
+            setRate(rate, isMarketRate = false, categoryData = null) {
+                document.getElementById('InterestRateInput').value = rate.toFixed(2);
+                this.isUsingMarketRate = isMarketRate;
+                this.currentCategoryData = categoryData;
+
+                this.updateUI();
+                calculateInstallment();
+            }
+
+            updateUI() {
+                const marketControls = document.getElementById('marketRateControls');
+                const manualControls = document.getElementById('manualRateControls');
+                const rateIndicator = document.getElementById('rateSourceIndicator');
+                const marketRateInfo = document.getElementById('marketRateInfo');
+
+                if (this.isUsingMarketRate) {
+                    marketControls.style.display = 'block';
+                    manualControls.style.display = 'none';
+                    rateIndicator.style.display = 'inline';
+
+                    if (this.currentCategoryData) {
+                        marketRateInfo.style.display = 'block';
+                        document.getElementById('marketRateText').innerHTML = `
+                                <strong>${this.currentCategoryData.categoryName}</strong> için piyasa oranı: <strong>%${this.currentCategoryData.rate}</strong>
+                                <br><small class="text-muted">${this.currentCategoryData.explanation}</small>
+                            `;
+                    }
+                } else {
+                    marketControls.style.display = 'none';
+                    manualControls.style.display = 'block';
+                    rateIndicator.style.display = 'none';
+                    marketRateInfo.style.display = 'none';
+                }
+
+                // Hide other indicators
+                document.getElementById('rateComparisonInfo').style.display = 'none';
+                document.getElementById('manualOverrideNotice').style.display = 'none';
+            }
+
+            reset() {
+                this.currentMarketRate = null;
+                this.isUsingMarketRate = false;
+                this.currentCategoryData = null;
+                document.getElementById('marketRateControls').style.display = 'none';
+                document.getElementById('manualRateControls').style.display = 'none';
+                document.getElementById('marketRateInfo').style.display = 'none';
+                document.getElementById('rateSourceIndicator').style.display = 'none';
+            }
+        }
+
+        // Initialize the manager
+        const rateManager = new InterestRateManager();
+
+        async function onCategoryChange() {
+            const categoryId = parseInt(document.getElementById('CategoryId').value);
+
+            // Reset rate manager
+            rateManager.reset();
+
+            if (!categoryId) {
+                // No category selected - show default rate
+                rateManager.setRate(0, false);
+                return;
+            }
+
+            try {
+                // Show loading
+                const rateIndicator = document.getElementById('rateSourceIndicator');
+                rateIndicator.textContent = 'Yükleniyor...';
+                rateIndicator.className = 'badge bg-secondary ms-2';
+                rateIndicator.style.display = 'inline';
+
+                // Fetch market rate
+                const response = await fetch(`/api/InterestRateApi/category/${categoryId}`);
+                const result = await response.json();
+
+                if (result.success && result.data.isInstallmentCategory) {
+                    rateManager.currentMarketRate = result.data.rate;
+                    rateManager.setRate(result.data.rate, true, result.data);
+
+                    // Reset loading indicator
+                    rateIndicator.textContent = 'Piyasa Oranı';
+                    rateIndicator.className = 'badge bg-info ms-2';
+                } else {
+                    throw new Error(result.error || 'Invalid category');
+                }
+            } catch (error) {
+                console.error('Error fetching rate:', error);
+                rateManager.setRate(1.99, false); // Fallback
+                rateManager.reset(); // Hide indicators
+            }
+        }
+
+        // Simplified UI Control Functions
+        function enableManualRate() {
+            rateManager.isUsingMarketRate = false;
+            rateManager.updateUI();
+        }
+
+        function useMarketRate() {
+            if (rateManager.currentMarketRate !== null) {
+                rateManager.setRate(rateManager.currentMarketRate, true, rateManager.currentCategoryData);
+            }
+        }
+
+        function setManualRate(rate) {
+            rateManager.setRate(rate, false);
+        }
+
+        function onInterestRateChange() {
+            // If user manually types a rate, switch to manual mode
+            if (rateManager.isUsingMarketRate) {
+                enableManualRate();
+            }
+            calculateInstallment();
+        }
+
         function calculateInstallment() {
             const totalAmount = parseFloat(document.querySelector('input[name="TotalAmount"]').value) || 0;
             const installmentCount = parseInt(document.querySelector('select[name="TotalInstallments"]').value) || 0;
+            const interestRate = parseFloat(document.querySelector('input[name="InterestRate"]').value) || 0;
             const firstPaymentDate = document.querySelector('input[name="FirstPaymentDate"]').value;
 
             const previewDiv = document.getElementById('calculationPreview');
-            
+            const interestRow = document.getElementById('interestRow');
+            const totalCostRow = document.getElementById('totalCostRow');
+
             if (totalAmount > 0 && installmentCount > 0) {
-                const monthlyPayment = totalAmount / installmentCount;
-                
+                let monthlyPayment, totalInterest, totalCost;
+
+                if (interestRate === 0) {
+                    // Simple installment without interest
+                    monthlyPayment = totalAmount / installmentCount;
+                    totalInterest = 0;
+                    totalCost = totalAmount;
+                    interestRow.style.display = 'none';
+                    totalCostRow.style.display = 'none';
+                } else {
+                    // Compound interest calculation - same formula as backend
+                    const monthlyRate = interestRate / 100;
+                    const denominator = Math.pow(1 + monthlyRate, installmentCount) - 1;
+
+                    if (denominator === 0) {
+                        monthlyPayment = totalAmount / installmentCount;
+                    } else {
+                        monthlyPayment = totalAmount * (monthlyRate * Math.pow(1 + monthlyRate, installmentCount)) / denominator;
+                    }
+
+                    totalCost = monthlyPayment * installmentCount;
+                    totalInterest = totalCost - totalAmount;
+
+                    interestRow.style.display = 'flex';
+                    totalCostRow.style.display = 'flex';
+                }
+
                 // Calculate last payment date
                 let lastPaymentDate = '';
                 if (firstPaymentDate) {
                     const firstDate = new Date(firstPaymentDate);
                     const lastDate = new Date(firstDate);
                     lastDate.setMonth(lastDate.getMonth() + installmentCount - 1);
-                    lastPaymentDate = lastDate.toLocaleDateString('tr-TR', { 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
+                    lastPaymentDate = lastDate.toLocaleDateString('tr-TR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
                     });
                 }
-                
-                // Update preview
-                document.getElementById('previewTotal').textContent = '₺' + totalAmount.toFixed(2).replace('.', ',');
+
+                // Update preview with proper Turkish number formatting
+                document.getElementById('previewPrincipal').textContent = '₺' + totalAmount.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                document.getElementById('previewRate').textContent = '%' + interestRate.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' (aylık)';
                 document.getElementById('previewCount').textContent = installmentCount + ' ay';
-                document.getElementById('previewMonthly').textContent = '₺' + monthlyPayment.toFixed(2).replace('.', ',');
+                document.getElementById('previewMonthly').textContent = '₺' + monthlyPayment.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                if (interestRate > 0) {
+                    document.getElementById('previewInterest').textContent = '₺' + totalInterest.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('previewTotalCost').textContent = '₺' + totalCost.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+
                 document.getElementById('previewEndDate').textContent = lastPaymentDate || 'Hesaplanıyor...';
-                
+
                 previewDiv.style.display = 'block';
             } else {
                 previewDiv.style.display = 'none';

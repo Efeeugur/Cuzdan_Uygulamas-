@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Cüzdan_Uygulaması.BusinessLogic.DTOs;
 
 public class InstallmentDto
@@ -27,12 +29,29 @@ public class InstallmentDto
 
 public class CreateInstallmentDto
 {
+    [Required(ErrorMessage = "Açıklama alanı gereklidir.")]
+    [StringLength(200, ErrorMessage = "Açıklama en fazla 200 karakter olabilir.")]
     public string Description { get; set; } = string.Empty;
+    
+    [Required(ErrorMessage = "Toplam tutar gereklidir.")]
+    [Range(0.01, 999999.99, ErrorMessage = "Toplam tutar 0.01 ile 999,999.99 arasında olmalıdır.")]
     public decimal TotalAmount { get; set; }
+    
+    [Required(ErrorMessage = "Taksit sayısı gereklidir.")]
+    [Range(1, 360, ErrorMessage = "Taksit sayısı 1 ile 360 ay arasında olmalıdır.")]
     public int TotalInstallments { get; set; }
+    
+    [Range(0, 99.99, ErrorMessage = "Faiz oranı 0 ile 99.99 arasında olmalıdır.")]
+    [Display(Name = "Faiz Oranı (Aylık %)")]
     public decimal InterestRate { get; set; } = 0;
+    
+    [Required(ErrorMessage = "İlk ödeme tarihi gereklidir.")]
+    [Display(Name = "İlk Ödeme Tarihi")]
     public DateTime FirstPaymentDate { get; set; } = DateTime.UtcNow;
-    public int? CategoryId { get; set; }
+    
+    [Required(ErrorMessage = "Kategori seçimi gereklidir.")]
+    [Range(26, 35, ErrorMessage = "Geçerli bir taksit kategorisi seçiniz.")]
+    public int CategoryId { get; set; }
 }
 
 public class UpdateInstallmentDto

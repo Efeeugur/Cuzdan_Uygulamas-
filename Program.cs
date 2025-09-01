@@ -46,6 +46,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IInstallmentService, InstallmentService>();
 builder.Services.AddScoped<ISimpleCategoryService, SimpleCategoryService>();
+builder.Services.AddScoped<ICategoryInterestRateService, CategoryInterestRateService>();
 
 builder.Services.AddControllersWithViews();
 

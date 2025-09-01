@@ -281,9 +281,9 @@ public class InstallmentController : Controller
 
     private async Task PopulateDropdownsAsync(string userId)
     {
-        // Use SimpleCategoryService for installment categories
+        // Use SimpleCategoryService for installment categories ONLY
         var simpleCategoryService = new SimpleCategoryService();
-        var categoryList = simpleCategoryService.GetAllCategories().ToList();
+        var categoryList = simpleCategoryService.GetInstallmentCategories().ToList();
         
         ViewBag.Categories = new SelectList(categoryList, "Value", "Text");
         
