@@ -186,3 +186,4 @@
 /Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/obj/Debug/net9.0/Cüzdan Uygulaması.pdb
 /Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/obj/Debug/net9.0/Cüzdan Uygulaması.genruntimeconfig.cache
 /Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/obj/Debug/net9.0/ref/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/bin/Debug/net9.0/PuppeteerSharp.dll

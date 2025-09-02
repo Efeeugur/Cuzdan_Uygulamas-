@@ -779,6 +779,22 @@
           }
         }
       },
+      "PuppeteerSharp/19.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/PuppeteerSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/PuppeteerSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.CodeDom/6.0.0": {
         "type": "package",
         "compile": {
@@ -2594,6 +2610,21 @@
         "postgresql.png"
       ]
     },
+    "PuppeteerSharp/19.0.0": {
+      "sha512": "8C6/aCvT5Mdq0nVsvFJsvOcgNTXzcYEDIgq+gVy/kpuEJIoQQGA6UokXpiMOSksaRg/yWsoRcQ4Fz+h85RfsXA==",
+      "type": "package",
+      "path": "puppeteersharp/19.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net8.0/PuppeteerSharp.dll",
+        "lib/net8.0/PuppeteerSharp.xml",
+        "lib/netstandard2.0/PuppeteerSharp.dll",
+        "lib/netstandard2.0/PuppeteerSharp.xml",
+        "puppeteersharp.19.0.0.nupkg.sha512",
+        "puppeteersharp.nuspec"
+      ]
+    },
     "System.CodeDom/6.0.0": {
       "sha512": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA==",
       "type": "package",
@@ -2989,7 +3020,8 @@
       "Microsoft.EntityFrameworkCore >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.0",
-      "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.0"
+      "Npgsql.EntityFrameworkCore.PostgreSQL >= 9.0.0",
+      "PuppeteerSharp >= 19.0.0"
     ]
   },
   "packageFolders": {
@@ -3054,6 +3086,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[9.0.0, )"
+          },
+          "PuppeteerSharp": {
+            "target": "Package",
+            "version": "[19.0.0, )"
           }
         },
         "imports": [

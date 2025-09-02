@@ -47,8 +47,13 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IInstallmentService, InstallmentService>();
 builder.Services.AddScoped<ISimpleCategoryService, SimpleCategoryService>();
 builder.Services.AddScoped<ICategoryInterestRateService, CategoryInterestRateService>();
+builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
 
 builder.Services.AddControllersWithViews();
+
+// Add Memory Caching
+builder.Services.AddMemoryCache();
 
 // Register Background Services
 builder.Services.AddHostedService<Cüzdan_Uygulaması.Services.RecurringTransactionService>();

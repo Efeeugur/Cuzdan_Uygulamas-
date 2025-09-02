@@ -1,0 +1,1535 @@
+@model Cüzdan_Uygulaması.BusinessLogic.DTOs.ReportResultDto
+@{
+    ViewData["Title"] = "Raporlar";
+    var request = ViewBag.Request as Cüzdan_Uygulaması.BusinessLogic.DTOs.ReportRequestDto ?? new Cüzdan_Uygulaması.BusinessLogic.DTOs.ReportRequestDto();
+}
+
+<style>
+    :root {
+        --bg: #f5f5f7;
+        --card: #ffffff;
+        --text: #1d1d1f;
+        --muted: #6e6e73;
+        --blue: #007aff;
+        --green: #28a745;
+        --red: #dc3545;
+        --orange: #ff9500;
+        --purple: #6f42c1;
+        --border: rgba(0, 0, 0, 0.08);
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --radius: 16px;
+    }
+
+    .reports-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .report-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 2rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .report-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--blue), #4A90E2);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .filter-section {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .form-control, .form-select {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        outline: none;
+    }
+
+    .btn-primary-custom {
+        background: var(--blue);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .btn-primary-custom:hover {
+        background: #0056b3;
+        color: white;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+    .btn-secondary-custom {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .btn-secondary-custom:hover {
+        background: var(--border);
+        color: var(--text);
+        text-decoration: none;
+    }
+
+    .summary-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .summary-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .summary-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .summary-card:nth-child(1) { animation-delay: 0.1s; }
+    .summary-card:nth-child(2) { animation-delay: 0.2s; }
+    .summary-card:nth-child(3) { animation-delay: 0.3s; }
+    .summary-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .summary-card.income {
+        border-left: 4px solid var(--green);
+    }
+
+    .summary-card.expense {
+        border-left: 4px solid var(--red);
+    }
+
+    .summary-card.net {
+        border-left: 4px solid var(--blue);
+    }
+
+    .summary-card.count {
+        border-left: 4px solid var(--purple);
+    }
+
+    .summary-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .summary-label {
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .transactions-table {
+        background: var(--card);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        background: #f8f9fa;
+        border: none;
+        padding: 1rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .table td {
+        border: none;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .transaction-amount.income {
+        color: var(--green);
+        font-weight: 600;
+    }
+
+    .transaction-amount.expense {
+        color: var(--red);
+        font-weight: 600;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--muted);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /*
+    TODO: Date preset button styles commented out - functionality removed
+    .date-preset-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .preset-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .preset-btn:hover, .preset-btn.active {
+        background: var(--blue);
+        color: white;
+        border-color: var(--blue);
+    }
+    */
+
+    @@media (max-width: 768px) {
+        .reports-container {
+            padding: 1rem;
+        }
+        
+        .summary-cards {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Loading animations */
+    .loading-pulse {
+        animation: pulse 1.5s ease-in-out infinite alternate;
+    }
+
+    #loadingSpinner .spinner-border {
+        animation: spin 1s linear infinite, fadeIn 0.3s ease-in;
+    }
+
+    /* Chart animations */
+    .chart-card {
+        animation: slideInUp 0.8s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .chart-card:nth-child(1) { animation-delay: 0.1s; }
+    .chart-card:nth-child(2) { animation-delay: 0.2s; }
+    .chart-card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Filter section animations */
+    .filter-section {
+        animation: slideInDown 0.6s ease-out;
+    }
+
+    /*
+    TODO: Preset button animations commented out - functionality removed
+    .preset-btn {
+        transition: all 0.2s ease;
+        animation: fadeInScale 0.4s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .preset-btn:nth-child(1) { animation-delay: 0.1s; }
+    .preset-btn:nth-child(2) { animation-delay: 0.15s; }
+    .preset-btn:nth-child(3) { animation-delay: 0.2s; }
+    .preset-btn:nth-child(4) { animation-delay: 0.25s; }
+    .preset-btn:nth-child(5) { animation-delay: 0.3s; }
+    .preset-btn:nth-child(6) { animation-delay: 0.35s; }
+    .preset-btn:nth-child(7) { animation-delay: 0.4s; }
+    .preset-btn:nth-child(8) { animation-delay: 0.45s; }
+    */
+
+    /* Transactions table animation */
+    .transactions-table {
+        animation: slideInUp 0.8s ease-out 0.6s;
+        animation-fill-mode: both;
+    }
+
+    .table tbody tr {
+        animation: fadeInLeft 0.5s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .table tbody tr:nth-child(1) { animation-delay: 0.1s; }
+    .table tbody tr:nth-child(2) { animation-delay: 0.2s; }
+    .table tbody tr:nth-child(3) { animation-delay: 0.3s; }
+    .table tbody tr:nth-child(4) { animation-delay: 0.4s; }
+    .table tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Keyframe definitions */
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @@keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @@keyframes pulse {
+        from {
+            opacity: 0.6;
+            transform: scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+    }
+
+    @@keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Responsive animations */
+    @@media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    /* Enhanced hover effects */
+    .btn-primary-custom, .btn-secondary-custom {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-primary-custom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .btn-primary-custom:hover::before {
+        left: 100%;
+    }
+
+    /* Accessibility helpers */
+    .visually-hidden {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+    }
+
+    /* Focus styles for better keyboard navigation */
+    .btn-primary-custom:focus,
+    .btn-secondary-custom:focus,
+    .form-control:focus,
+    .form-select:focus,
+    .form-check-input:focus {
+        outline: 3px solid rgba(0, 122, 255, 0.5);
+        outline-offset: 2px;
+    }
+
+    /* High contrast mode support */
+    @@media (prefers-contrast: high) {
+        .summary-card {
+            border-width: 2px;
+        }
+        
+        .btn-primary-custom,
+        .btn-secondary-custom {
+            border-width: 2px;
+        }
+    }
+</style>
+
+<div class="reports-container">
+    <!-- Page Header -->
+    <div class="report-card">
+        <div class="card-header">
+            <h1 class="mb-2">
+                <i class="fas fa-chart-bar me-2"></i>
+                Finansal Raporlar
+            </h1>
+            <p class="mb-0 opacity-75">İşlemlerinizi analiz edin ve raporlar oluşturun</p>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="report-card" role="region" aria-labelledby="filter-heading">
+        <div class="card-body">
+            <h3 class="mb-3" id="filter-heading">
+                <i class="fas fa-filter me-2" aria-hidden="true"></i>
+                Rapor Filtreleri
+            </h3>
+            
+            <form asp-controller="Reports" asp-action="GenerateReport" method="post">
+                <div class="filter-section">
+
+                    <!-- Basic Filters Row -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.StartDate" class="form-label">Başlangıç Tarihi (İsteğe Bağlı)</label>
+                                <input asp-for="@request.StartDate" class="form-control" type="date" />
+                                <div class="form-text">Boş bırakılırsa tüm geçmiş dahil edilir</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.EndDate" class="form-label">Bitiş Tarihi (İsteğe Bağlı)</label>
+                                <input asp-for="@request.EndDate" class="form-control" type="date" />
+                                <div class="form-text">Boş bırakılırsa bugüne kadar dahil edilir</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.TransactionType" class="form-label">İşlem Türü</label>
+                                <select asp-for="@request.TransactionType" class="form-select">
+                                    <option value="">Tümü</option>
+                                    <option value="0">Gelir</option>
+                                    <option value="1">Gider</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.SearchTerm" class="form-label">Açıklama Ara</label>
+                                <input asp-for="@request.SearchTerm" class="form-control" 
+                                       placeholder="İşlem açıklaması..." />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Filters Row -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.AccountId" class="form-label">Hesap</label>
+                                <select asp-for="@request.AccountId" class="form-select" asp-items="@ViewBag.Accounts">
+                                    <option value="">Tüm Hesaplar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.CategoryId" class="form-label">Kategori</label>
+                                <select asp-for="@request.CategoryId" class="form-select" asp-items="@ViewBag.Categories">
+                                    <option value="">Tüm Kategoriler</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.MinAmount" class="form-label">Min. Tutar (İsteğe Bağlı)</label>
+                                <input asp-for="@request.MinAmount" class="form-control" type="number" step="0.01" 
+                                       placeholder="₺0.00" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label asp-for="@request.MaxAmount" class="form-label">Maks. Tutar (İsteğe Bağlı)</label>
+                                <input asp-for="@request.MaxAmount" class="form-control" type="number" step="0.01" 
+                                       placeholder="₺0.00" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Options Row -->
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input asp-for="@request.IncludeRecurring" class="form-check-input" type="checkbox" />
+                                    <label asp-for="@request.IncludeRecurring" class="form-check-label">
+                                        Düzenli işlemler dahil
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input asp-for="@request.IncludeInstallments" class="form-check-input" type="checkbox" />
+                                    <label asp-for="@request.IncludeInstallments" class="form-check-label">
+                                        Taksitler dahil
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center" role="group" aria-label="Rapor işlem butonları">
+                    <button type="submit" class="btn-primary-custom me-2" id="generateReportBtn"
+                            aria-describedby="generate-btn-help">
+                        <i class="fas fa-search me-2" aria-hidden="true"></i>Rapor Oluştur
+                    </button>
+                    <button type="button" class="btn-secondary-custom me-2" onclick="resetFilters()"
+                            aria-label="Tüm filtreleri temizle">
+                        <i class="fas fa-undo me-2" aria-hidden="true"></i>Temizle
+                    </button>
+                    <button type="button" class="btn btn-outline-danger me-2" onclick="openPdfExportModal()" 
+                            id="pdfExportBtn" disabled aria-label="Raporu PDF olarak indir">
+                        <i class="fas fa-file-pdf me-2" aria-hidden="true"></i>PDF İndir
+                    </button>
+                    <div class="form-check form-check-inline mt-2">
+                        <input class="form-check-input" type="checkbox" id="realTimeUpdates"
+                               aria-describedby="realtime-help">
+                        <label class="form-check-label" for="realTimeUpdates">
+                            <i class="fas fa-sync-alt me-1" aria-hidden="true"></i>Otomatik Güncelleme
+                        </label>
+                        <div id="realtime-help" class="form-text">Filtre değiştiğinde raporu otomatik olarak güncellemek için işaretleyin</div>
+                    </div>
+                    <div id="generate-btn-help" class="form-text">Seçilen filtrelere göre rapor oluşturur</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="report-card" style="display: none;">
+        <div class="card-body text-center py-5">
+            <div class="spinner-border text-primary mb-3" role="status">
+                <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+            <h5>Rapor oluşturuluyor...</h5>
+            <p class="text-muted">Lütfen bekleyiniz</p>
+        </div>
+    </div>
+
+    <!-- Report Results -->
+    <div id="reportResults" role="main" aria-label="Rapor sonuçları">
+    @if (Model != null && Model.Transactions.Any())
+    {
+        <!-- Summary Cards -->
+        <section class="summary-cards" role="region" aria-labelledby="summary-heading">
+            <h2 id="summary-heading" class="visually-hidden">Finansal Özet</h2>
+            <div class="summary-card income" role="img" aria-label="Toplam gelir ₺@Model.Summary.TotalIncome.ToString("N2")">
+                <div class="summary-value text-success">₺@Model.Summary.TotalIncome.ToString("N2")</div>
+                <div class="summary-label">Toplam Gelir</div>
+            </div>
+            <div class="summary-card expense" role="img" aria-label="Toplam gider ₺@Model.Summary.TotalExpense.ToString("N2")">
+                <div class="summary-value text-danger">₺@Model.Summary.TotalExpense.ToString("N2")</div>
+                <div class="summary-label">Toplam Gider</div>
+            </div>
+            <div class="summary-card net" role="img" aria-label="Net durum @(Model.Summary.NetAmount >= 0 ? "kazanç" : "kayıp") ₺@Model.Summary.NetAmount.ToString("N2")">
+                <div class="summary-value @(Model.Summary.NetAmount >= 0 ? "text-success" : "text-danger")">
+                    ₺@Model.Summary.NetAmount.ToString("N2")
+                </div>
+                <div class="summary-label">Net Durum</div>
+            </div>
+            <div class="summary-card count" role="img" aria-label="Toplam @Model.TotalTransactions işlem">
+                <div class="summary-value text-info">@Model.TotalTransactions</div>
+                <div class="summary-label">İşlem Sayısı</div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        @if (Model.CategoryBreakdown.Any() || Model.AccountBreakdown.Any())
+        {
+            <div class="row mb-4" role="region" aria-labelledby="charts-heading">
+                <h2 id="charts-heading" class="visually-hidden">Grafik Analizleri</h2>
+                
+                @* 
+                TODO: Category Distribution and Account Analysis charts - commented out for simplification
+                Will be reevaluated in future updates
+
+                <!-- Category Distribution Chart -->
+                @if (Model.CategoryBreakdown.Any())
+                {
+                    <div class="col-lg-6 mb-4">
+                        <div class="report-card" role="region" aria-labelledby="category-chart-heading">
+                            <div class="card-body">
+                                <h4 class="mb-3" id="category-chart-heading">
+                                    <i class="fas fa-chart-pie me-2" aria-hidden="true"></i>
+                                    Kategori Dağılımı
+                                </h4>
+                                <div style="height: 400px; display: flex; justify-content: center; align-items: center;">
+                                    <canvas id="categoryChart" width="400" height="400" 
+                                            aria-label="Kategori dağılımı pasta grafik" 
+                                            role="img"
+                                            aria-describedby="category-legend"></canvas>
+                                </div>
+                                <div class="mt-3" id="category-legend" role="list" aria-label="Kategori dağılımı açıklaması">
+                                    <div class="row">
+                                        @foreach (var category in Model.CategoryBreakdown.Take(5))
+                                        {
+                                            <div class="col-12 mb-2" role="listitem">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2" style="width: 12px; height: 12px; background-color: @category.Color; border-radius: 2px;" 
+                                                             aria-hidden="true"></div>
+                                                        <span class="small">@category.CategoryName</span>
+                                                    </div>
+                                                    <span class="small fw-bold" aria-label="@category.CategoryName tutarı">₺@category.TotalAmount.ToString("N0")</span>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Account Distribution Chart -->
+                @if (Model.AccountBreakdown.Any())
+                {
+                    <div class="col-lg-6 mb-4">
+                        <div class="report-card">
+                            <div class="card-body">
+                                <h4 class="mb-3">
+                                    <i class="fas fa-chart-bar me-2"></i>
+                                    Hesap Analizi
+                                </h4>
+                                <div style="height: 400px;">
+                                    <canvas id="accountChart"></canvas>
+                                </div>
+                                <div class="mt-3">
+                                    @foreach (var account in Model.AccountBreakdown.Take(3))
+                                    {
+                                        <div class="mb-2">
+                                            <div class="d-flex justify-content-between">
+                                                <span class="small fw-bold">@account.AccountName</span>
+                                                <span class="small @(account.TotalAmount >= 0 ? "text-success" : "text-danger")">
+                                                    ₺@account.TotalAmount.ToString("N2")
+                                                </span>
+                                            </div>
+                                            <div class="small text-muted">
+                                                Gelir: ₺@account.IncomeTotal.ToString("N0") | 
+                                                Gider: ₺@account.ExpenseTotal.ToString("N0")
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                *@
+            </div>
+
+            <!-- Monthly Trend Chart -->
+            @if (Model.MonthlyTrends.Any())
+            {
+                <div class="report-card mb-4">
+                    <div class="card-body">
+                        <h4 class="mb-3">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Aylık Trend Analizi
+                        </h4>
+                        <div style="height: 300px;">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                        <div class="mt-3 text-center">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="small text-muted">Ortalama Aylık Gelir</div>
+                                    <div class="fw-bold text-success">₺@(Model.MonthlyTrends.Any() ? Model.MonthlyTrends.Average(m => m.IncomeTotal).ToString("N0") : "0")</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="small text-muted">Ortalama Aylık Gider</div>
+                                    <div class="fw-bold text-danger">₺@(Model.MonthlyTrends.Any() ? Model.MonthlyTrends.Average(m => m.ExpenseTotal).ToString("N0") : "0")</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="small text-muted">Ortalama Net</div>
+                                    <div class="fw-bold @(Model.MonthlyTrends.Any() && Model.MonthlyTrends.Average(m => m.NetAmount) >= 0 ? "text-success" : "text-danger")">
+                                        ₺@(Model.MonthlyTrends.Any() ? Model.MonthlyTrends.Average(m => m.NetAmount).ToString("N0") : "0")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+        <!-- Transactions Table -->
+        <div class="report-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>
+                        <i class="fas fa-list me-2"></i>
+                        İşlem Detayları (@Model.DateRange)
+                    </h3>
+                    <small class="text-muted">
+                        Rapor oluşturulma: @Model.GeneratedDate.ToString("dd/MM/yyyy HH:mm")
+                    </small>
+                </div>
+                
+                <div class="transactions-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Açıklama</th>
+                                <th>Kategori</th>
+                                <th>Hesap</th>
+                                <th>Tutar</th>
+                                <th>Tür</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transaction in Model.Transactions.OrderByDescending(t => t.TransactionDate))
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@transaction.TransactionDate.ToString("dd/MM/yyyy")</strong>
+                                        <br>
+                                        <small class="text-muted">@transaction.TransactionDate.ToString("HH:mm")</small>
+                                    </td>
+                                    <td>@transaction.Description</td>
+                                    <td>
+                                        @if (transaction.CategoryId.HasValue)
+                                        {
+                                            <span class="badge bg-light text-dark">@transaction.Category?.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (transaction.Account != null)
+                                        {
+                                            <span class="badge bg-info">@transaction.Account.Name</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="transaction-amount @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "income" : "expense")">
+                                            @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "+" : "-")₺@transaction.Amount.ToString("N2")
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "bg-success" : "bg-danger")">
+                                            @(transaction.Type == Cüzdan_Uygulaması.Models.TransactionType.Income ? "Gelir" : "Gider")
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model != null && !string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="report-card">
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    @Model.ErrorMessage
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model != null)
+    {
+        <div class="report-card">
+            <div class="card-body">
+                <div class="empty-state">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Veri Bulunamadı</h3>
+                    <p>Seçilen kriterlere göre herhangi bir işlem bulunamadı.</p>
+                    <p class="text-muted">Farklı filtreler deneyerek arama yapabilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    }
+    </div> <!-- End reportResults -->
+
+    <!-- PDF Export Modal -->
+    <div class="modal fade" id="pdfExportModal" tabindex="-1" aria-labelledby="pdfExportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pdfExportModalLabel">
+                        <i class="fas fa-file-pdf me-2"></i>PDF Rapor İndir
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="pdfExportForm" method="post" action="/Reports/ExportToPdf">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sayfa Formatı:</label>
+                                <select name="pdfOptions.Format" class="form-select">
+                                    <option value="A4">A4</option>
+                                    <option value="Letter">Letter</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Yönlendirme:</label>
+                                <select name="pdfOptions.Landscape" class="form-select">
+                                    <option value="false">Dikey</option>
+                                    <option value="true">Yatay</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">İçerik Seçenekleri:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="pdfOptions.IncludeCharts" id="includeCharts" checked>
+                                <label class="form-check-label" for="includeCharts">
+                                    Grafikleri dahil et
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="pdfOptions.IncludeTransactionDetails" id="includeTransactions" checked>
+                                <label class="form-check-label" for="includeTransactions">
+                                    İşlem detaylarını dahil et
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="headerText" class="form-label">Başlık Metni (opsiyonel):</label>
+                            <input type="text" class="form-control" name="pdfOptions.HeaderText" id="headerText" placeholder="Örn: Şirket Adı">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="footerText" class="form-label">Alt Bilgi:</label>
+                            <input type="text" class="form-control" name="pdfOptions.FooterText" id="footerText" value="Cüzdan Uygulaması Finansal Raporu">
+                        </div>
+                        
+                        <!-- Hidden fields for current report filters -->
+                        <input type="hidden" name="StartDate" id="pdfStartDate">
+                        <input type="hidden" name="EndDate" id="pdfEndDate">
+                        <input type="hidden" name="AccountId" id="pdfAccountId">
+                        <input type="hidden" name="CategoryId" id="pdfCategoryId">
+                        <input type="hidden" name="TransactionType" id="pdfTransactionType">
+                        <input type="hidden" name="MinAmount" id="pdfMinAmount">
+                        <input type="hidden" name="MaxAmount" id="pdfMaxAmount">
+                        <input type="hidden" name="SearchTerm" id="pdfSearchTerm">
+                        <input type="hidden" name="IncludeRecurring" id="pdfIncludeRecurring">
+                        <input type="hidden" name="IncludeInstallments" id="pdfIncludeInstallments">
+                        @Html.AntiForgeryToken()
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary me-2" onclick="previewPdf()">
+                            <i class="fas fa-eye me-2"></i>Önizleme
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-download me-2"></i>PDF İndir
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Chart data from server
+        const categoryData = @Html.Raw(Json.Serialize(Model?.CategoryBreakdown ?? new List<Cüzdan_Uygulaması.BusinessLogic.DTOs.CategoryBreakdownDto>()));
+        const accountData = @Html.Raw(Json.Serialize(Model?.AccountBreakdown ?? new List<Cüzdan_Uygulaması.BusinessLogic.DTOs.AccountBreakdownDto>()));
+        const trendData = @Html.Raw(Json.Serialize(Model?.MonthlyTrends ?? new List<Cüzdan_Uygulaması.BusinessLogic.DTOs.MonthlyTrendDto>()));
+        
+        // Chart instances to destroy before recreating
+        // let categoryChart, accountChart; // Commented out - charts disabled
+        let trendChart;
+        
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            setupAjaxReporting();
+            
+            // Date fields are left blank by default for flexibility
+            // User can choose their own date range or leave empty for all data
+        });
+        
+        function setupAjaxReporting() {
+            const form = document.querySelector('form');
+            const realTimeCheckbox = document.getElementById('realTimeUpdates');
+            const generateBtn = document.getElementById('generateReportBtn');
+            
+            // Handle real-time updates
+            if (realTimeCheckbox) {
+                const formInputs = form.querySelectorAll('input, select');
+                
+                formInputs.forEach(input => {
+                    input.addEventListener('change', function() {
+                        if (realTimeCheckbox.checked) {
+                            debounce(generateReportAjax, 500)();
+                        }
+                    });
+                });
+            }
+            
+            // Handle form submission via AJAX when real-time is enabled
+            form.addEventListener('submit', function(e) {
+                if (realTimeCheckbox && realTimeCheckbox.checked) {
+                    e.preventDefault();
+                    generateReportAjax();
+                }
+            });
+        }
+        
+        function generateReportAjax() {
+            const form = document.querySelector('form');
+            const formData = new FormData(form);
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const reportResults = document.getElementById('reportResults');
+            const generateBtn = document.getElementById('generateReportBtn');
+            
+            // Show loading spinner
+            loadingSpinner.style.display = 'block';
+            reportResults.style.display = 'none';
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Oluşturuluyor...';
+            
+            // Convert FormData to JSON
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            fetch('/Reports/GenerateReportAjax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    updateReportDisplay(result.data);
+                } else {
+                    showError(result.error || 'Rapor oluşturulurken bir hata oluştu.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+            })
+            .finally(() => {
+                // Hide loading spinner
+                loadingSpinner.style.display = 'none';
+                reportResults.style.display = 'block';
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="fas fa-search me-2"></i>Rapor Oluştur';
+            });
+        }
+        
+        function updateReportDisplay(data) {
+            // Update summary cards
+            updateSummaryCards(data.summary);
+            
+            // Update and recreate charts
+            updateCharts(data);
+            
+            // Update transaction table
+            updateTransactionTable(data.transactions, data.dateRange);
+            
+            // Enable PDF export button
+            document.getElementById('pdfExportBtn').disabled = false;
+            
+            // Show success message
+            showSuccess(`Rapor başarıyla oluşturuldu! ${data.totalTransactions} işlem bulundu.`);
+        }
+        
+        function updateSummaryCards(summary) {
+            const summaryContainer = document.querySelector('.summary-cards');
+            if (!summaryContainer) return;
+            
+            summaryContainer.innerHTML = `
+                <div class="summary-card income">
+                    <div class="summary-value text-success">₺${summary.totalIncome.toLocaleString('tr-TR', {minimumFractionDigits: 2})}</div>
+                    <div class="summary-label">Toplam Gelir</div>
+                </div>
+                <div class="summary-card expense">
+                    <div class="summary-value text-danger">₺${summary.totalExpense.toLocaleString('tr-TR', {minimumFractionDigits: 2})}</div>
+                    <div class="summary-label">Toplam Gider</div>
+                </div>
+                <div class="summary-card net">
+                    <div class="summary-value ${summary.netAmount >= 0 ? 'text-success' : 'text-danger'}">
+                        ₺${summary.netAmount.toLocaleString('tr-TR', {minimumFractionDigits: 2})}
+                    </div>
+                    <div class="summary-label">Net Durum</div>
+                </div>
+                <div class="summary-card count">
+                    <div class="summary-value text-info">${data.totalTransactions}</div>
+                    <div class="summary-label">İşlem Sayısı</div>
+                </div>
+            `;
+        }
+        
+        function updateCharts(data) {
+            // Destroy existing charts
+            // if (categoryChart) categoryChart.destroy(); // Commented out - chart disabled
+            // if (accountChart) accountChart.destroy(); // Commented out - chart disabled
+            if (trendChart) trendChart.destroy();
+            
+            // Update global data
+            // categoryData = data.categoryBreakdown || []; // Commented out - chart disabled
+            // accountData = data.accountBreakdown || []; // Commented out - chart disabled
+            trendData = data.monthlyTrends || [];
+            
+            // Recreate charts
+            initializeCharts();
+        }
+        
+        function updateTransactionTable(transactions, dateRange) {
+            // This would update the transaction table with new data
+            // Implementation depends on the specific table structure needed
+            console.log('Updating transaction table with', transactions.length, 'transactions');
+        }
+        
+        function showError(message) {
+            const reportResults = document.getElementById('reportResults');
+            reportResults.innerHTML = `
+                <div class="report-card" style="animation: slideInUp 0.5s ease-out;">
+                    <div class="card-body">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Hata:</strong> ${message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-primary" onclick="location.reload()">
+                                <i class="fas fa-refresh me-2"></i>Sayfayı Yenile
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showSuccess(message) {
+            // Create and show toast notification
+            const toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-bg-success border-0 position-fixed top-0 end-0 m-3';
+            toast.style.zIndex = '9999';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="fas fa-check-circle me-2"></i>
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 3000
+            });
+            bsToast.show();
+            
+            // Remove toast after hiding
+            toast.addEventListener('hidden.bs.toast', () => {
+                document.body.removeChild(toast);
+            });
+        }
+        
+        // Debounce function to limit API calls
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        function initializeCharts() {
+            // TODO: Category and Account charts commented out for simplification
+            /*
+            if (categoryData && categoryData.length > 0) {
+                createCategoryChart();
+            }
+            
+            if (accountData && accountData.length > 0) {
+                createAccountChart();
+            }
+            */
+            
+            if (trendData && trendData.length > 0) {
+                createTrendChart();
+            }
+        }
+        
+        /*
+        // TODO: Chart functions commented out for simplification - will be reevaluated in future
+        function createCategoryChart() {
+            const ctx = document.getElementById('categoryChart');
+            if (!ctx) return;
+            
+            const colors = categoryData.map(c => c.color || generateColor(c.categoryId));
+            
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categoryData.map(c => c.categoryName),
+                    datasets: [{
+                        data: categoryData.map(c => c.totalAmount),
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = new Intl.NumberFormat('tr-TR', {
+                                        style: 'currency',
+                                        currency: 'TRY'
+                                    }).format(context.parsed);
+                                    const percentage = ((context.parsed / categoryData.reduce((a, b) => a + b.totalAmount, 0)) * 100).toFixed(1);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createAccountChart() {
+            const ctx = document.getElementById('accountChart');
+            if (!ctx) return;
+            
+            accountChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: accountData.map(a => a.accountName),
+                    datasets: [{
+                        label: 'Gelir',
+                        data: accountData.map(a => a.incomeTotal),
+                        backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Gider',
+                        data: accountData.map(a => Math.abs(a.expenseTotal)),
+                        backgroundColor: 'rgba(220, 53, 69, 0.8)',
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('tr-TR', {
+                                        style: 'currency',
+                                        currency: 'TRY',
+                                        minimumFractionDigits: 0
+                                    }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${new Intl.NumberFormat('tr-TR', {
+                                        style: 'currency',
+                                        currency: 'TRY'
+                                    }).format(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        */
+        
+        function createTrendChart() {
+            const ctx = document.getElementById('trendChart');
+            if (!ctx) return;
+            
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: trendData.map(t => t.monthYear),
+                    datasets: [{
+                        label: 'Gelir',
+                        data: trendData.map(t => t.incomeTotal),
+                        borderColor: 'rgba(40, 167, 69, 1)',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        fill: false,
+                        tension: 0.4,
+                        borderWidth: 3
+                    }, {
+                        label: 'Gider',
+                        data: trendData.map(t => Math.abs(t.expenseTotal)),
+                        borderColor: 'rgba(220, 53, 69, 1)',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        fill: false,
+                        tension: 0.4,
+                        borderWidth: 3
+                    }, {
+                        label: 'Net',
+                        data: trendData.map(t => t.netAmount),
+                        borderColor: 'rgba(0, 122, 255, 1)',
+                        backgroundColor: 'rgba(0, 122, 255, 0.1)',
+                        fill: false,
+                        tension: 0.4,
+                        borderWidth: 2,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return new Intl.NumberFormat('tr-TR', {
+                                        style: 'currency',
+                                        currency: 'TRY',
+                                        minimumFractionDigits: 0
+                                    }).format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${new Intl.NumberFormat('tr-TR', {
+                                        style: 'currency',
+                                        currency: 'TRY'
+                                    }).format(context.parsed.y)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function generateColor(seed) {
+            const colors = [
+                '#007bff', '#28a745', '#dc3545', '#ffc107', '#6f42c1',
+                '#fd7e14', '#20c997', '#6610f2', '#e83e8c', '#17a2b8'
+            ];
+            return colors[seed % colors.length];
+        }
+
+        // Date range preset functionality
+        /*
+        // TODO: setDateRange function commented out - quick date selection removed
+        function setDateRange(preset) {
+            const today = new Date();
+            const startInput = document.querySelector('input[name="StartDate"]');
+            const endInput = document.querySelector('input[name="EndDate"]');
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            
+            let startDate, endDate;
+            
+            switch(preset) {
+                case 'today':
+                    startDate = endDate = today;
+                    break;
+                case 'yesterday':
+                    startDate = endDate = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+                    break;
+                case 'thisWeek':
+                    const startOfWeek = new Date(today);
+                    startOfWeek.setDate(today.getDate() - today.getDay() + 1);
+                    startDate = startOfWeek;
+                    endDate = today;
+                    break;
+                case 'lastWeek':
+                    const lastWeekEnd = new Date(today);
+                    lastWeekEnd.setDate(today.getDate() - today.getDay());
+                    const lastWeekStart = new Date(lastWeekEnd);
+                    lastWeekStart.setDate(lastWeekEnd.getDate() - 6);
+                    startDate = lastWeekStart;
+                    endDate = lastWeekEnd;
+                    break;
+                case 'thisMonth':
+                    startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                    endDate = today;
+                    break;
+                case 'lastMonth':
+                    startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                    endDate = new Date(today.getFullYear(), today.getMonth(), 0);
+                    break;
+                case 'last3Months':
+                    startDate = new Date(today.getFullYear(), today.getMonth() - 3, 1);
+                    endDate = today;
+                    break;
+                case 'thisYear':
+                    startDate = new Date(today.getFullYear(), 0, 1);
+                    endDate = today;
+                    break;
+            }
+            
+            if (startDate && endDate) {
+                startInput.value = startDate.toISOString().split('T')[0];
+                endInput.value = endDate.toISOString().split('T')[0];
+                
+                // Add active class to clicked button
+                event.target.classList.add('active');
+            }
+        }
+        */
+        
+        function resetFilters() {
+            // Reset form to clear all inputs
+            document.querySelector('form').reset();
+        }
+        
+        // PDF Export Functions
+        function openPdfExportModal() {
+            // Copy current form values to PDF form
+            copyFormValuesToPdfForm();
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('pdfExportModal'));
+            modal.show();
+        }
+        
+        function copyFormValuesToPdfForm() {
+            const form = document.querySelector('form[action="/Reports/GenerateReport"]');
+            
+            // Mapping of form field names to PDF form field IDs
+            const fieldMappings = {
+                'StartDate': 'pdfStartDate',
+                'EndDate': 'pdfEndDate',
+                'AccountId': 'pdfAccountId',
+                'CategoryId': 'pdfCategoryId',
+                'TransactionType': 'pdfTransactionType',
+                'MinAmount': 'pdfMinAmount',
+                'MaxAmount': 'pdfMaxAmount',
+                'SearchTerm': 'pdfSearchTerm',
+                'IncludeRecurring': 'pdfIncludeRecurring',
+                'IncludeInstallments': 'pdfIncludeInstallments'
+            };
+            
+            // Copy each field value to the PDF form
+            for (const [fieldName, pdfFieldId] of Object.entries(fieldMappings)) {
+                const sourceField = form.querySelector(`[name="${fieldName}"]`);
+                const targetField = document.getElementById(pdfFieldId);
+                
+                if (sourceField && targetField) {
+                    if (sourceField.type === 'checkbox') {
+                        targetField.value = sourceField.checked ? 'true' : 'false';
+                    } else {
+                        targetField.value = sourceField.value || '';
+                    }
+                }
+            }
+            
+            console.log('Filter values copied to PDF form:');
+            for (const [fieldName, pdfFieldId] of Object.entries(fieldMappings)) {
+                const field = document.getElementById(pdfFieldId);
+                if (field) {
+                    console.log(`${fieldName}: ${field.value}`);
+                }
+            }
+        }
+        
+        function previewPdf() {
+            // Copy current form values
+            copyFormValuesToPdfForm();
+            
+            // Create preview URL with current filters
+            const form = document.getElementById('pdfExportForm');
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+            
+            for (let [key, value] of formData.entries()) {
+                if (!key.startsWith('pdfOptions') && key !== '__RequestVerificationToken') {
+                    params.append(key, value);
+                }
+            }
+            
+            // Open preview in new window
+            const previewUrl = `/Reports/PreviewPdf?${params.toString()}`;
+            window.open(previewUrl, '_blank', 'width=1000,height=800,scrollbars=yes');
+        }
+        
+        // Enable PDF export button when data is loaded
+        function enablePdfExport() {
+            const pdfBtn = document.getElementById('pdfExportBtn');
+            if (pdfBtn) {
+                pdfBtn.disabled = false;
+            }
+        }
+
+        // Enable PDF export if we have data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Date fields are left blank for user flexibility
+            
+            // Enable PDF export if we have data
+            @if (Model != null && Model.Transactions.Any())
+            {
+                <text>enablePdfExport();</text>
+            }
+        });
+    </script>
+}

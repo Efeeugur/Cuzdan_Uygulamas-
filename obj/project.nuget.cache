@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "FhPDqe92+c8=",
+  "dgSpecHash": "C3s14hTGYO0=",
   "success": true,
   "projectFilePath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
   "expectedPackageFiles": [
@@ -38,6 +38,7 @@
     "/Users/efeugur/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
     "/Users/efeugur/.nuget/packages/npgsql/9.0.0/npgsql.9.0.0.nupkg.sha512",
     "/Users/efeugur/.nuget/packages/npgsql.entityframeworkcore.postgresql/9.0.0/npgsql.entityframeworkcore.postgresql.9.0.0.nupkg.sha512",
+    "/Users/efeugur/.nuget/packages/puppeteersharp/19.0.0/puppeteersharp.19.0.0.nupkg.sha512",
     "/Users/efeugur/.nuget/packages/system.codedom/6.0.0/system.codedom.6.0.0.nupkg.sha512",
     "/Users/efeugur/.nuget/packages/system.collections.immutable/7.0.0/system.collections.immutable.7.0.0.nupkg.sha512",
     "/Users/efeugur/.nuget/packages/system.composition/7.0.0/system.composition.7.0.0.nupkg.sha512",
