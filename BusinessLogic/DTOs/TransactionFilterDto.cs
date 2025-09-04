@@ -26,4 +26,7 @@ public class TransactionFilterDto
     [Display(Name = "Search")]
     [StringLength(100, ErrorMessage = "Search term cannot exceed 100 characters")]
     public string? Search { get; set; }
+    
+    [Display(Name = "Only Installments")]
+    public bool OnlyInstallments { get; set; }
 }

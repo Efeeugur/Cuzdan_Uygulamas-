@@ -20,7 +20,7 @@
             </div>
             <div class="col-auto">
                 <a asp-action="Create" class="btn-primary-action">
-                    <i class="fas fa-plus me-2"></i>Yeni İşlem
+                    <i class="bi bi-plus me-2"></i>Yeni İşlem
                 </a>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-success">
-                            <i class="fas fa-arrow-up fa-2x mb-2"></i>
+                            <i class="bi bi-arrow-up fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Toplam Gelir</h6>
                         <h4 class="text-success">₺@summary.TotalIncome.ToString("N2")</h4>
@@ -45,7 +45,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-danger">
-                            <i class="fas fa-arrow-down fa-2x mb-2"></i>
+                            <i class="bi bi-arrow-down fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Toplam Gider</h6>
                         <h4 class="text-danger">₺@summary.TotalExpense.ToString("N2")</h4>
@@ -56,7 +56,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-info">
-                            <i class="fas fa-calculator fa-2x mb-2"></i>
+                            <i class="bi bi-calculator fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Net Tutar</h6>
                         <h4 class="@(summary.NetAmount >= 0 ? "text-success" : "text-danger")">
@@ -69,7 +69,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-primary">
-                            <i class="fas fa-list fa-2x mb-2"></i>
+                            <i class="bi bi-list fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Toplam İşlem</h6>
                         <h4 class="text-primary">@summary.TransactionCount</h4>
@@ -109,11 +109,11 @@
                       @transaction.Account?.Name
                       @if (transaction.Category != null)
                       {
-                        <span class="item-chip"><i class="fas fa-tag"></i> @transaction.Category.Name</span>
+                        <span class="item-chip"><i class="bi bi-tag"></i> @transaction.Category.Name</span>
                       }
                       @if (transaction.IsRecurring)
                       {
-                        <span class="item-chip"><i class="fas fa-sync-alt"></i> Otomatik</span>
+                        <span class="item-chip"><i class="bi bi-arrow-repeat"></i> Otomatik</span>
                       }
                       • @transaction.TransactionDate.ToString("dd MMMM yyyy, HH:mm")
                     </p>
@@ -129,19 +129,19 @@
                          asp-route-id="@transaction.Id"
                          class="btn-view-action"
                          title="Detay">
-                        <i class="fas fa-eye"></i><span>Detay</span>
+                        <i class="bi bi-eye"></i><span>Detay</span>
                       </a>
                       <a asp-action="Edit"
                          asp-route-id="@transaction.Id"
                          class="btn-edit-action"
                          title="Düzenle">
-                        <i class="fas fa-edit"></i><span>Düzenle</span>
+                        <i class="bi bi-pencil"></i><span>Düzenle</span>
                       </a>
                       <button type="button"
                               class="btn-danger-action"
                               onclick="deleteTransaction(@transaction.Id)"
                               title="Sil">
-                        <i class="fas fa-trash"></i><span>Sil</span>
+                        <i class="bi bi-trash"></i><span>Sil</span>
                       </button>
                     </div>
                   </div>
@@ -161,11 +161,11 @@
         {
           <div class="card border-0 shadow-sm">
             <div class="card-body empty-state">
-              <i class="fas fa-receipt fa-4x mb-3"></i>
+              <i class="bi bi-receipt fa-4x mb-3"></i>
               <h4>Henüz işlem bulunmuyor</h4>
               <p>İlk gelir veya gider işleminizi oluşturarak başlayın.</p>
               <a asp-action="Create" class="btn-primary-action">
-                <i class="fas fa-plus me-2"></i>İlk İşlemimi Ekle
+                <i class="bi bi-plus me-2"></i>İlk İşlemimi Ekle
               </a>
             </div>
           </div>

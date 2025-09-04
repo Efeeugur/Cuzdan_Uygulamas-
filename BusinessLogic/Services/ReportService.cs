@@ -1,5 +1,6 @@
 using Cüzdan_Uygulaması.BusinessLogic.DTOs;
 using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
+using Cüzdan_Uygulaması.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Cüzdan_Uygulaması.BusinessLogic.Services;
@@ -229,9 +230,10 @@ public class ReportService : IReportService
             EndDate = request.EndDate,
             AccountId = request.AccountId,
             CategoryId = request.CategoryId,
-            Type = request.TransactionType,
-            IsRecurring = request.IncludeRecurring ? null : false,
-            Search = request.SearchTerm
+            Type = request.OnlyInstallments ? null : request.TransactionType,
+            IsRecurring = null, // Always include both recurring and non-recurring transactions
+            Search = request.SearchTerm,
+            OnlyInstallments = request.OnlyInstallments
         };
     }
 

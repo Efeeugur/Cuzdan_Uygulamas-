@@ -114,8 +114,16 @@ public class TransactionService : ITransactionService
         if (filter.CategoryId.HasValue)
             query = query.Where(t => t.CategoryId == filter.CategoryId.Value);
 
-        if (filter.Type.HasValue)
-            query = query.Where(t => t.Type == filter.Type.Value);
+        if (filter.OnlyInstallments)
+        {
+            // Filter for only installment transactions (transactions with InstallmentId)
+            query = query.Where(t => t.InstallmentId.HasValue);
+        }
+        else if (filter.Type.HasValue)
+        {
+            // Filter by type but exclude installment transactions for regular income/expense filters
+            query = query.Where(t => t.Type == filter.Type.Value && !t.InstallmentId.HasValue);
+        }
 
         if (filter.IsRecurring.HasValue)
             query = query.Where(t => t.IsRecurring == filter.IsRecurring.Value);

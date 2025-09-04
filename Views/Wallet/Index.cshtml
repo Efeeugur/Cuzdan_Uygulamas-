@@ -16,7 +16,7 @@
             </div>
             <div class="col-auto">
                 <a asp-action="CreateAccount" class="btn-primary-action">
-                    <i class="fas fa-plus me-2"></i>Yeni Hesap
+                    <i class="bi bi-plus me-2"></i>Yeni Hesap
                 </a>
             </div>
         </div>
@@ -36,7 +36,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-success">
-                            <i class="fas fa-arrow-up fa-2x mb-2"></i>
+                            <i class="bi bi-arrow-up fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Toplam Gelir</h6>
                         <h5 class="text-success">₺@transactionSummary.TotalIncome.ToString("N2")</h5>
@@ -47,7 +47,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-danger">
-                            <i class="fas fa-arrow-down fa-2x mb-2"></i>
+                            <i class="bi bi-arrow-down fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Toplam Gider</h6>
                         <h5 class="text-danger">₺@transactionSummary.TotalExpense.ToString("N2")</h5>
@@ -58,7 +58,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body text-center">
                         <div class="text-info">
-                            <i class="fas fa-calculator fa-2x mb-2"></i>
+                            <i class="bi bi-calculator fa-2x mb-2"></i>
                         </div>
                         <h6 class="text-muted">Net Tutar</h6>
                         <h5 class="@(transactionSummary.NetAmount >= 0 ? "text-success" : "text-danger")">
@@ -99,7 +99,7 @@
                                     }
                                     <div class="item-badges">
                                         <span class="item-chip">
-                                            <i class="fas fa-receipt me-1"></i>@account.Transactions.Count() işlem
+                                            <i class="bi bi-receipt me-1"></i>@account.Transactions.Count() işlem
                                         </span>
                                     </div>
                                 </div>
@@ -112,26 +112,26 @@
                                 <!-- Aksiyonlar -->
                                 <div class="item-actions">
                                     <a asp-action="AccountDetails" asp-route-id="@account.Id" class="btn-view-action btn-sm" title="Detay">
-                                        <i class="fas fa-eye me-1"></i> Detay
+                                        <i class="bi bi-eye me-1"></i> Detay
                                     </a>
                                     <a asp-controller="Transaction" asp-action="Create" asp-route-accountId="@account.Id" class="btn-primary-action btn-sm" title="Yeni İşlem">
-                                        <i class="fas fa-plus me-1"></i> İşlem
+                                        <i class="bi bi-plus me-1"></i> İşlem
                                     </a>
 
                                     <div class="btn-group">
                                         <button class="btn-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" title="Diğer">
-                                            <i class="fas fa-cog"></i>
+                                            <i class="bi bi-gear"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
                                                 <a class="dropdown-item" asp-action="EditAccount" asp-route-id="@account.Id">
-                                                    <i class="fas fa-edit me-2"></i>Düzenle
+                                                    <i class="bi bi-pencil me-2"></i>Düzenle
                                                 </a>
                                             </li>
                                             <li><hr class="dropdown-divider" /></li>
                                             <li>
                                                 <a class="dropdown-item text-danger" href="#" onclick="deleteAccount(@account.Id)">
-                                                    <i class="fas fa-trash me-2"></i>Sil
+                                                    <i class="bi bi-trash me-2"></i>Sil
                                                 </a>
                                             </li>
                                         </ul>
@@ -146,11 +146,11 @@
             {
                 <div class="card border-0 shadow-sm">
                     <div class="card-body empty-state">
-                        <i class="fas fa-wallet fa-4x mb-3"></i>
+                        <i class="bi bi-wallet fa-4x mb-3"></i>
                         <h4>Henüz hesap eklenmemiş</h4>
                         <p>İlk hesabınızı oluşturarak finansal takibi başlatın.</p>
                         <a asp-action="CreateAccount" class="btn-primary-action">
-                            <i class="fas fa-plus me-2"></i>İlk Hesabımı Oluştur
+                            <i class="bi bi-plus me-2"></i>İlk Hesabımı Oluştur
                         </a>
                     </div>
                 </div>

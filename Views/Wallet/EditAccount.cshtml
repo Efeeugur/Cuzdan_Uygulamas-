@@ -129,7 +129,7 @@
     <div class="form-container">
         <div class="form-header">
             <h2 class="mb-2">
-                <i class="fas fa-edit form-icon"></i>
+                <i class="bi bi-pencil form-icon"></i>
                 Hesap Düzenle
             </h2>
             <p class="text-muted mb-0">@Model.Name hesabının bilgilerini güncelleyin</p>
@@ -143,7 +143,7 @@
 
                 <div class="balance-warning">
                     <div class="d-flex align-items-center">
-                        <i class="fas fa-info-circle me-2"></i>
+                        <i class="bi bi-info-circle me-2"></i>
                         <div>
                             <strong>Not: Hesap bakiyesi yalnızca işlemler aracılığıyla değiştirilir</strong>
                             <div class="small">Bu formda sadece hesap adı ve açıklamasını güncelleyebilirsiniz</div>
@@ -153,7 +153,7 @@
 
                 <div class="mb-4">
                     <label asp-for="Name" class="form-label">
-                        <i class="fas fa-tag form-icon"></i>Hesap Adı *
+                        <i class="bi bi-tag form-icon"></i>Hesap Adı *
                     </label>
                     <input asp-for="Name" class="form-control" 
                            placeholder="örn: Ziraat Bankası Vadesiz, Nakit, Kredi Kartı" 
@@ -164,7 +164,7 @@
 
                 <div class="mb-4">
                     <label asp-for="Description" class="form-label">
-                        <i class="fas fa-align-left form-icon"></i>Açıklama
+                        <i class="bi bi-align-left form-icon"></i>Açıklama
                     </label>
                     <textarea asp-for="Description" class="form-control" rows="3" 
                               placeholder="Bu hesap hakkında ek bilgiler (isteğe bağlı)..."></textarea>
@@ -175,12 +175,12 @@
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <a asp-action="Index" class="btn btn-secondary-custom w-100">
-                            <i class="fas fa-arrow-left me-2"></i>İptal Et
+                            <i class="bi bi-arrow-left me-2"></i>İptal Et
                         </a>
                     </div>
                     <div class="col-md-6">
                         <button type="submit" class="btn-apple">
-                            <i class="fas fa-save me-2"></i>Değişiklikleri Kaydet
+                            <i class="bi bi-floppy me-2"></i>Değişiklikleri Kaydet
                         </button>
                     </div>
                 </div>

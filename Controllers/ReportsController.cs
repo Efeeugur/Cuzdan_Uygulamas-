@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.DTOs;
 using Cüzdan_Uygulaması.BusinessLogic.Services;
+using Cüzdan_Uygulaması.Models;
 
 namespace Cüzdan_Uygulaması.Controllers;
 
@@ -50,6 +51,9 @@ public class ReportsController : Controller
         // Pass both request and result to view
         ViewBag.Request = request;
         
+        // Store the current report request in TempData for PDF export
+        TempData["CurrentReportRequest"] = System.Text.Json.JsonSerializer.Serialize(request);
+        
         return View(reportResult);
     }
 
@@ -72,6 +76,9 @@ public class ReportsController : Controller
         
         await PopulateDropdownsAsync(userId);
         ViewBag.Request = request;
+        
+        // Store the current report request in TempData for PDF export
+        TempData["CurrentReportRequest"] = System.Text.Json.JsonSerializer.Serialize(request);
         
         return View("Index", reportResult);
     }
@@ -110,14 +117,34 @@ public class ReportsController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ExportToPdf(ReportRequestDto request, PdfExportOptionsDto? pdfOptions = null)
+    public async Task<IActionResult> ExportToPdf(PdfExportOptionsDto? pdfOptions = null)
     {
         var userId = GetUserId();
         
         try
         {
-            // Generate report data
+            // Get the current report request from TempData
+            ReportRequestDto request;
+            if (TempData.Peek("CurrentReportRequest") is string requestJson)
+            {
+                request = System.Text.Json.JsonSerializer.Deserialize<ReportRequestDto>(requestJson) ?? new ReportRequestDto();
+                Console.WriteLine($"PDF EXPORT: Using stored report request");
+                Console.WriteLine($"  OnlyInstallments: {request.OnlyInstallments}");
+                Console.WriteLine($"  TransactionType: {request.TransactionType}");
+                Console.WriteLine($"  StartDate: {request.StartDate}");
+                Console.WriteLine($"  EndDate: {request.EndDate}");
+            }
+            else
+            {
+                // Fallback to empty request (all transactions)
+                request = new ReportRequestDto();
+                Console.WriteLine($"PDF EXPORT: No stored request found, using default (all transactions)");
+            }
+            
+            // Generate report data using the same filters as the displayed report
             var reportResult = await GenerateReportAsync(request, userId);
+            
+            Console.WriteLine($"PDF EXPORT: Report generated with {reportResult.Transactions.Count} transactions");
             
             // Convert PDF options
             var options = new BusinessLogic.Interfaces.PdfExportOptions
@@ -178,9 +205,10 @@ public class ReportsController : Controller
                 EndDate = request.EndDate,
                 AccountId = request.AccountId,
                 CategoryId = request.CategoryId,
-                Type = request.TransactionType,
-                IsRecurring = request.IncludeRecurring ? null : false,
-                Search = request.SearchTerm
+                Type = request.OnlyInstallments ? null : request.TransactionType,
+                IsRecurring = null, // Always include both recurring and non-recurring transactions
+                Search = request.SearchTerm,
+                OnlyInstallments = request.OnlyInstallments
             };
 
             // Get filtered transactions

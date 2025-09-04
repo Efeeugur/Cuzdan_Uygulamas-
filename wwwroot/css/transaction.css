@@ -1,0 +1,427 @@
+/*
+ * Transaction CSS for Cüzdan Uygulaması (Wallet Application)
+ * Contains all styling specific to transaction creation and editing pages
+ */
+
+/* ========================================
+   Transaction Form Components
+   ======================================== */
+.form-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.form-header {
+    padding: 2rem 2rem 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-body {
+    padding: 2rem;
+}
+
+.form-icon {
+    color: var(--blue);
+    margin-right: 0.5rem;
+}
+
+/* ========================================
+   Transaction Type Selector
+   ======================================== */
+.transaction-type-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.type-option {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--card);
+}
+
+.type-option:hover {
+    border-color: var(--blue);
+    background: rgba(0, 122, 255, 0.05);
+}
+
+.type-option.selected.income {
+    border-color: var(--green);
+    background: rgba(40, 167, 69, 0.1);
+}
+
+.type-option.selected.expense {
+    border-color: var(--red);
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.type-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.type-option.income .type-icon {
+    color: var(--green);
+}
+
+.type-option.expense .type-icon {
+    color: var(--red);
+}
+
+/* ========================================
+   Recurring Transaction Section
+   ======================================== */
+.recurring-section {
+    background: rgba(0, 122, 255, 0.05);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.recurring-section.show {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   Form Check Components
+   ======================================== */
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(0, 122, 255, 0.02);
+    border: 1px solid rgba(0, 122, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.form-check:hover {
+    background: rgba(0, 122, 255, 0.05);
+    border-color: rgba(0, 122, 255, 0.2);
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: var(--card);
+    transition: all 0.2s ease;
+}
+
+.form-check-input:checked {
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+.form-check-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.form-check-label {
+    cursor: pointer;
+    flex: 1;
+}
+
+/* ========================================
+   Form Help Text
+   ======================================== */
+.form-help {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    line-height: 1.4;
+}
+
+.form-check .form-help {
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    color: rgba(110, 110, 115, 0.8);
+}
+
+/* ========================================
+   Input Group Components
+   ======================================== */
+.input-group-text {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 12px 16px;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+}
+
+.input-group .form-control:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.input-group .form-control:focus + .input-group-text {
+    border-color: var(--blue);
+}
+
+/* ========================================
+   Transaction Form Enhancements
+   ======================================== */
+.transaction-form-row {
+    margin-bottom: 1.5rem;
+}
+
+.transaction-form-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Enhanced datetime input styling */
+input[type="datetime-local"] {
+    position: relative;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* Select styling improvements */
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px 12px;
+    padding-right: 2.5rem;
+}
+
+.form-select:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23007aff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* ========================================
+   Alert and Message Styling
+   ======================================== */
+.alert {
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-danger {
+    background: rgba(220, 53, 69, 0.1);
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.alert-warning {
+    background: rgba(255, 149, 0, 0.1);
+    border-color: var(--orange);
+    color: #d68910;
+}
+
+.alert-success {
+    background: rgba(40, 167, 69, 0.1);
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.alert i {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   Button Styling Improvements
+   ======================================== */
+.btn-primary-action,
+.btn-secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    min-height: 48px;
+}
+
+.btn-primary-action {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-primary-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.btn-secondary-action {
+    background: var(--card);
+    color: var(--muted);
+    border-color: var(--border);
+}
+
+.btn-secondary-action:hover {
+    background: var(--border);
+    color: var(--text);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 1rem;
+        max-width: none;
+    }
+    
+    .form-header,
+    .form-body {
+        padding: 1.5rem;
+    }
+    
+    .transaction-type-selector {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .type-option {
+        padding: 0.75rem;
+    }
+    
+    .type-icon {
+        font-size: 1.5rem;
+    }
+    
+    .recurring-section {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-primary-action,
+    .btn-secondary-action {
+        padding: 0.625rem 1rem;
+        font-size: 0.9rem;
+        min-height: 44px;
+    }
+    
+    .form-check {
+        padding: 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .form-check-input {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* ========================================
+   Focus and Accessibility
+   ======================================== */
+.type-option:focus-visible {
+    outline: 3px solid rgba(0, 122, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.btn-primary-action:focus-visible,
+.btn-secondary-action:focus-visible {
+    outline: 3px solid rgba(0, 122, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   Animation Utilities
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ========================================
+   Loading States
+   ======================================== */
+.form-control.loading,
+.form-select.loading {
+    background-image: linear-gradient(90deg, transparent, rgba(0, 122, 255, 0.1), transparent);
+    background-size: 200px 100%;
+    background-repeat: no-repeat;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}

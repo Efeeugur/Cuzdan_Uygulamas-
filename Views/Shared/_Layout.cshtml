@@ -7,8 +7,10 @@
     <title>@ViewData["Title"] - Cüzdan_Uygulaması</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/node_modules/bootstrap-icons/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Cüzdan_Uygulaması.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 
 </head>
 
@@ -26,13 +28,13 @@
             </button>
 
             <div id="appNavbar" class="navbar-collapse collapse d-md-flex nav-links">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house me-2"></i>Ana Sayfa</a>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a class="nav-link" asp-controller="Wallet" asp-action="Index">Hesaplarım</a>
-                    <a class="nav-link" asp-controller="Transaction" asp-action="Index">İşlemler</a>
-                    <a class="nav-link" asp-controller="Installment" asp-action="Index">Taksitler</a>
-                    <a class="nav-link" asp-controller="Reports" asp-action="Index">Raporlar</a>
+                    <a class="nav-link" asp-controller="Wallet" asp-action="Index"><i class="bi bi-wallet2 me-2"></i>Hesaplarım</a>
+                    <a class="nav-link" asp-controller="Transaction" asp-action="Index"><i class="bi bi-arrow-left-right me-2"></i>İşlemler</a>
+                    <a class="nav-link" asp-controller="Installment" asp-action="Index"><i class="bi bi-credit-card-2-front me-2"></i>Taksitler</a>
+                    <a class="nav-link" asp-controller="Reports" asp-action="Index"><i class="bi bi-graph-up-arrow me-2"></i>Raporlar</a>
                 }
             </div>
 

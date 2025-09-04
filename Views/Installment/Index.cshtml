@@ -15,7 +15,7 @@
             <div class="col-auto">
                 <div class="btn-group">
                     <a asp-action="Create" class="btn-primary-action">
-                        <i class="fas fa-plus me-2"></i>Yeni Taksit
+                        <i class="bi bi-plus me-2"></i>Yeni Taksit
                     </a>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-primary"><i class="fas fa-list fa-2x mb-2"></i></div>
+                    <div class="text-primary"><i class="bi bi-list fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Toplam Taksit</h6>
                     <h4 class="text-primary">@Model.Count()</h4>
                 </div>
@@ -36,7 +36,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-warning"><i class="fas fa-clock fa-2x mb-2"></i></div>
+                    <div class="text-warning"><i class="bi bi-clock fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Aktif Taksit</h6>
                     <h4 class="text-warning">@Model.Count(i => !i.IsCompleted)</h4>
                 </div>
@@ -45,7 +45,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-success"><i class="fas fa-check-circle fa-2x mb-2"></i></div>
+                    <div class="text-success"><i class="bi bi-check-circle fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Tamamlanan</h6>
                     <h4 class="text-success">@Model.Count(i => i.IsCompleted)</h4>
                 </div>
@@ -54,7 +54,7 @@
         <div class="col-md-3 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body text-center">
-                    <div class="text-info"><i class="fas fa-money-bill-wave fa-2x mb-2"></i></div>
+                    <div class="text-info"><i class="bi bi-currency-dollar fa-2x mb-2"></i></div>
                     <h6 class="text-muted">Toplam Tutar</h6>
                     <h4 class="text-info">₺@Model.Sum(i => i.TotalAmount).ToString("N2")</h4>
                 </div>
@@ -95,15 +95,15 @@
                                     <div class="progress-ring__icon">
                                         @if (installment.IsCompleted)
                                         {
-                                            <i class="fas fa-check"></i>
+                                            <i class="bi bi-check"></i>
                                         }
                                         else if (installment.NextPaymentDate < DateTime.Now)
                                         {
-                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <i class="bi bi-exclamation-triangle"></i>
                                         }
                                         else
                                         {
-                                            <i class="fas fa-credit-card"></i>
+                                            <i class="bi bi-credit-card"></i>
                                         }
                                     </div>
                                 </div>
@@ -117,19 +117,19 @@
                                     • ₺@installment.MonthlyPayment.ToString("N2") aylık
                                     @if (installment.Category != null)
                                     {
-                                        <span class="item-chip"><i class="fas fa-tag"></i> @installment.Category.Name</span>
+                                        <span class="item-chip"><i class="bi bi-tag"></i> @installment.Category.Name</span>
                                     }
                                     @if (installment.IsCompleted)
                                     {
-                                        <span class="item-chip item-chip--success"><i class="fas fa-check"></i> Tamamlandı</span>
+                                        <span class="item-chip item-chip--success"><i class="bi bi-check"></i> Tamamlandı</span>
                                     }
                                     else if (installment.NextPaymentDate < DateTime.Now)
                                     {
-                                        <span class="item-chip item-chip--danger"><i class="fas fa-exclamation-triangle"></i> Gecikmiş</span>
+                                        <span class="item-chip item-chip--danger"><i class="bi bi-exclamation-triangle"></i> Gecikmiş</span>
                                     }
                                     else
                                     {
-                                        <span class="item-chip item-chip--primary"><i class="fas fa-clock"></i> @installment.NextPaymentDate.ToString("dd MMM")</span>
+                                        <span class="item-chip item-chip--primary"><i class="bi bi-clock"></i> @installment.NextPaymentDate.ToString("dd MMM")</span>
                                     }
                                 </p>
                                 
@@ -160,22 +160,22 @@
                                 {
                                     <a asp-action="Pay" asp-route-id="@installment.Id"
                                         class="btn-success-action btn-sm" title="Ödeme Yap">
-                                        <i class="fas fa-credit-card"></i><span>Ödeme Yap</span>
+                                        <i class="bi bi-credit-card"></i><span>Ödeme Yap</span>
                                     </a>
                                 }
                                 <a asp-action="Details" asp-route-id="@installment.Id"
                                     class="btn-view-action btn-sm" title="Detay">
-                                    <i class="fas fa-eye"></i><span>Detay</span>
+                                    <i class="bi bi-eye"></i><span>Detay</span>
                                 </a>
                                 <a asp-action="Edit" asp-route-id="@installment.Id"
                                     class="btn-edit-action btn-sm" title="Düzenle">
-                                    <i class="fas fa-edit"></i><span>Düzenle</span>
+                                    <i class="bi bi-pencil"></i><span>Düzenle</span>
                                 </a>
                                 <button type="button"
                                         class="btn-danger-action btn-sm"
                                         onclick="deleteInstallment(@installment.Id)"
                                         title="Sil">
-                                    <i class="fas fa-trash"></i><span>Sil</span>
+                                    <i class="bi bi-trash"></i><span>Sil</span>
                                 </button>
                             </div>
                         </div>
@@ -187,11 +187,11 @@
             {
                 <div class="card border-0 shadow-sm">
                     <div class="card-body empty-state">
-                        <i class="fas fa-shopping-cart fa-4x mb-3"></i>
+                        <i class="bi bi-cart fa-4x mb-3"></i>
                         <h4>Henüz taksit bulunmuyor</h4>
                         <p>İlk taksitli alışverişinizi ekleyerek başlayın.</p>
                         <a asp-action="Create" class="btn-primary-action">
-                            <i class="fas fa-plus me-2"></i>İlk Taksitimi Ekle
+                            <i class="bi bi-plus me-2"></i>İlk Taksitimi Ekle
                         </a>
                     </div>
                 </div>

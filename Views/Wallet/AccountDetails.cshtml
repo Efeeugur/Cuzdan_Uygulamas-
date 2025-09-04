@@ -123,13 +123,13 @@
                 <div class="btn-group">
                     <a asp-controller="Transaction" asp-action="Create" asp-route-accountId="@Model.Id"
                         class="btn-primary-action">
-                        <i class="fas fa-plus me-2"></i>Yeni İşlem
+                        <i class="bi bi-plus me-2"></i>Yeni İşlem
                     </a>
                     <a asp-action="EditAccount" asp-route-id="@Model.Id" class="btn-edit-action">
-                        <i class="fas fa-edit me-2"></i>Düzenle
+                        <i class="bi bi-pencil me-2"></i>Düzenle
                     </a>
                     <a asp-action="Index" class="btn-secondary-action">
-                        <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                        <i class="bi bi-arrow-left me-2"></i>Geri Dön
                     </a>
                 </div>
             </div>
@@ -171,7 +171,7 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body text-center py-3">
                             <div class="text-success">
-                                <i class="fas fa-arrow-up fa-lg mb-1"></i>
+                                <i class="bi bi-arrow-up fa-lg mb-1"></i>
                             </div>
                             <h6 class="text-muted mb-1">Toplam Gelir</h6>
                             <h6 class="text-success mb-0">
@@ -185,7 +185,7 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body text-center py-3">
                             <div class="text-danger">
-                                <i class="fas fa-arrow-down fa-lg mb-1"></i>
+                                <i class="bi bi-arrow-down fa-lg mb-1"></i>
                             </div>
                             <h6 class="text-muted mb-1">Toplam Gider</h6>
                             <h6 class="text-danger mb-0">
@@ -204,7 +204,7 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">
-                            <i class="fas fa-history me-2"></i>
+                            <i class="bi bi-clock-history me-2"></i>
                             İşlem Geçmişi (@Model.Transactions.Count() işlem)
                         </h4>
                         <a asp-controller="Transaction" asp-action="Index" class="btn-view-action btn-sm">
@@ -249,7 +249,7 @@
                                             @transaction.Description
                                             @if (transaction.IsRecurring)
                                             {
-                                                <br><small class="text-info"><i class="fas fa-sync-alt me-1"></i>Otomatik İşlem</small>
+                                                <br><small class="text-info"><i class="bi bi-arrow-repeat me-1"></i>Otomatik İşlem</small>
                                             }
                                         </td>
                                         <td>
@@ -266,11 +266,11 @@
                                             <div class="btn-group">
                                                 <a asp-controller="Transaction" asp-action="Details" asp-route-id="@transaction.Id"
                                                     class="btn-view-action btn-sm" title="Detay">
-                                                    <i class="fas fa-eye"></i>
+                                                    <i class="bi bi-eye"></i>
                                                 </a>
                                                 <a asp-controller="Transaction" asp-action="Edit" asp-route-id="@transaction.Id"
                                                     class="btn-edit-action btn-sm" title="Düzenle">
-                                                    <i class="fas fa-edit"></i>
+                                                    <i class="bi bi-pencil"></i>
                                                 </a>
                                             </div>
                                         </td>
@@ -287,17 +287,17 @@
             <div class="installment-card">
                 <div class="card-header">
                     <h4 class="mb-0">
-                        <i class="fas fa-history me-2"></i>
+                        <i class="bi bi-clock-history me-2"></i>
                         İşlem Geçmişi
                     </h4>
                 </div>
                 <div class="card-body empty-state">
-                    <i class="fas fa-receipt fa-3x mb-3"></i>
+                    <i class="bi bi-receipt fa-3x mb-3"></i>
                     <h5>Henüz işlem bulunmuyor</h5>
                     <p>Bu hesapta henüz hiç işlem yapılmamış.</p>
                     <a asp-controller="Transaction" asp-action="Create" asp-route-accountId="@Model.Id"
                         class="btn-primary-action">
-                        <i class="fas fa-plus me-2"></i>İlk İşlemi Ekle
+                        <i class="bi bi-plus me-2"></i>İlk İşlemi Ekle
                     </a>
                 </div>
             </div>

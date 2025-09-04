@@ -1,0 +1,371 @@
+/*
+ * Installment CSS for Cüzdan Uygulaması (Wallet Application)
+ * Contains all styling specific to installment creation and details pages
+ */
+
+/* ========================================
+   Installment Form Components
+   ======================================== */
+.form-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.form-header {
+    padding: 2rem 2rem 1rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-body {
+    padding: 2rem;
+}
+
+.form-icon {
+    color: var(--blue);
+    margin-right: 0.5rem;
+}
+
+/* ========================================
+   Installment Details Components
+   ======================================== */
+.details-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+}
+
+.installment-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--blue), #4A90E2);
+    color: white;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* ========================================
+   Information Sections
+   ======================================== */
+.info-section {
+    background: #f8f9fa;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.info-value {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ========================================
+   Progress Components
+   ======================================== */
+.progress-section {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.progress-bar-custom {
+    height: 12px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 1rem 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    transition: width 0.5s ease;
+    border-radius: 6px;
+}
+
+/* ========================================
+   Status Components
+   ======================================== */
+.status-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-active {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-completed {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ========================================
+   Warning and Alert Components
+   ======================================== */
+.overdue-warning {
+    background: #ffebee;
+    border: 1px solid #ffcdd2;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #d32f2f;
+}
+
+.installment-info {
+    background: #fff3cd;
+    border: 1px solid #ffecb5;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #856404;
+}
+
+/* ========================================
+   Interest Rate Components
+   ======================================== */
+.interest-info {
+    background: linear-gradient(135deg, #fff3cd, #ffeeba);
+    border: 1px solid #ffc107;
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.interest-badge {
+    background: var(--orange);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.market-comparison {
+    background: #f8f9fa;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* ========================================
+   Calculation Preview Components
+   ======================================== */
+.calculation-preview {
+    background: rgba(0, 122, 255, 0.05);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.preview-row:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 122, 255, 0.1);
+}
+
+.preview-label {
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.preview-value {
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.preview-value.total {
+    font-size: 1.1rem;
+    color: var(--green);
+}
+
+/* ========================================
+   Form Help Text
+   ======================================== */
+.form-help {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+}
+
+/* ========================================
+   Input Group Components
+   ======================================== */
+.input-group-text {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 12px 16px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+}
+
+/* ========================================
+   Transactions Table
+   ======================================== */
+.transactions-table {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    background: #f8f9fa;
+    border: none;
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.table td {
+    border: none;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ========================================
+   Amount Display
+   ======================================== */
+.amount-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+.text-success {
+    color: var(--green) !important;
+}
+
+.text-danger {
+    color: var(--red) !important;
+}
+
+.text-warning {
+    color: var(--orange) !important;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    .form-container {
+        margin: 1rem;
+        max-width: none;
+    }
+    
+    .details-container {
+        margin: 1rem;
+        max-width: none;
+    }
+    
+    .form-header,
+    .form-body,
+    .card-header,
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .info-section,
+    .progress-section {
+        padding: 1rem;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .amount-display {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .preview-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .market-comparison .row {
+        flex-direction: column;
+    }
+}

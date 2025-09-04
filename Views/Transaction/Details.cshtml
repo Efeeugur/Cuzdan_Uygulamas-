@@ -160,13 +160,13 @@
             <div class="col-auto">
                 <div class="btn-group">
                     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit-action">
-                        <i class="fas fa-edit me-2"></i>Düzenle
+                        <i class="bi bi-pencil me-2"></i>Düzenle
                     </a>
                     <a asp-action="Index" class="btn-secondary-action">
-                        <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                        <i class="bi bi-arrow-left me-2"></i>Geri Dön
                     </a>
                     <button class="btn-danger-action" onclick="deleteTransaction(@Model.Id)">
-                        <i class="fas fa-trash me-2"></i>Sil
+                        <i class="bi bi-trash me-2"></i>Sil
                     </button>
                 </div>
             </div>
@@ -195,7 +195,7 @@
             <div class="info-grid">
                 <div class="info-card">
                     <div class="info-icon">
-                        <i class="fas fa-university"></i>
+                        <i class="bi bi-building"></i>
                     </div>
                     <div class="info-title">Hesap</div>
                     <div class="info-value">@(Model.Account?.Name ?? "Bilinmiyor")</div>
@@ -205,7 +205,7 @@
                 {
                     <div class="info-card">
                         <div class="info-icon">
-                            <i class="fas fa-tags"></i>
+                            <i class="bi bi-tags"></i>
                         </div>
                         <div class="info-title">Kategori</div>
                         <div class="info-value">@Model.Category.Name</div>
@@ -214,7 +214,7 @@
 
                 <div class="info-card">
                     <div class="info-icon">
-                        <i class="fas fa-calendar"></i>
+                        <i class="bi bi-calendar"></i>
                     </div>
                     <div class="info-title">Tarih</div>
                     <div class="info-value">@Model.TransactionDate.ToString("dd MMM yyyy")</div>
@@ -224,7 +224,7 @@
                 {
                     <div class="info-card">
                         <div class="info-icon">
-                            <i class="fas fa-sync-alt"></i>
+                            <i class="bi bi-arrow-repeat"></i>
                         </div>
                         <div class="info-title">Tekrar</div>
                         <div class="info-value">
@@ -256,7 +256,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-edit"></i>
+                        <i class="bi bi-pencil"></i>
                         Açıklama
                     </div>
                     <div class="detail-value">@Model.Description</div>
@@ -264,7 +264,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-money-bill-wave"></i>
+                        <i class="bi bi-currency-dollar"></i>
                         Tutar
                     </div>
                     <div class="detail-value">
@@ -278,7 +278,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-tag"></i>
+                        <i class="bi bi-tag"></i>
                         İşlem Türü
                     </div>
                     <div class="detail-value">
@@ -291,7 +291,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-university"></i>
+                        <i class="bi bi-building"></i>
                         Hesap
                     </div>
                     <div class="detail-value">
@@ -311,7 +311,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-tags"></i>
+                        <i class="bi bi-tags"></i>
                         Kategori
                     </div>
                     <div class="detail-value">
@@ -328,7 +328,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-calendar"></i>
+                        <i class="bi bi-calendar"></i>
                         İşlem Tarihi
                     </div>
                     <div class="detail-value">@Model.TransactionDate.ToString("dddd, dd MMMM yyyy HH:mm")</div>
@@ -336,14 +336,14 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-sync-alt"></i>
+                        <i class="bi bi-arrow-repeat"></i>
                         Tekrar Eden İşlem
                     </div>
                     <div class="detail-value">
                         @if (Model.IsRecurring)
                         {
                             <span class="status-badge recurring-badge">
-                                <i class="fas fa-sync-alt me-1"></i>
+                                <i class="bi bi-arrow-repeat me-1"></i>
                                 @switch (Model.RecurrenceType)
                                 {
                                     case Cüzdan_Uygulaması.Models.RecurrenceType.Monthly:
@@ -367,7 +367,7 @@
 
                 <div class="detail-row">
                     <div class="detail-label">
-                        <i class="fas fa-clock"></i>
+                        <i class="bi bi-clock"></i>
                         Oluşturma Tarihi
                     </div>
                     <div class="detail-value">@Model.CreatedDate.ToString("dd MMMM yyyy HH:mm")</div>
@@ -380,7 +380,7 @@
                 <div class="transaction-card">
                     <h6 class="mb-3">Tekrar Eden İşlem Bilgileri</h6>
                     <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>
+                        <i class="bi bi-info-circle me-2"></i>
                         Bu işlem @switch (Model.RecurrenceType)
                         {
                                         case Cüzdan_Uygulaması.Models.RecurrenceType.Monthly:

@@ -19,6 +19,9 @@ public class ReportRequestDto
 
     [Display(Name = "İşlem Türü")]
     public TransactionType? TransactionType { get; set; }
+    
+    [Display(Name = "Sadece Taksitler")]
+    public bool OnlyInstallments { get; set; }
 
     [Display(Name = "Rapor Türü")]
     public ReportType ReportType { get; set; } = ReportType.Summary;

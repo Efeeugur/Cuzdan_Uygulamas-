@@ -216,7 +216,7 @@
     <div class="payment-container">
         <div class="payment-header">
             <h2 class="mb-2">
-                <i class="fas fa-credit-card me-2"></i>
+                <i class="bi bi-credit-card me-2"></i>
                 Taksit Ödemesi
             </h2>
             <p class="mb-0 opacity-75">@(installment?.Description ?? "")</p>
@@ -228,7 +228,7 @@
             {
                 <div class="overdue-warning">
                     <div class="d-flex align-items-center">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <i class="bi bi-exclamation-triangle me-2"></i>
                         <div>
                             <strong>Gecikmiş Ödeme!</strong>
                             <div class="small">Bu taksit @(installment?.NextPaymentDate.ToString("dd MMMM yyyy")) tarihinde ödenmeliydi.</div>
@@ -313,7 +313,7 @@
 
                 <div class="mb-4">
                     <label asp-for="AccountId" class="form-label">
-                        <i class="fas fa-university form-icon"></i>Ödeme Hesabı *
+                        <i class="bi bi-building form-icon"></i>Ödeme Hesabı *
                     </label>
                     <select asp-for="AccountId" asp-items="accounts" class="form-control">
                         <option value="">Ödeme yapılacak hesabı seçin...</option>
@@ -324,7 +324,7 @@
 
                 <div class="mb-4">
                     <label asp-for="PaymentDate" class="form-label">
-                        <i class="fas fa-calendar form-icon"></i>Ödeme Tarihi *
+                        <i class="bi bi-calendar form-icon"></i>Ödeme Tarihi *
                     </label>
                     <input asp-for="PaymentDate" class="form-control" type="date" />
                     <span asp-validation-for="PaymentDate" class="text-danger"></span>
@@ -333,7 +333,7 @@
 
                 <div class="mb-4">
                     <label asp-for="Notes" class="form-label">
-                        <i class="fas fa-sticky-note form-icon"></i>Notlar
+                        <i class="bi bi-sticky form-icon"></i>Notlar
                     </label>
                     <textarea asp-for="Notes" class="form-control" rows="3" 
                               placeholder="Bu ödeme hakkında ek notlarınız (isteğe bağlı)..."></textarea>
@@ -344,12 +344,12 @@
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <a asp-action="Details" asp-route-id="@(installment?.Id ?? 0)" class="btn btn-secondary-custom w-100">
-                            <i class="fas fa-arrow-left me-2"></i>Geri Dön
+                            <i class="bi bi-arrow-left me-2"></i>Geri Dön
                         </a>
                     </div>
                     <div class="col-md-6">
                         <button type="submit" class="btn-success-custom">
-                            <i class="fas fa-check me-2"></i>Ödemeyi Tamamla
+                            <i class="bi bi-check me-2"></i>Ödemeyi Tamamla
                         </button>
                     </div>
                 </div>
