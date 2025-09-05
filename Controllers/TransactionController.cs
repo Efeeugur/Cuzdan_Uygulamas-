@@ -6,6 +6,7 @@ using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.DTOs;
 using Cüzdan_Uygulaması.BusinessLogic.Services;
 using Cüzdan_Uygulaması.Models;
+using Cüzdan_Uygulaması.Exceptions;
 
 namespace Cüzdan_Uygulaması.Controllers;
 
@@ -78,64 +79,17 @@ public class TransactionController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateTransactionDto model)
     {
+        var userId = GetUserId();
+        
         if (!ModelState.IsValid)
         {
-            var userId = GetUserId();
             await PopulateDropdownsAsync(userId);
             return View(model);
         }
 
-        try
-        {
-            var userId = GetUserId();
-            await _transactionService.CreateTransactionAsync(model, userId);
-            TempData["Success"] = "İşlem başarıyla kaydedildi.";
-            return RedirectToAction(nameof(Index));
-        }
-        catch (InvalidOperationException ex)
-        {
-            // Handle specific business logic errors
-            TempData["Warning"] = ex.Message;
-            var userId = GetUserId();
-            await PopulateDropdownsAsync(userId);
-            return View(model);
-        }
-        catch (ArgumentException ex)
-        {
-            // Handle validation errors
-            TempData["Warning"] = $"Geçersiz değer: {ex.Message}";
-            var userId = GetUserId();
-            await PopulateDropdownsAsync(userId);
-            return View(model);
-        }
-        catch (Exception ex)
-        {
-            // Handle unexpected errors with user-friendly message
-            var errorMessage = "İşlem kaydedilirken beklenmeyen bir hata oluştu. Lütfen girdiğiniz bilgileri kontrol edin.";
-            
-            // Add specific error details for common issues
-            if (ex.Message.Contains("format") || ex.Message.Contains("invalid"))
-            {
-                errorMessage = "Girilen tutar formatı geçersiz. Lütfen geçerli bir sayı girin (örn: 100,50).";
-            }
-            else if (ex.Message.Contains("balance") || ex.Message.Contains("insufficient"))
-            {
-                errorMessage = "Bu işlem için hesabınızda yeterli bakiye bulunmuyor.";
-            }
-            else if (ex.Message.Contains("account") || ex.Message.Contains("not found"))
-            {
-                errorMessage = "Seçilen hesap bulunamadı. Lütfen geçerli bir hesap seçin.";
-            }
-            
-            TempData["Error"] = errorMessage;
-            
-            // Log the full exception for debugging
-            Console.WriteLine($"Transaction Creation Error: {ex}");
-            
-            var userId = GetUserId();
-            await PopulateDropdownsAsync(userId);
-            return View(model);
-        }
+        await _transactionService.CreateTransactionAsync(model, userId);
+        TempData["Success"] = "İşlem başarıyla kaydedildi.";
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
@@ -145,7 +99,7 @@ public class TransactionController : Controller
         var transaction = await _transactionService.GetTransactionByIdAsync(id, userId);
 
         if (transaction == null)
-            return NotFound();
+            throw new ResourceNotFoundException("Transaction", id);
 
         var model = new UpdateTransactionDto
         {
@@ -169,52 +123,34 @@ public class TransactionController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(UpdateTransactionDto model)
     {
+        var userId = GetUserId();
+        
         if (!ModelState.IsValid)
         {
-            var userId = GetUserId();
             await PopulateDropdownsAsync(userId);
             return View(model);
         }
 
-        try
-        {
-            var userId = GetUserId();
-            var result = await _transactionService.UpdateTransactionAsync(model, userId);
+        var result = await _transactionService.UpdateTransactionAsync(model, userId);
 
-            if (result == null)
-                return NotFound();
+        if (result == null)
+            throw new ResourceNotFoundException("Transaction", model.Id);
 
-            TempData["Success"] = "Transaction updated successfully.";
-            return RedirectToAction(nameof(Index));
-        }
-        catch (Exception ex)
-        {
-            ModelState.AddModelError(string.Empty, ex.Message);
-            var userId = GetUserId();
-            await PopulateDropdownsAsync(userId);
-            return View(model);
-        }
+        TempData["Success"] = "Transaction updated successfully.";
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        try
-        {
-            var userId = GetUserId();
-            var result = await _transactionService.DeleteTransactionAsync(id, userId);
+        var userId = GetUserId();
+        var result = await _transactionService.DeleteTransactionAsync(id, userId);
 
-            if (!result)
-                return NotFound();
+        if (!result)
+            throw new ResourceNotFoundException("Transaction", id);
 
-            TempData["Success"] = "Transaction deleted successfully.";
-        }
-        catch (Exception ex)
-        {
-            TempData["Error"] = ex.Message;
-        }
-
+        TempData["Success"] = "Transaction deleted successfully.";
         return RedirectToAction(nameof(Index));
     }
 
@@ -224,7 +160,7 @@ public class TransactionController : Controller
         var transaction = await _transactionService.GetTransactionByIdAsync(id, userId);
 
         if (transaction == null)
-            return NotFound();
+            throw new ResourceNotFoundException("Transaction", id);
 
         return View(transaction);
     }

@@ -36,23 +36,17 @@ public class HomeController : Controller
 
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
         
-        try
-        {
-            var totalBalance = await _accountService.GetTotalBalanceByUserIdAsync(userId);
-            var recentTransactions = (await _transactionService.GetTransactionsByUserIdAsync(userId)).Take(5);
-            var upcomingInstallments = (await _installmentService.GetActiveInstallmentsAsync(userId))
-                .Where(i => i.NextPaymentDate <= DateTime.UtcNow.AddDays(7))
-                .Take(5);
-            var transactionSummary = await _transactionService.GetTransactionSummaryAsync(userId);
+        var totalBalance = await _accountService.GetTotalBalanceByUserIdAsync(userId);
+        var recentTransactions = (await _transactionService.GetTransactionsByUserIdAsync(userId)).Take(5);
+        var upcomingInstallments = (await _installmentService.GetActiveInstallmentsAsync(userId))
+            .Where(i => i.NextPaymentDate <= DateTime.UtcNow.AddDays(7))
+            .Take(5);
+        var transactionSummary = await _transactionService.GetTransactionSummaryAsync(userId);
 
-            ViewBag.TotalBalance = totalBalance;
-            ViewBag.RecentTransactions = recentTransactions;
-            ViewBag.UpcomingInstallments = upcomingInstallments;
-            ViewBag.TransactionSummary = transactionSummary;
-        }
-        catch
-        {
-        }
+        ViewBag.TotalBalance = totalBalance;
+        ViewBag.RecentTransactions = recentTransactions;
+        ViewBag.UpcomingInstallments = upcomingInstallments;
+        ViewBag.TransactionSummary = transactionSummary;
 
         return View();
     }

@@ -7,6 +7,7 @@ using Cüzdan_Uygulaması.DataAccess.Interfaces;
 using Cüzdan_Uygulaması.DataAccess.Repositories;
 using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.Services;
+using Cüzdan_Uygulaması.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,9 +62,12 @@ builder.Services.AddHostedService<Cüzdan_Uygulaması.Services.RecurringTransact
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+// Use custom global exception middleware instead of built-in exception handler
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

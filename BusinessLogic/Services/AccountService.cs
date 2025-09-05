@@ -2,6 +2,7 @@ using Cüzdan_Uygulaması.BusinessLogic.DTOs;
 using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.Mappers;
 using Cüzdan_Uygulaması.DataAccess.Interfaces;
+using Cüzdan_Uygulaması.Exceptions;
 
 namespace Cüzdan_Uygulaması.BusinessLogic.Services;
 
@@ -44,13 +45,13 @@ public class AccountService : IAccountService
     public async Task<AccountDto> CreateAccountAsync(CreateAccountDto createAccountDto, string userId)
     {
         if (string.IsNullOrWhiteSpace(createAccountDto.Name))
-            throw new ArgumentException("Account name is required.");
+            throw new ValidationException("Name", "Account name is required.");
 
         var existingAccount = await _unitOfWork.Accounts.FirstOrDefaultAsync(
             a => a.UserId == userId && a.Name.ToLower() == createAccountDto.Name.ToLower());
 
         if (existingAccount != null)
-            throw new InvalidOperationException("An account with this name already exists.");
+            throw new BusinessLogicException("An account with this name already exists.");
 
         var account = createAccountDto.ToEntity(userId);
         await _unitOfWork.Accounts.AddAsync(account);
@@ -68,7 +69,7 @@ public class AccountService : IAccountService
             return null;
 
         if (string.IsNullOrWhiteSpace(updateAccountDto.Name))
-            throw new ArgumentException("Account name is required.");
+            throw new ValidationException("Name", "Account name is required.");
 
         var existingAccount = await _unitOfWork.Accounts.FirstOrDefaultAsync(
             a => a.UserId == userId && 
@@ -76,7 +77,7 @@ public class AccountService : IAccountService
                  a.Id != updateAccountDto.Id);
 
         if (existingAccount != null)
-            throw new InvalidOperationException("An account with this name already exists.");
+            throw new BusinessLogicException("An account with this name already exists.");
 
         account.Name = updateAccountDto.Name;
         account.Description = updateAccountDto.Description;

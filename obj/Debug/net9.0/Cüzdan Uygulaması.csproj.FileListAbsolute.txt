@@ -187,3 +187,399 @@
 /Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/obj/Debug/net9.0/Cüzdan Uygulaması.genruntimeconfig.cache
 /Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/obj/Debug/net9.0/ref/Cüzdan Uygulaması.dll
 /Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması/bin/Debug/net9.0/PuppeteerSharp.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/appsettings.Development.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/appsettings.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/package-lock.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/package.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.staticwebassets.runtime.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.staticwebassets.endpoints.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.deps.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.runtimeconfig.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.pdb
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Humanizer.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.Build.Locator.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Mono.TextTemplating.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Npgsql.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/PuppeteerSharp.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/System.CodeDom.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/System.Composition.AttributedModel.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/System.Composition.Convention.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/System.Composition.Hosting.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/System.Composition.Runtime.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/System.Composition.TypedParts.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.csproj.AssemblyReference.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/rpswa.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.GeneratedMSBuildEditorConfig.editorconfig
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.AssemblyInfoInputs.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.AssemblyInfo.cs
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.csproj.CoreCompileInputs.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.MvcApplicationPartsAssemblyInfo.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.RazorAssemblyInfo.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.RazorAssemblyInfo.cs
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.sourcelink.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/rjimswa.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/scopedcss/bundle/Cüzdan Uygulaması.styles.css
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/scopedcss/projectbundle/Cüzdan Uygulaması.bundle.scp.css
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/hf2uqw2mto-gs0l0h2nh7.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/55gvbfy7kq-eno49xcc8g.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/ylntq1gqfz-rkhi1omlcn.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/uvozihi2ls-a378fx4ies.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/87hpaehpp1-w7bh2y5cjn.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/f1yi2e78hv-61n19gt1b8.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/inm1v7jbyt-24o610fdzo.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/q8faairt5q-8smznrr3yu.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/7cympymujj-g8lhh4tdpr.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/kus084tvvt-btwrlj08a1.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/tpdwpkqe29-bqjiyaj88i.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/xh8w11wd8t-c2jlpeoesf.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/x76n1e3su7-erw9l3u2r3.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/ltln6fx0xy-aexeepp0ev.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/fwmexhynqe-d7shbmvgxk.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/0j5uwxxwz7-ausgxo2sd3.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/m04pmbwlhe-k8d9w2qqmf.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/yyge4qdx4y-cosvhxvwiu.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/vs645kitoo-ub07r2b239.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/ny0jph7k1x-fvhpjtyr6v.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/gnbl0xynbn-b7pk76d08c.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/ic7s8pvfqz-fsbi9cje9m.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/cndo71lh45-rzd6atqjts.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/fq3bp1xfu2-ee0r1s7dh0.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/gqqeu00brt-dxx9fxp4il.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/dsv9lb8q8i-jd9uben2k1.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/4f6bvam1ha-khv3u5hwcm.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/s3p3kd9j1n-r4e9w2rdcm.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/5tlwsrnc7q-lcd1t2u6c8.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/ljiz82uyxs-c2oey78nd0.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/tmlmi8ghdf-tdbxkamptv.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/v9n8swyrb7-j5mq2jizvt.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/lkua1jvsno-06098lyss8.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/yycz9k0oar-nvvlpmu67g.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/ms8ggghydo-s35ty4nyc5.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/8voas71vsr-pj5nd1wqec.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/vol5fvtmmq-46ein0sx1k.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/d206t8y8z1-v0zj4ognzu.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/bd34jq6060-37tfw0ft22.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/481bva6c53-hrwsygsryq.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/9ykxjv2lce-pk9g2wxc8p.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/2ub46iyu9a-ft3s53vfgj.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/5fy64x4aog-6cfz1n2cew.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/vbxbtbt71m-6pdc2jztkx.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/an1rm6ygj3-493y06b0oq.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/m7g3ltzkda-iovd86k7lj.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/btbsbfjivg-vr1egmr9el.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/q2rsqgsupj-kbrnm935zg.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/xgiiyqphdj-jj8uyg4cgr.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/411jgi2tj4-y7v9cxd14o.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/4eqdf31th5-notf2xhcfb.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/15vit6xr6t-h1s4sie4z3.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/a3ifv1j9b0-63fj8s7r0e.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/uvwhswimlb-0j3bgjxly4.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/any0piwmr8-47otxtyo56.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/921tnza5fh-4v8eqarkd7.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/tpy8b3lbo9-356vix0kms.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/c1b97dlk0s-83jwlth58m.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/mdi3ypm5ra-mrlpezrjn3.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/vsgfjkzns6-lzl9nlhx6b.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/myqeuuymv0-ag7o75518u.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/o4cmrma75s-x0q3zqp4vz.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/vho4pmaw3e-0i3buxo5is.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/9gty0i7rap-o1o13a6vjx.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/9yq6aoah9o-ttgo8qnofa.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/3dz1eubb4p-2z0ns9nrw6.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/rfxywo251j-muycvpuwrr.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/aidsor64ma-87fc7y1x7t.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/58h9u2trmx-mlv21k5csn.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/is1ch0ngr7-5586vp6x82.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/compressed/16ne7bo7t1-5586vp6x82.gz
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/staticwebassets.build.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/staticwebassets.build.json.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/staticwebassets.development.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/C_zdan U.3EC8E8BC.Up2Date
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/refint/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.pdb
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.genruntimeconfig.cache
+/Users/efeugur/Desktop/Cuzdan_Uygulamasi/obj/Debug/net9.0/ref/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.csproj.AssemblyReference.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/rpswa.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.GeneratedMSBuildEditorConfig.editorconfig
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.AssemblyInfoInputs.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.AssemblyInfo.cs
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.csproj.CoreCompileInputs.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.MvcApplicationPartsAssemblyInfo.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.RazorAssemblyInfo.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.RazorAssemblyInfo.cs
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.sourcelink.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/refint/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.pdb
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/appsettings.Development.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/appsettings.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/package-lock.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/package.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.staticwebassets.endpoints.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.staticwebassets.runtime.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.deps.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.runtimeconfig.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Cüzdan Uygulaması.pdb
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Humanizer.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.Build.Locator.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Microsoft.Extensions.DependencyModel.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Mono.TextTemplating.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Npgsql.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/PuppeteerSharp.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/System.CodeDom.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/System.Composition.AttributedModel.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/System.Composition.Convention.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/System.Composition.Hosting.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/System.Composition.Runtime.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/System.Composition.TypedParts.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/cs/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/de/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/es/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/fr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/it/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ja/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ko/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pl/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/ru/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/rjimswa.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/scopedcss/bundle/Cüzdan Uygulaması.styles.css
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/scopedcss/projectbundle/Cüzdan Uygulaması.bundle.scp.css
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/hf2uqw2mto-gs0l0h2nh7.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/55gvbfy7kq-eno49xcc8g.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/ylntq1gqfz-rkhi1omlcn.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/uvozihi2ls-a378fx4ies.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/87hpaehpp1-w7bh2y5cjn.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/f1yi2e78hv-61n19gt1b8.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/inm1v7jbyt-24o610fdzo.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/q8faairt5q-8smznrr3yu.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/7cympymujj-g8lhh4tdpr.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/kus084tvvt-btwrlj08a1.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/tpdwpkqe29-bqjiyaj88i.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/xh8w11wd8t-c2jlpeoesf.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/x76n1e3su7-erw9l3u2r3.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/ltln6fx0xy-aexeepp0ev.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/fwmexhynqe-d7shbmvgxk.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/0j5uwxxwz7-ausgxo2sd3.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/m04pmbwlhe-k8d9w2qqmf.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/yyge4qdx4y-cosvhxvwiu.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/vs645kitoo-ub07r2b239.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/ny0jph7k1x-fvhpjtyr6v.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/gnbl0xynbn-b7pk76d08c.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/ic7s8pvfqz-fsbi9cje9m.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/cndo71lh45-rzd6atqjts.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/fq3bp1xfu2-ee0r1s7dh0.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/gqqeu00brt-dxx9fxp4il.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/dsv9lb8q8i-jd9uben2k1.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/4f6bvam1ha-khv3u5hwcm.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/s3p3kd9j1n-r4e9w2rdcm.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/5tlwsrnc7q-lcd1t2u6c8.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/ljiz82uyxs-c2oey78nd0.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/tmlmi8ghdf-tdbxkamptv.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/v9n8swyrb7-j5mq2jizvt.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/lkua1jvsno-06098lyss8.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/yycz9k0oar-nvvlpmu67g.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/ms8ggghydo-s35ty4nyc5.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/8voas71vsr-pj5nd1wqec.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/vol5fvtmmq-46ein0sx1k.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/d206t8y8z1-v0zj4ognzu.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/bd34jq6060-37tfw0ft22.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/481bva6c53-hrwsygsryq.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/9ykxjv2lce-pk9g2wxc8p.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/2ub46iyu9a-ft3s53vfgj.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/5fy64x4aog-6cfz1n2cew.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/vbxbtbt71m-6pdc2jztkx.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/an1rm6ygj3-493y06b0oq.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/m7g3ltzkda-iovd86k7lj.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/btbsbfjivg-vr1egmr9el.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/q2rsqgsupj-kbrnm935zg.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/xgiiyqphdj-jj8uyg4cgr.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/411jgi2tj4-y7v9cxd14o.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/4eqdf31th5-notf2xhcfb.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/15vit6xr6t-h1s4sie4z3.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/a3ifv1j9b0-63fj8s7r0e.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/uvwhswimlb-0j3bgjxly4.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/any0piwmr8-47otxtyo56.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/921tnza5fh-4v8eqarkd7.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/tpy8b3lbo9-356vix0kms.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/c1b97dlk0s-83jwlth58m.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/mdi3ypm5ra-mrlpezrjn3.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/vsgfjkzns6-lzl9nlhx6b.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/myqeuuymv0-ag7o75518u.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/o4cmrma75s-x0q3zqp4vz.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/vho4pmaw3e-0i3buxo5is.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/9gty0i7rap-o1o13a6vjx.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/9yq6aoah9o-ttgo8qnofa.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/3dz1eubb4p-2z0ns9nrw6.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/rfxywo251j-muycvpuwrr.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/aidsor64ma-87fc7y1x7t.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/58h9u2trmx-mlv21k5csn.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/is1ch0ngr7-5586vp6x82.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/compressed/16ne7bo7t1-5586vp6x82.gz
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/staticwebassets.build.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/staticwebassets.build.json.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/staticwebassets.development.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/C_zdan U.3EC8E8BC.Up2Date
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/Cüzdan Uygulaması.genruntimeconfig.cache
+/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/Debug/net9.0/ref/Cüzdan Uygulaması.dll
