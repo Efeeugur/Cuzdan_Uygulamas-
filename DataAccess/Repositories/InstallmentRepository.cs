@@ -7,7 +7,7 @@ namespace Cüzdan_Uygulaması.DataAccess.Repositories;
 
 public class InstallmentRepository : Repository<Installment>, IInstallmentRepository
 {
-    public InstallmentRepository(ApplicationDbContext context) : base(context)
+    public InstallmentRepository(ApplicationDbContext context, ILogger<Repository<Installment>> logger) : base(context, logger)
     {
     }
 

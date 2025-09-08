@@ -17,101 +17,101 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Cüzdan_Uygulaması
 build_property.RootNamespace = Cüzdan_Uygulaması
-build_property.ProjectDir = /Users/efeugur/Desktop/Cuzdan Uygulamasi/
+build_property.ProjectDir = /Users/efeugur/Desktop/Cüzdan Uygulaması/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/efeugur/Desktop/Cuzdan Uygulamasi
+build_property.MSBuildProjectDirectory = /Users/efeugur/Desktop/Cüzdan Uygulaması
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Account/Login.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Account/Register.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Home/Index.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Home/Privacy.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Installment/Create.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Installment/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdGFsbG1lbnQvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Installment/Details.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Installment/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdGFsbG1lbnQvRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Installment/Index.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Installment/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdGFsbG1lbnQvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Installment/Pay.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Installment/Pay.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW5zdGFsbG1lbnQvUGF5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Reports/Index.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Reports/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUmVwb3J0cy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Shared/Error.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Transaction/Create.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Transaction/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Transaction/Details.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Transaction/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Transaction/Edit.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Transaction/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Transaction/Index.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Transaction/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVHJhbnNhY3Rpb24vSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Wallet/AccountDetails.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Wallet/AccountDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2FsbGV0L0FjY291bnREZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Wallet/CreateAccount.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Wallet/CreateAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2FsbGV0L0NyZWF0ZUFjY291bnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Wallet/EditAccount.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Wallet/EditAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2FsbGV0L0VkaXRBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Wallet/Index.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Wallet/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvV2FsbGV0L0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/_ViewImports.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/_ViewStart.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/efeugur/Desktop/Cuzdan Uygulamasi/Views/Shared/_Layout.cshtml]
+[/Users/efeugur/Desktop/Cüzdan Uygulaması/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-4yq97obc8i

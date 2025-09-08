@@ -7,6 +7,7 @@ using Cüzdan_Uygulaması.BusinessLogic.DTOs;
 using Cüzdan_Uygulaması.BusinessLogic.Services;
 using Cüzdan_Uygulaması.Models;
 using Cüzdan_Uygulaması.Exceptions;
+using Cüzdan_Uygulaması.Logging;
 
 namespace Cüzdan_Uygulaması.Controllers;
 
@@ -17,17 +18,20 @@ public class TransactionController : Controller
     private readonly IAccountService _accountService;
     private readonly ISimpleCategoryService _simpleCategoryService;
     private readonly IInstallmentService _installmentService;
+    private readonly ILogger<TransactionController> _logger;
 
     public TransactionController(
         ITransactionService transactionService,
         IAccountService accountService,
         ISimpleCategoryService simpleCategoryService,
-        IInstallmentService installmentService)
+        IInstallmentService installmentService,
+        ILogger<TransactionController> logger)
     {
         _transactionService = transactionService;
         _accountService = accountService;
         _simpleCategoryService = simpleCategoryService;
         _installmentService = installmentService;
+        _logger = logger;
     }
 
     private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)!;

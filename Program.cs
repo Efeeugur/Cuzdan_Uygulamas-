@@ -8,8 +8,28 @@ using Cüzdan_Uygulaması.DataAccess.Repositories;
 using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.Services;
 using Cüzdan_Uygulaması.Middleware;
+using Serilog;
+using Serilog.Events;
+
+// Configure Serilog from configuration
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+    .Build();
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+    .CreateLogger();
+
+try
+{
+    Log.Information("Starting Cüzdan Uygulaması");
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Use Serilog as the logging provider
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
@@ -51,6 +71,9 @@ builder.Services.AddScoped<ICategoryInterestRateService, CategoryInterestRateSer
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IPdfService, PdfService>();
 
+// Register Security and Logging Services
+builder.Services.AddScoped<Cüzdan_Uygulaması.Services.ISecurityAuditService, Cüzdan_Uygulaması.Services.SecurityAuditService>();
+
 builder.Services.AddControllersWithViews();
 
 // Add Memory Caching
@@ -62,6 +85,9 @@ builder.Services.AddHostedService<Cüzdan_Uygulaması.Services.RecurringTransact
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+// Use request logging middleware first (before exception middleware)
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 // Use custom global exception middleware instead of built-in exception handler
 app.UseMiddleware<GlobalExceptionMiddleware>();
@@ -85,5 +111,15 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+Log.Information("Cüzdan Uygulaması started successfully");
 
 app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

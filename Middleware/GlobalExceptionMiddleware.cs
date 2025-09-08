@@ -2,6 +2,7 @@ using System.Net;
 using System.Text.Json;
 using Cüzdan_Uygulaması.Exceptions;
 using Cüzdan_Uygulaması.Models;
+using Cüzdan_Uygulaması.Logging;
 
 namespace Cüzdan_Uygulaması.Middleware;
 
@@ -29,10 +30,49 @@ public class GlobalExceptionMiddleware
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "An unhandled exception occurred. TraceId: {TraceId}, UserId: {UserId}, Path: {Path}", 
-                context.TraceIdentifier,
-                context.User?.Identity?.Name ?? "Anonymous",
-                context.Request.Path);
+            var userId = context.User?.Identity?.Name ?? "Anonymous";
+            var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
+            var userAgent = context.Request.Headers["User-Agent"].ToString();
+            
+            using (_logger.BeginScope(new Dictionary<string, object>
+            {
+                [LoggerConstants.TraceId] = context.TraceIdentifier,
+                [LoggerConstants.UserId] = userId,
+                [LoggerConstants.RequestPath] = context.Request.Path.Value ?? "",
+                [LoggerConstants.RequestMethod] = context.Request.Method,
+                [LoggerConstants.IpAddress] = ipAddress,
+                [LoggerConstants.UserAgent] = userAgent,
+                ["ExceptionType"] = exception.GetType().Name
+            }))
+            {
+                // Log different exception types with appropriate levels
+                switch (exception)
+                {
+                    case BaseCustomException customEx:
+                        _logger.LogWarning(exception, 
+                            "Business exception occurred: {ExceptionType} - {Message} (User: {UserId}, Path: {RequestPath})",
+                            exception.GetType().Name, customEx.Message, userId, context.Request.Path);
+                        break;
+                        
+                    case UnauthorizedAccessException:
+                        _logger.LogWarning(exception,
+                            "Unauthorized access attempt: User {UserId} from {IpAddress} tried to access {RequestPath}",
+                            userId, ipAddress, context.Request.Path);
+                        break;
+                        
+                    case ArgumentException argEx:
+                        _logger.LogWarning(exception,
+                            "Invalid argument provided: {Message} (User: {UserId}, Path: {RequestPath})",
+                            argEx.Message, userId, context.Request.Path);
+                        break;
+                        
+                    default:
+                        _logger.LogError(exception,
+                            "Unhandled system exception: {ExceptionType} - {Message} (User: {UserId}, Path: {RequestPath}, IP: {IpAddress})",
+                            exception.GetType().Name, exception.Message, userId, context.Request.Path, ipAddress);
+                        break;
+                }
+            }
 
             await HandleExceptionAsync(context, exception);
         }

@@ -3,16 +3,19 @@ using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.Mappers;
 using Cüzdan_Uygulaması.DataAccess.Interfaces;
 using Cüzdan_Uygulaması.Models;
+using Cüzdan_Uygulaması.Logging;
 
 namespace Cüzdan_Uygulaması.BusinessLogic.Services;
 
 public class TransactionService : ITransactionService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ILogger<TransactionService> _logger;
 
-    public TransactionService(IUnitOfWork unitOfWork)
+    public TransactionService(IUnitOfWork unitOfWork, ILogger<TransactionService> logger)
     {
         _unitOfWork = unitOfWork;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<TransactionDto>> GetTransactionsByUserIdAsync(string userId)
@@ -161,65 +164,90 @@ public class TransactionService : ITransactionService
 
     public async Task<TransactionDto> CreateTransactionAsync(CreateTransactionDto createTransactionDto, string userId)
     {
-        if (createTransactionDto.Amount <= 0)
-            throw new ArgumentException("Transaction amount must be positive.");
-
-        var account = await _unitOfWork.Accounts.FirstOrDefaultAsync(
-            a => a.Id == createTransactionDto.AccountId && a.UserId == userId);
-
-        if (account == null)
-            throw new InvalidOperationException($"Account with ID {createTransactionDto.AccountId} not found or access denied. Please ensure you have created an account first.");
-
-        if (createTransactionDto.CategoryId.HasValue)
+        using (_logger.BeginScopeWithUserId(userId))
+        using (var timer = _logger.TimeOperation("CreateTransaction"))
         {
-            // Validate SimpleCategoryService categories (1-35)
-            if (createTransactionDto.CategoryId.Value < 1 || createTransactionDto.CategoryId.Value > 35)
+            if (createTransactionDto.Amount <= 0)
             {
-                throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
+                _logger.LogValidationError(userId, "CreateTransaction.Amount", "Transaction amount must be positive");
+                throw new ArgumentException("Transaction amount must be positive.");
             }
-        }
 
-        if (createTransactionDto.InstallmentId.HasValue)
-        {
-            var installment = await _unitOfWork.Installments.FirstOrDefaultAsync(
-                i => i.Id == createTransactionDto.InstallmentId && i.UserId == userId);
+            var account = await _unitOfWork.Accounts.FirstOrDefaultAsync(
+                a => a.Id == createTransactionDto.AccountId && a.UserId == userId);
 
-            if (installment == null)
-                throw new InvalidOperationException("Installment not found or access denied.");
-        }
+            if (account == null)
+            {
+                _logger.LogBusinessRuleViolation(userId, "AccountNotFound", $"Account ID {createTransactionDto.AccountId} not found or access denied");
+                throw new InvalidOperationException($"Account with ID {createTransactionDto.AccountId} not found or access denied. Please ensure you have created an account first.");
+            }
 
-        try
-        {
-            await _unitOfWork.BeginTransactionAsync();
+            // Check for insufficient funds on expense transactions
+            if (createTransactionDto.Type == TransactionType.Expense && account.Balance < createTransactionDto.Amount)
+            {
+                _logger.LogInsufficientFunds(userId, createTransactionDto.AccountId, createTransactionDto.Amount, account.Balance);
+                throw new InvalidOperationException($"Insufficient funds. Account balance: {account.Balance:C}, Requested amount: {createTransactionDto.Amount:C}");
+            }
 
-            var transaction = createTransactionDto.ToEntity(userId);
-            
-            // Note: We keep CategoryId even for SimpleCategoryService categories (1-25)
-            // The foreign key constraint allows null, so EF won't enforce the relationship
-            // We'll handle display logic in the service layer
-            
-            // Log transaction details for debugging
-            Console.WriteLine($"Creating Transaction: UserId={transaction.UserId}, AccountId={transaction.AccountId}, Amount={transaction.Amount}, Type={transaction.Type}, CategoryId={transaction.CategoryId}");
-            
-            await _unitOfWork.Transactions.AddAsync(transaction);
+            if (createTransactionDto.CategoryId.HasValue)
+            {
+                // Validate SimpleCategoryService categories (1-35)
+                if (createTransactionDto.CategoryId.Value < 1 || createTransactionDto.CategoryId.Value > 35)
+                {
+                    _logger.LogValidationError(userId, "CreateTransaction.CategoryId", $"Invalid category ID: {createTransactionDto.CategoryId.Value}");
+                    throw new InvalidOperationException("Invalid category ID. Must be between 1 and 35.");
+                }
+            }
 
-            var balanceChange = createTransactionDto.Type == TransactionType.Income 
-                ? createTransactionDto.Amount 
-                : -createTransactionDto.Amount;
+            if (createTransactionDto.InstallmentId.HasValue)
+            {
+                var installment = await _unitOfWork.Installments.FirstOrDefaultAsync(
+                    i => i.Id == createTransactionDto.InstallmentId && i.UserId == userId);
 
-            account.Balance += balanceChange;
-            _unitOfWork.Accounts.Update(account);
+                if (installment == null)
+                {
+                    _logger.LogBusinessRuleViolation(userId, "InstallmentNotFound", $"Installment ID {createTransactionDto.InstallmentId} not found or access denied");
+                    throw new InvalidOperationException("Installment not found or access denied.");
+                }
+            }
 
-            Console.WriteLine($"Saving changes - Account Balance will be: {account.Balance}");
-            await _unitOfWork.SaveChangesAsync();
-            await _unitOfWork.CommitTransactionAsync();
+            try
+            {
+                await _unitOfWork.BeginTransactionAsync();
 
-            return transaction.ToDto();
-        }
-        catch
-        {
-            await _unitOfWork.RollbackTransactionAsync();
-            throw;
+                var transaction = createTransactionDto.ToEntity(userId);
+                
+                _logger.LogDebug("Creating transaction: AccountId={AccountId}, Amount={Amount:C}, Type={Type}, CategoryId={CategoryId}",
+                    transaction.AccountId, transaction.Amount, transaction.Type, transaction.CategoryId);
+                
+                await _unitOfWork.Transactions.AddAsync(transaction);
+
+                var balanceChange = createTransactionDto.Type == TransactionType.Income 
+                    ? createTransactionDto.Amount 
+                    : -createTransactionDto.Amount;
+
+                var oldBalance = account.Balance;
+                account.Balance += balanceChange;
+                _unitOfWork.Accounts.Update(account);
+
+                _logger.LogDebug("Updating account balance: Account={AccountId}, OldBalance={OldBalance:C}, NewBalance={NewBalance:C}",
+                    account.Id, oldBalance, account.Balance);
+
+                await _unitOfWork.SaveChangesAsync();
+                await _unitOfWork.CommitTransactionAsync();
+
+                var result = transaction.ToDto();
+                _logger.LogTransactionCreated(userId, result.Id, result.Amount, result.Category?.Name ?? "Unknown", result.Description ?? "");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                _logger.LogError(ex, "Failed to create transaction for user {UserId}: Amount={Amount:C}, AccountId={AccountId}",
+                    userId, createTransactionDto.Amount, createTransactionDto.AccountId);
+                throw;
+            }
         }
     }
 

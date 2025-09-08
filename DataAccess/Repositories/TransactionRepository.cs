@@ -7,7 +7,7 @@ namespace Cüzdan_Uygulaması.DataAccess.Repositories;
 
 public class TransactionRepository : Repository<Transaction>, ITransactionRepository
 {
-    public TransactionRepository(ApplicationDbContext context) : base(context)
+    public TransactionRepository(ApplicationDbContext context, ILogger<Repository<Transaction>> logger) : base(context, logger)
     {
     }
 

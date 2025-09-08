@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/efeugur/Desktop/Cuzdan Uygulamasi/Cüzdan Uygulaması.csproj": {}
+    "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj": {}
   },
   "projects": {
-    "/Users/efeugur/Desktop/Cuzdan Uygulamasi/Cüzdan Uygulaması.csproj": {
+    "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/efeugur/Desktop/Cuzdan Uygulamasi/Cüzdan Uygulaması.csproj",
+        "projectUniqueName": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
         "projectName": "Cüzdan Uygulaması",
-        "projectPath": "/Users/efeugur/Desktop/Cuzdan Uygulamasi/Cüzdan Uygulaması.csproj",
+        "projectPath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
         "packagesPath": "/Users/efeugur/.nuget/packages/",
-        "outputPath": "/Users/efeugur/Desktop/Cuzdan Uygulamasi/obj/",
+        "outputPath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/efeugur/.nuget/NuGet/NuGet.Config"
@@ -67,6 +67,38 @@
             "PuppeteerSharp": {
               "target": "Package",
               "version": "[19.0.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Serilog.Enrichers.Environment": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
+            "Serilog.Enrichers.Process": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Serilog.Enrichers.Thread": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "Serilog.Settings.Configuration": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Serilog.Sinks.PostgreSQL": {
+              "target": "Package",
+              "version": "[2.3.0, )"
             }
           },
           "imports": [

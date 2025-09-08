@@ -7,7 +7,7 @@ namespace Cüzdan_Uygulaması.DataAccess.Repositories;
 
 public class AccountRepository : Repository<Account>, IAccountRepository
 {
-    public AccountRepository(ApplicationDbContext context) : base(context)
+    public AccountRepository(ApplicationDbContext context, ILogger<Repository<Account>> logger) : base(context, logger)
     {
     }
 

@@ -3,16 +3,19 @@ using Cüzdan_Uygulaması.BusinessLogic.Interfaces;
 using Cüzdan_Uygulaması.BusinessLogic.Mappers;
 using Cüzdan_Uygulaması.DataAccess.Interfaces;
 using Cüzdan_Uygulaması.Exceptions;
+using Cüzdan_Uygulaması.Logging;
 
 namespace Cüzdan_Uygulaması.BusinessLogic.Services;
 
 public class AccountService : IAccountService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ILogger<AccountService> _logger;
 
-    public AccountService(IUnitOfWork unitOfWork)
+    public AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logger)
     {
         _unitOfWork = unitOfWork;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<AccountDto>> GetAccountsByUserIdAsync(string userId)
@@ -44,20 +47,32 @@ public class AccountService : IAccountService
 
     public async Task<AccountDto> CreateAccountAsync(CreateAccountDto createAccountDto, string userId)
     {
-        if (string.IsNullOrWhiteSpace(createAccountDto.Name))
-            throw new ValidationException("Name", "Account name is required.");
+        using (_logger.BeginScopeWithUserId(userId))
+        using (var timer = _logger.TimeOperation("CreateAccount"))
+        {
+            if (string.IsNullOrWhiteSpace(createAccountDto.Name))
+            {
+                _logger.LogValidationError(userId, "CreateAccount.Name", "Account name is required");
+                throw new ValidationException("Name", "Account name is required.");
+            }
 
-        var existingAccount = await _unitOfWork.Accounts.FirstOrDefaultAsync(
-            a => a.UserId == userId && a.Name.ToLower() == createAccountDto.Name.ToLower());
+            var existingAccount = await _unitOfWork.Accounts.FirstOrDefaultAsync(
+                a => a.UserId == userId && a.Name.ToLower() == createAccountDto.Name.ToLower());
 
-        if (existingAccount != null)
-            throw new BusinessLogicException("An account with this name already exists.");
+            if (existingAccount != null)
+            {
+                _logger.LogBusinessRuleViolation(userId, "DuplicateAccountName", $"Account name '{createAccountDto.Name}' already exists");
+                throw new BusinessLogicException("An account with this name already exists.");
+            }
 
-        var account = createAccountDto.ToEntity(userId);
-        await _unitOfWork.Accounts.AddAsync(account);
-        await _unitOfWork.SaveChangesAsync();
+            var account = createAccountDto.ToEntity(userId);
+            await _unitOfWork.Accounts.AddAsync(account);
+            await _unitOfWork.SaveChangesAsync();
 
-        return account.ToDto();
+            var result = account.ToDto();
+            _logger.LogAccountCreated(userId, result.Id, result.Name, result.Balance);
+            return result;
+        }
     }
 
     public async Task<AccountDto?> UpdateAccountAsync(UpdateAccountDto updateAccountDto, string userId)
