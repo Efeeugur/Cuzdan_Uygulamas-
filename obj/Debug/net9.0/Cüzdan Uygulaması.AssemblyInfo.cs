@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cüzdan Uygulaması")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+420249521a5f55b064de2b6c400b5ab6da0a89ef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+628a3a3dcaed9d3dee1f5aca24c7d0e5625957d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cüzdan Uygulaması")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cüzdan Uygulaması")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

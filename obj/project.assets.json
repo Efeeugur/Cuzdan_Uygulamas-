@@ -5177,11 +5177,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
+      "projectUniqueName": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
       "projectName": "Cüzdan Uygulaması",
-      "projectPath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
+      "projectPath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
       "packagesPath": "/Users/efeugur/.nuget/packages/",
-      "outputPath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/obj/",
+      "outputPath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/efeugur/.nuget/NuGet/NuGet.Config"

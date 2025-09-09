@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5LDn2kEtQxE=",
+  "dgSpecHash": "smnXXw1H3b0=",
   "success": true,
-  "projectFilePath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
+  "projectFilePath": "/Users/efeugur/Desktop/Cüzdan Uygulaması/Cüzdan Uygulaması.csproj",
   "expectedPackageFiles": [
     "/Users/efeugur/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/efeugur/.nuget/packages/microsoft.aspnetcore.cryptography.internal/9.0.0/microsoft.aspnetcore.cryptography.internal.9.0.0.nupkg.sha512",
